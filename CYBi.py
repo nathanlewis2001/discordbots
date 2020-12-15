@@ -148,7 +148,7 @@ async def ping(ctx):
 
 @bot.command(pass_context=True)
 async def poll(ctx, *, question):
-    poll_embed = discord.Embed(title = f"{question}", description = "Respond down below:")
+    poll_embed = discord.Embed(title = f"{question}")
     sent_message = await ctx.send(embed = poll_embed)
     await sent_message.add_reaction("🇽")
     await sent_message.add_reaction("✅")
