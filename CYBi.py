@@ -5,7 +5,7 @@ Author: Professor Mark Scott (mscott@fhu.edu)
 
 Other contributors:
 Cameron Pierce (pierce.cameron7@yahoo.com): the poll command
---------------------------------
+--------------------------------------------------------------------------------
 
 The MIT License (MIT)
 Copyright © 2020 Professor Mark Scott
@@ -130,7 +130,6 @@ async def kick(ctx, member: discord.Member, *, reason=None):
     await member.kick(reason=reason)
     await ctx.send(f'Kicked: {member.mention}')
 
-
 @kick.error
 async def kick_error(ctx, error):
     if isinstance(error, commands.CheckFailure):
@@ -207,7 +206,6 @@ async def unban(ctx, *, member):
             await ctx.guild.unban(user)
             await ctx.send(f'Unbanned {user.mention}')
             return
-
 
 @unban.error
 async def unban_error(ctx, error):
