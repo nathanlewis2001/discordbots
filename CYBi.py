@@ -4,7 +4,7 @@ FHU CYB - Discord bot 12/2020
 Author: Professor Mark Scott (mscott@fhu.edu)
 
 Other contributors:
-Cameron Pierce (pierce.cameron7@yahoo.com): the poll command 
+Cameron Pierce (pierce.cameron7@yahoo.com): the poll command
 --------------------------------
 
 The MIT License (MIT)
@@ -54,23 +54,6 @@ CYBi Discord Bot Commands
 
 ------------------------------------------------------------------------
 '''
-
-# attendance taker for class and creates a permanent record on bot server
-@bot.command()
-async def present(ctx, course: str, member: discord.Member = None):
-    member = ctx.author if not member else member
-    await ctx.send(f'{member.display_name} (aka: {member.name}) has been marked **present** in ' + (course) + '!')
-    rightnow = datetime.datetime.now()
-    with open("attendance.log", "a+") as file:
-        file.write(str(rightnow))
-        file.write('--' + course)
-        file.write(f'--{member.display_name} (aka:{member.name})\n')
-        file.close()
-
-@present.error
-async def present_error(ctx, error):
-    if isinstance(error, commands.MissingRequiredArgument):
-        await ctx.send('Please specify the **course number**, such as CYB101, CYB220, etc.')
 
 # ban members for moderators and admins
 @bot.command()
@@ -170,6 +153,22 @@ async def poll(ctx, *, question):
     await sent_message.add_reaction("🇽")
     await sent_message.add_reaction("✅")
 
+# present is the attendance taker for class and creates a permanent record on bot server
+@bot.command()
+async def present(ctx, course: str, member: discord.Member = None):
+    member = ctx.author if not member else member
+    await ctx.send(f'{member.display_name} (aka: {member.name}) has been marked **present** in ' + (course) + '!')
+    rightnow = datetime.datetime.now()
+    with open("attendance.log", "a+") as file:
+        file.write(str(rightnow))
+        file.write('--' + course)
+        file.write(f'--{member.display_name} (aka:{member.name})\n')
+        file.close()
+
+@present.error
+async def present_error(ctx, error):
+    if isinstance(error, commands.MissingRequiredArgument):
+        await ctx.send('Please specify the **course number**, such as CYB101, CYB220, etc.')
 
 # read and understand class syllabus and creates a permanent record on bot server
 @bot.command()
