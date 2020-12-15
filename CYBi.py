@@ -71,7 +71,7 @@ async def present(ctx, course: str, member: discord.Member = None):
 async def present_error(ctx, error):
     if isinstance(error, commands.MissingRequiredArgument):
         await ctx.send('Please specify the **course number**, such as CYB101, CYB220, etc.')
-        
+
 # ban members for moderators and admins
 @bot.command()
 @commands.has_role('Moderator')
@@ -169,7 +169,7 @@ async def poll(ctx, *, question):
     sent_message = await ctx.send(embed = poll_embed)
     await sent_message.add_reaction("🇽")
     await sent_message.add_reaction("✅")
-    
+
 
 # read and understand class syllabus and creates a permanent record on bot server
 @bot.command()
