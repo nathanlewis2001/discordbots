@@ -111,6 +111,7 @@ async def help(ctx):
                     value="(Moderator) Kicks Discord member from guild: **Usage:** *./kick member name*", inline=False)
     embed.add_field(name="**mynick**", value="Gives member's current display name: **Usage:** *./mynick*", inline=False)
     embed.add_field(name="**ping**", value="Checks bot latency: **Usage:** *./ping*", inline=False)
+    embed.add_field(name="**poll**", value="Creates a quick yes or no poll: **Usage:** *./poll Do you like eggs?*", inline=False)
     embed.add_field(name="**present**",
                     value="Marks member present for a live Discord class session: FOR USE ONLY in the ***Discussion Channel***, __#attendance__. ***Usage:*** *./present CYB101 or ./present CYB220*, etc.",
                     inline=False)
