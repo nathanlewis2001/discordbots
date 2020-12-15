@@ -1,2 +1,2 @@
 # discordbots
-Discordbots repo
+CYBi Discord bot runs on users local server.
