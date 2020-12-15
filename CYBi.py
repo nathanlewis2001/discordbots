@@ -153,6 +153,11 @@ async def poll(ctx, *, question):
     await sent_message.add_reaction("🇽")
     await sent_message.add_reaction("✅")
 
+@poll.error
+async def poll_error(ctx, error):
+    if isinstance(error, commands.MissingRequiredArgument):
+        await ctx.send('Please specify a question.')
+
 # present is the attendance taker for class and creates a permanent record on bot server
 @bot.command()
 async def present(ctx, course: str, member: discord.Member = None):
