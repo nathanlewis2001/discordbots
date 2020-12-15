@@ -1,2 +1,2 @@
 # discordbots
-CYBi Discord bot runs on users local server.
+CYBi Discord bot runs on user's local server.
