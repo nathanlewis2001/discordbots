@@ -2,10 +2,10 @@
 CYBi Bot
 FHU CYB - Discord bot 12/2020
 Author: Professor Mark Scott (mscott@fhu.edu)
--using Discord app in university classes
+-using Discord in university classes
 
 Other contributors:
-Cameron Pierce (pierce.cameron7@yahoo.com): poll command
+Cameron Pierce (pierce.cameron7@yahoo.com): original poll command
 --------------------------------------------------------------------------------
 
 The MIT License (MIT)
@@ -84,7 +84,7 @@ async def clean(ctx, amount: int):
 @clean.error
 async def clean_error(ctx, error):
     if isinstance(error, commands.MissingRequiredArgument):
-        await ctx.send('[ERROR: please specify a number of messages to remove]')
+        await ctx.send('Please specify a number of messages to remove.')
     elif isinstance(error, commands.CheckFailure):
         await ctx.send("You need special permission to clean this channel!")
 
@@ -187,9 +187,9 @@ async def present_error(ctx, error):
 
 '''
 # strawpoll
-@bot.command()
+@bot.command(pass_context=True)
 async def straw(ctx, *, questions):
-    
+
 '''
 
 # read and understand class syllabus and creates a permanent record on bot server
