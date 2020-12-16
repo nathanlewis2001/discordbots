@@ -161,6 +161,7 @@ async def poll(ctx, *, question, member: discord.Member = None):
                             More reaction emotes for use:
                             👍👎✅🇽
 '''
+
 @poll.error
 async def poll_error(ctx, error):
     if isinstance(error, commands.MissingRequiredArgument):
