@@ -154,9 +154,12 @@ async def poll(ctx, *, question, member: discord.Member = None):
     poll_embed.set_thumbnail(url="https://drive.google.com/uc?id=14FBUSKg4Hz8HRITRaUiTzy97omZDDEwn")
     sent_message = await ctx.send(embed = poll_embed)
     await ctx.message.delete()
-    await sent_message.add_reaction("🇽")
-    await sent_message.add_reaction("✅")
-
+    await sent_message.add_reaction("👍")
+    await sent_message.add_reaction("👎")
+'''
+                            More reaction emotes for use:
+                            👍👎✅🇽
+'''
 @poll.error
 async def poll_error(ctx, error):
     if isinstance(error, commands.MissingRequiredArgument):
