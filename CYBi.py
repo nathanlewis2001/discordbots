@@ -4,7 +4,7 @@ FHU CYB - Discord bot 12/2020
 Author: Professor Mark Scott (mscott@fhu.edu)
 
 Other contributors:
-Cameron Pierce (pierce.cameron7@yahoo.com): the poll command
+Cameron Pierce (pierce.cameron7@yahoo.com): poll command
 --------------------------------------------------------------------------------
 
 The MIT License (MIT)
