@@ -1,6 +1,6 @@
 '''
 CYBi Bot
-FHU CYB - Discord bot 12/2020
+FHU CYB Discord bot 12/2020
 Author: Professor Mark Scott (mscott@fhu.edu)
 -using Discord in university classes
 
