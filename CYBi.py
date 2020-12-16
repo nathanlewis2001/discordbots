@@ -147,10 +147,13 @@ async def ping(ctx):
     await ctx.send(f'The ping latency to the bot server is {bot.latency}!')
 
 @bot.command(pass_context=True)
-async def poll(ctx, *, question):
+async def poll(ctx, *, question, member: discord.Member = None):
+    member = ctx.author if not member else member
     poll_embed = discord.Embed(title = "FHU CYB Class Poll", description=f"{question}")
+    poll_embed.set_footer(text=f'~~~{member.display_name} (aka:{member.name})')
+    poll_embed.set_thumbnail(url="https://drive.google.com/uc?id=14FBUSKg4Hz8HRITRaUiTzy97omZDDEwn")
     sent_message = await ctx.send(embed = poll_embed)
-    #await ctx.message.delete()
+    await ctx.message.delete()
     await sent_message.add_reaction("🇽")
     await sent_message.add_reaction("✅")
 
