@@ -148,7 +148,7 @@ async def ping(ctx):
 
 @bot.command(pass_context=True)
 async def poll(ctx, *, question):
-    poll_embed = discord.Embed(title = f"{question}")
+    poll_embed = discord.Embed(title = "FHU CYB Class Poll", description=f"{question}")
     sent_message = await ctx.send(embed = poll_embed)
     await sent_message.add_reaction("🇽")
     await sent_message.add_reaction("✅")
@@ -156,7 +156,7 @@ async def poll(ctx, *, question):
 @poll.error
 async def poll_error(ctx, error):
     if isinstance(error, commands.MissingRequiredArgument):
-        await ctx.send('Please specify a question.')
+        await ctx.send('Please specify a poll question.')
 
 # present is the attendance taker for class and creates a permanent record on bot server
 @bot.command()
