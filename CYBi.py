@@ -92,7 +92,7 @@ async def clean_error(ctx, error):
 @bot.command(pass_context=True)
 async def help(ctx):
     author = ctx.message.author
-
+    await ctx.message.delete()
     embed = discord.Embed(
         colour=discord.Colour.purple(),
         title="CYBi's Commands",
@@ -139,11 +139,13 @@ async def kick_error(ctx, error):
 @bot.command()
 async def mynick(ctx, member: discord.Member = None):
     member = ctx.author if not member else member
+    await ctx.message.delete()
     await ctx.send(f"{member.display_name} is your nickname.")
 
 # ping to check bot latency
 @bot.command()
 async def ping(ctx):
+    await ctx.message.delete()
     await ctx.send(f'The ping latency to the bot server is {bot.latency}!')
 
 # simple yes or no poll
@@ -171,6 +173,7 @@ async def poll_error(ctx, error):
 @bot.command()
 async def present(ctx, course: str, member: discord.Member = None):
     member = ctx.author if not member else member
+    await ctx.message.delete()
     await ctx.send(f'{member.display_name} (aka: {member.name}) has been marked **present** in ' + (course) + '!')
     rightnow = datetime.datetime.now()
     with open("attendance.log", "a+") as file:
@@ -195,6 +198,7 @@ async def straw(ctx, *, questions):
 @bot.command()
 async def syllabus(ctx, course: str, member: discord.Member = None):
     member = ctx.author if not member else member
+    await ctx.message.delete()
     rightnow = datetime.datetime.now()
     await ctx.send(f'{member.display_name} (aka:{member.name}) has read and understands the ' + (course) + ' syllabus!')
     with open("syllabus.log", "a+") as file:
