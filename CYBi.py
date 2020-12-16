@@ -147,6 +147,7 @@ async def mynick(ctx, member: discord.Member = None):
 async def ping(ctx):
     await ctx.send(f'The ping latency to the bot server is {bot.latency}!')
 
+# simple yes or no poll
 @bot.command(pass_context=True)
 async def poll(ctx, *, question, member: discord.Member = None):
     member = ctx.author if not member else member
@@ -183,6 +184,13 @@ async def present(ctx, course: str, member: discord.Member = None):
 async def present_error(ctx, error):
     if isinstance(error, commands.MissingRequiredArgument):
         await ctx.send('Please specify the **course number**, such as CYB101, CYB220, etc.')
+
+'''
+# strawpoll
+@bot.command()
+async def straw(ctx, *, questions):
+    
+'''
 
 # read and understand class syllabus and creates a permanent record on bot server
 @bot.command()
