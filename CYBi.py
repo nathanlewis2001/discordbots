@@ -70,6 +70,7 @@ async def ban_error(ctx, error):
 # bottime provides date and time
 @bot.command()
 async def bottime(ctx):
+    await ctx.message.delete()
     rightnow = datetime.datetime.now()
     await ctx.send(rightnow)
 
@@ -161,7 +162,7 @@ async def poll(ctx, *, question, member: discord.Member = None):
     await sent_message.add_reaction("👎")
 '''
                             More reaction emotes for use:
-                            👍👎✅🇽
+                            👍👎✅🇽❎
 '''
 
 @poll.error
