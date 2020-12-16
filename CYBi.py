@@ -150,6 +150,7 @@ async def ping(ctx):
 async def poll(ctx, *, question):
     poll_embed = discord.Embed(title = "FHU CYB Class Poll", description=f"{question}")
     sent_message = await ctx.send(embed = poll_embed)
+    #await ctx.message.delete()
     await sent_message.add_reaction("🇽")
     await sent_message.add_reaction("✅")
 
