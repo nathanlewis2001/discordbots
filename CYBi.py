@@ -2,6 +2,7 @@
 CYBi Bot
 FHU CYB - Discord bot 12/2020
 Author: Professor Mark Scott (mscott@fhu.edu)
+-using Discord app in university classes
 
 Other contributors:
 Cameron Pierce (pierce.cameron7@yahoo.com): poll command
