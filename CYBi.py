@@ -118,7 +118,6 @@ async def help(ctx):
                     inline=False)
     embed.add_field(name="**unban**", value="(Moderator) Unbans Discord member: **Usage:** *./unban member name*",
                     inline=False)
-
     await author.send(embed=embed)
 
 # kick member for mods and admins only
