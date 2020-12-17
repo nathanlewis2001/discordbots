@@ -120,6 +120,10 @@ async def help(ctx):
                     inline=False)
     await author.send(embed=embed)
 
+'''
+HelpDesk in development
+'''
+
 # kick member for mods and admins only
 @bot.command()
 @commands.has_role('Moderator')
@@ -185,8 +189,7 @@ async def present_error(ctx, error):
         await ctx.send('Please specify the **course number**, such as CYB101, CYB220, etc.')
 
 '''
-# strawpoll
-
+# strawpoll in development
 
 '''
 
