@@ -2,10 +2,7 @@
 CYBi Bot
 FHU CYB Discord bot 12/2020
 Author: Professor Mark Scott (mscott@fhu.edu)
--using Discord in university classes
-
-Other contributors:
-Cameron Pierce (pierce.cameron7@yahoo.com): original poll command
+Other contributors: Cameron Pierce (pierce.cameron7@yahoo.com): original poll command
 --------------------------------------------------------------------------------
 The MIT License (MIT)
 Copyright © 2020 Professor Mark Scott
@@ -190,8 +187,7 @@ async def present_error(ctx, error):
 
 '''
 # strawpoll
-@bot.command(pass_context=True)
-async def straw(ctx, *, questions):
+
 
 '''
 
