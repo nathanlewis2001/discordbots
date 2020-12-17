@@ -3,6 +3,7 @@ CYBi Bot
 FHU CYB Discord bot 12/2020
 Author: Professor Mark Scott (mscott@fhu.edu)
 Other contributors: Cameron Pierce (pierce.cameron7@yahoo.com): original poll command
+                    Other Open Source Projects
 --------------------------------------------------------------------------------
 The MIT License (MIT)
 Copyright © 2020 Professor Mark Scott
@@ -162,7 +163,7 @@ async def poll(ctx, *, question, member: discord.Member = None):
     await sent_message.add_reaction("👎")
 '''
                             More reaction emotes for use:
-                            👍👎✅🇽❎
+                            👍👎✅🇽❎❌
 '''
 
 @poll.error
