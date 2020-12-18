@@ -212,6 +212,7 @@ async def syllabus(ctx, course: str, member: discord.Member = None):
     await ctx.message.delete()
     channel = bot.get_channel(786421989912084512)
     await channel.send(f'{member.display_name} (aka:{member.name}) has read and understands the ' + (course) + ' syllabus!')
+    rightnow = datetime.datetime.now()
     with open("syllabus.log", "a+") as file:
         file.write(str(rightnow))
         file.write('--' + course)
