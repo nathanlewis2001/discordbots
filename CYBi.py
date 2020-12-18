@@ -175,7 +175,8 @@ async def cybpoll_error(ctx, error):
 async def present(ctx, course: str, member: discord.Member = None):
     member = ctx.author if not member else member
     await ctx.message.delete()
-    await ctx.send(f'{member.display_name} (aka: {member.name}) has been marked **present** in ' + (course) + '!')
+    channel = bot.get_channel(786278326519332894)
+    await channel.send(f'{member.display_name} (aka: {member.name}) has been marked **present** in ' + (course) + '!')
     rightnow = datetime.datetime.now()
     with open("attendance.log", "a+") as file:
         file.write(str(rightnow))
@@ -209,8 +210,8 @@ async def support_error(ctx, error):
 async def syllabus(ctx, course: str, member: discord.Member = None):
     member = ctx.author if not member else member
     await ctx.message.delete()
-    rightnow = datetime.datetime.now()
-    await ctx.send(f'{member.display_name} (aka:{member.name}) has read and understands the ' + (course) + ' syllabus!')
+    channel = bot.get_channel(786421989912084512)
+    await channel.send(f'{member.display_name} (aka:{member.name}) has read and understands the ' + (course) + ' syllabus!')
     with open("syllabus.log", "a+") as file:
         file.write(str(rightnow))
         file.write('--' + course)
