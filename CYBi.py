@@ -121,9 +121,20 @@ async def help(ctx):
                     inline=False)
     await author.send(embed=embed)
 
-'''
-HelpDesk in development
-'''
+# heldesk
+@bot.command(pass_context=True)
+async def helpdesk(ctx, *, question, member: discord.Member = None):
+    member = ctx.author if not member else member
+    help_embed = discord.Embed(title = "FHU CYB Helpdesk", description=f"{question}")
+    help_embed.set_footer(text=f'~~~{member.display_name} (aka:{member.name})')
+    help_embed.set_thumbnail(url="https://drive.google.com/uc?id=14FBUSKg4Hz8HRITRaUiTzy97omZDDEwn")
+    sent_message = await ctx.send(embed = help_embed)
+    await ctx.message.delete()
+
+@helpdesk.error
+async def helpdesk_error(ctx, error):
+    if isinstance(error, commands.MissingRequiredArgument):
+        await ctx.send('Please specify what you need help with.')
 
 # kick member for mods and admins only
 @bot.command()
