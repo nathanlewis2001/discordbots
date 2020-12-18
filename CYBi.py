@@ -154,17 +154,19 @@ async def cybpoll(ctx, *, question, member: discord.Member = None):
     poll_embed = discord.Embed(title = "FHU CYB Class Poll", description=f"{question}")
     poll_embed.set_footer(text=f'~~~{member.display_name} (aka:{member.name})')
     poll_embed.set_thumbnail(url="https://drive.google.com/uc?id=14FBUSKg4Hz8HRITRaUiTzy97omZDDEwn")
-    sent_message = await ctx.send(embed = poll_embed)
+    channel = bot.get_channel(778614115244703764)
+    sent_message = await channel.send(embed = poll_embed)
     await ctx.message.delete()
     await sent_message.add_reaction("👍")
     await sent_message.add_reaction("👎")
+
 '''
                             More reaction emotes for use:
                             👍👎✅🇽❎❌
 '''
 
 @cybpoll.error
-async def poll_error(ctx, error):
+async def cybpoll_error(ctx, error):
     if isinstance(error, commands.MissingRequiredArgument):
         await ctx.send('Please specify a poll question.')
 
@@ -197,7 +199,6 @@ async def support(ctx, *, question, member: discord.Member = None):
     await channel.send(embed = support_embed)
     await ctx.message.delete()
 
-# await message.send(embed = support_embed)
 @support.error
 async def support_error(ctx, error):
     if isinstance(error, commands.MissingRequiredArgument):
