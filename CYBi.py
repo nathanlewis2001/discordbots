@@ -106,11 +106,11 @@ async def help(ctx):
     embed.add_field(name="**bottime**", value="Gives the current date and time: **Usage:** *./bottime*", inline=False)
     embed.add_field(name="**clean**",
                     value="(Admin) Deletes channel messages: **Usage:** *./clean 5 or ./clean 50*, etc.", inline=False)
+    embed.add_field(name="**cybpoll**", value="Creates a quick yes or no poll: **Usage:** *./cybpoll Do you like eggs?*", inline=False)
     embed.add_field(name="**kick**",
                     value="(Moderator) Kicks Discord member from guild: **Usage:** *./kick member name*", inline=False)
     embed.add_field(name="**mynick**", value="Gives member's current display name: **Usage:** *./mynick*", inline=False)
     embed.add_field(name="**ping**", value="Checks bot latency: **Usage:** *./ping*", inline=False)
-    embed.add_field(name="**poll**", value="Creates a quick yes or no poll: **Usage:** *./poll Do you like eggs?*", inline=False)
     embed.add_field(name="**present**",
                     value="Marks member present for a live Discord class session: FOR USE ONLY in the ***Discussion Channel***, __#attendance__. ***Usage:*** *./present CYB101 or ./present CYB220*, etc.",
                     inline=False)
@@ -152,7 +152,7 @@ async def ping(ctx):
 
 # simple yes or no poll
 @bot.command(pass_context=True)
-async def poll(ctx, *, question, member: discord.Member = None):
+async def cybpoll(ctx, *, question, member: discord.Member = None):
     member = ctx.author if not member else member
     poll_embed = discord.Embed(title = "FHU CYB Class Poll", description=f"{question}")
     poll_embed.set_footer(text=f'~~~{member.display_name} (aka:{member.name})')
@@ -166,7 +166,7 @@ async def poll(ctx, *, question, member: discord.Member = None):
                             👍👎✅🇽❎❌
 '''
 
-@poll.error
+@cybpoll.error
 async def poll_error(ctx, error):
     if isinstance(error, commands.MissingRequiredArgument):
         await ctx.send('Please specify a poll question.')
