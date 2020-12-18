@@ -121,21 +121,6 @@ async def help(ctx):
                     inline=False)
     await author.send(embed=embed)
 
-# heldesk
-@bot.command(pass_context=True)
-async def helpdesk(ctx, *, question, member: discord.Member = None):
-    member = ctx.author if not member else member
-    help_embed = discord.Embed(title = "FHU CYB Helpdesk", description=f"{question}")
-    help_embed.set_footer(text=f'~~~{member.display_name} (aka:{member.name})')
-    help_embed.set_thumbnail(url="https://drive.google.com/uc?id=14FBUSKg4Hz8HRITRaUiTzy97omZDDEwn")
-    sent_message = await ctx.send(embed = help_embed)
-    await ctx.message.delete()
-
-@helpdesk.error
-async def helpdesk_error(ctx, error):
-    if isinstance(error, commands.MissingRequiredArgument):
-        await ctx.send('Please specify what you need help with.')
-
 # kick member for mods and admins only
 @bot.command()
 @commands.has_role('Moderator')
@@ -200,11 +185,21 @@ async def present_error(ctx, error):
     if isinstance(error, commands.MissingRequiredArgument):
         await ctx.send('Please specify the **course number**, such as CYB101, CYB220, etc.')
 
-'''
-# strawpoll in development
+# support
+@bot.command(pass_context=True)
+async def support(ctx, *, question, member: discord.Member = None):
+    member = ctx.author if not member else member
+    support_embed = discord.Embed(title = "FHU CYB Discord Support", description=f"{question}")
+    support_embed.set_footer(text=f'~~~{member.display_name} (aka:{member.name})')
+    support_embed.set_thumbnail(url="https://drive.google.com/uc?id=14FBUSKg4Hz8HRITRaUiTzy97omZDDEwn")
+    sent_message = await ctx.send(embed = support_embed)
+    await ctx.message.delete()
 
-'''
-
+@support.error
+async def support_error(ctx, error):
+    if isinstance(error, commands.MissingRequiredArgument):
+        await ctx.send('Please specify what you need help with.')
+        
 # read and understand class syllabus and creates a permanent record on bot server
 @bot.command()
 async def syllabus(ctx, course: str, member: discord.Member = None):
