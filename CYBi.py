@@ -114,6 +114,7 @@ async def help(ctx):
     embed.add_field(name="**present**",
                     value="Marks member present for a live Discord class session: FOR USE ONLY in the ***Discussion Channel***, __#attendance__. ***Usage:*** *./present CYB101 or ./present CYB220*, etc.",
                     inline=False)
+    embed.add_field(name="**support**", value="Creates a support request: **Usage:** *./support I need help installing VirtualBox*", inline=False)
     embed.add_field(name="**syllabus**",
                     value="Verifies member has read and understands the class syllabus: FOR USE ONLY in the ***Information Channel***, __#syllabus__. ***Usage:*** *./syllabus CYB101 or ./syllabus CYB220*, etc.",
                     inline=False)
@@ -196,7 +197,6 @@ async def support(ctx, *, question, member: discord.Member = None):
     await channel.send(embed = support_embed)
     await ctx.message.delete()
 
-    print(channel)
 # await message.send(embed = support_embed)
 @support.error
 async def support_error(ctx, error):
