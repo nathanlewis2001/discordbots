@@ -192,7 +192,7 @@ async def support(ctx, *, question, member: discord.Member = None):
     support_embed = discord.Embed(title = "FHU CYB Discord Support", description=f"{question}")
     support_embed.set_footer(text=f'~~~{member.display_name} (aka:{member.name})')
     support_embed.set_thumbnail(url="https://drive.google.com/uc?id=14FBUSKg4Hz8HRITRaUiTzy97omZDDEwn")
-    sent_message = await ctx.send(embed = support_embed)
+    await ctx.send(embed = support_embed)
     await ctx.message.delete()
 
 @support.error
