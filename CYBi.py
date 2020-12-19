@@ -198,8 +198,9 @@ async def support(ctx, *, question, member: discord.Member = None):
     support_embed.set_thumbnail(url="https://drive.google.com/uc?id=14FBUSKg4Hz8HRITRaUiTzy97omZDDEwn")
     channel = bot.get_channel(789239232836272159)
     await channel.send(embed = support_embed)
+    author = ctx.message.author
+    await author.send(f'Thank you for using our support channel, someone will be with soon!')
     #await bot.send_message((729330115963518986), "There is new support ticket.")
-    #await ctx.send(f'There is new support ticket just entered.')
     await ctx.message.delete()
 
 @support.error
