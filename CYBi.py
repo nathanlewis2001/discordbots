@@ -77,7 +77,7 @@ async def bottime(ctx):
 #@commands.check(mscott)
 @commands.has_role('Admin')
 async def clean(ctx, amount: int):
-    await ctx.channel.purge(limit=amount)
+         await ctx.channel.purge(limit=amount, check=lambda msg: not msg.pinned)
 
 @clean.error
 async def clean_error(ctx, error):
