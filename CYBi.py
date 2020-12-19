@@ -193,7 +193,7 @@ async def present_error(ctx, error):
 @bot.command(pass_context=True)
 async def support(ctx, *, question, member: discord.Member = None):
     member = ctx.author if not member else member
-    support_embed = discord.Embed(title = "My request", description=f"{question}")
+    support_embed = discord.Embed(title = "Support request", description=f"{question}")
     support_embed.set_author(name=f'~~~{member.display_name} (aka:{member.name})')
     support_embed.set_thumbnail(url=ctx.message.author.avatar_url)
     channel = bot.get_channel(789239232836272159)
