@@ -39,7 +39,7 @@ bot.remove_command('help')
 
 @bot.event
 async def on_ready():
-    print("Bot is ready")
+    print("CYBi Bot is ready")
     print('Logged on as', bot.user)
     print('Discord.py Version: {}'.format(discord.__version__))
     await bot.change_presence(status=discord.Status.online,
@@ -198,6 +198,8 @@ async def support(ctx, *, question, member: discord.Member = None):
     support_embed.set_thumbnail(url="https://drive.google.com/uc?id=14FBUSKg4Hz8HRITRaUiTzy97omZDDEwn")
     channel = bot.get_channel(789239232836272159)
     await channel.send(embed = support_embed)
+    #await bot.send_message((729330115963518986), "There is new support ticket.")
+    #await ctx.send(f'There is new support ticket just entered.')
     await ctx.message.delete()
 
 @support.error
@@ -244,7 +246,7 @@ async def unban_error(ctx, error):
     if isinstance(error, commands.CheckFailure):
         await ctx.send('You need special permission to unban!')
 # ------------------------------------------------------------------------------
-print("bot is starting..")
+print("CYBi bot is starting..")
 
 load_dotenv('.env')
 bot.run(os.getenv('DISCORD_TOKEN'))
