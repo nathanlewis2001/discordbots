@@ -199,8 +199,7 @@ async def support(ctx, *, question, member: discord.Member = None):
     channel = bot.get_channel(789239232836272159)
     await channel.send(embed = support_embed)
     author = ctx.message.author
-    await author.send(f'Thank you for using our support channel. A support team member will contact with soon!')
-    #await bot.send_message((729330115963518986), "There is new support ticket.")
+    await author.send(f'{member.display_name}, thank you for using our support channel. A support team member will contact with soon!')
     await ctx.message.delete()
 
 @support.error
