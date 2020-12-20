@@ -119,8 +119,8 @@ async def help(ctx):
     embed.add_field(name="**bottime**", value="Gives the current date and time: **Usage:** *./bottime*", inline=False)
     embed.add_field(name="**clean**",
                     value="(Admin) Deletes channel messages except for pinned messages: **Usage:** *./clean 5 or ./clean 50*, etc.", inline=False)
-embed.add_field(name="**cleanall**",
-                value="(Admin) Deletes channel messages, including pinned messages: **Usage:** *./clean 5 or ./clean 50*, etc.", inline=False)
+    embed.add_field(name="**cleanall**",
+                    value="(Admin) Deletes channel messages, including pinned messages: **Usage:** *./clean 5 or ./clean 50*, etc.", inline=False)
     embed.add_field(name="**cybpoll**", value="Creates a quick yes or no poll: **Usage:** *./cybpoll Do you like eggs?*", inline=False)
     embed.add_field(name="**kick**",
                     value="(Moderator) Kicks Discord member from guild: **Usage:** *./kick member name*", inline=False)
