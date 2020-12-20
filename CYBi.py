@@ -86,6 +86,19 @@ async def clean_error(ctx, error):
     elif isinstance(error, commands.CheckFailure):
         await ctx.send("You need special permission to clean this channel!")
 
+@bot.command()
+#@commands.check(mscott)
+@commands.has_role('Admin')
+async def cleanall(ctx, amount: int):
+         await ctx.channel.purge(limit=amount)
+
+@cleanall.error
+async def cleanall_error(ctx, error):
+    if isinstance(error, commands.MissingRequiredArgument):
+        await ctx.send('Please specify a number of messages to remove.')
+    elif isinstance(error, commands.CheckFailure):
+        await ctx.send("You need special permission to clean this channel!")
+
 # custom help sent to member via a DM
 
 @bot.command(pass_context=True)
@@ -105,7 +118,9 @@ async def help(ctx):
                     inline=False)
     embed.add_field(name="**bottime**", value="Gives the current date and time: **Usage:** *./bottime*", inline=False)
     embed.add_field(name="**clean**",
-                    value="(Admin) Deletes channel messages: **Usage:** *./clean 5 or ./clean 50*, etc.", inline=False)
+                    value="(Admin) Deletes channel messages except for pinned messages: **Usage:** *./clean 5 or ./clean 50*, etc.", inline=False)
+embed.add_field(name="**cleanall**",
+                value="(Admin) Deletes channel messages, including pinned messages: **Usage:** *./clean 5 or ./clean 50*, etc.", inline=False)
     embed.add_field(name="**cybpoll**", value="Creates a quick yes or no poll: **Usage:** *./cybpoll Do you like eggs?*", inline=False)
     embed.add_field(name="**kick**",
                     value="(Moderator) Kicks Discord member from guild: **Usage:** *./kick member name*", inline=False)
