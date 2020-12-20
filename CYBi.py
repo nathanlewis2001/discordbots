@@ -209,12 +209,14 @@ async def present_error(ctx, error):
 async def support(ctx, *, question, member: discord.Member = None):
     member = ctx.author if not member else member
     support_embed = discord.Embed(title = "Support request", description=f"{question}")
-    support_embed.set_author(name=f'~~~{member.display_name} (aka:{member.name})')
+    support_embed.set_author(name=f'From:  {member.display_name} (aka:{member.name})')
     support_embed.set_thumbnail(url=ctx.message.author.avatar_url)
     channel = bot.get_channel(789239232836272159)
     await channel.send(embed = support_embed)
     author = ctx.message.author
     await author.send(f'{member.display_name}, thank you for using our support channel. A support team member will contact with soon!')
+    channel2 = bot.get_channel(743118001183916113)
+    await channel2.send(f' There is a new support request from {member.display_name} (aka: {member.name}) in the #support channel. Can a mod respond?')
     await ctx.message.delete()
 
 @support.error
