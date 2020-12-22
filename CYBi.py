@@ -74,7 +74,6 @@ async def bottime(ctx):
 
 # clean channel messages for Admin only
 @bot.command()
-#@commands.check(mscott)
 @commands.has_role('Admin')
 async def clean(ctx, amount: int):
          await ctx.channel.purge(limit=amount, check=lambda msg: not msg.pinned)
@@ -87,7 +86,6 @@ async def clean_error(ctx, error):
         await ctx.send("You need special permission to clean this channel!")
 
 @bot.command()
-#@commands.check(mscott)
 @commands.has_role('Admin')
 async def cleanall(ctx, amount: int):
          await ctx.channel.purge(limit=amount)
@@ -100,7 +98,6 @@ async def cleanall_error(ctx, error):
         await ctx.send("You need special permission to clean this channel!")
 
 # custom help sent to member via a DM
-
 @bot.command(pass_context=True)
 async def help(ctx):
     author = ctx.message.author
@@ -110,7 +107,6 @@ async def help(ctx):
         title="CYBi's Commands",
         description="./ or a period and forward slash are CYBi's prefix"
     )
-    #embed.set_image(url="https://drive.google.com/uc?id=14FBUSKg4Hz8HRITRaUiTzy97omZDDEwn")
     embed.set_thumbnail(url="https://drive.google.com/uc?id=14FBUSKg4Hz8HRITRaUiTzy97omZDDEwn")
     embed.set_footer(text="~~~Professor Scott")
     embed.add_field(name="**ban**",
@@ -127,11 +123,11 @@ async def help(ctx):
     embed.add_field(name="**mynick**", value="Gives member's current display name: **Usage:** *./mynick*", inline=False)
     embed.add_field(name="**ping**", value="Checks bot latency: **Usage:** *./ping*", inline=False)
     embed.add_field(name="**present**",
-                    value="Marks member present for a live Discord class session: FOR USE ONLY in the ***Discussion Channel***, __#attendance__. ***Usage:*** *./present CYB101 or ./present CYB220*, etc.",
+                    value="Marks member present for a live Discord class session: **Usage:** *./present CYB101 or ./present CYB220, etc.*",
                     inline=False)
-    embed.add_field(name="**support**", value="Creates a support request: **Usage:** *./support I need help installing VirtualBox*", inline=False)
+    embed.add_field(name="**support**", value="Creates a support request: **Usage:** *./support I need help installing VirtualBox", inline=False)
     embed.add_field(name="**syllabus**",
-                    value="Verifies member has read and understands the class syllabus: FOR USE ONLY in the ***Information Channel***, __#syllabus__. ***Usage:*** *./syllabus CYB101 or ./syllabus CYB220*, etc.",
+                    value="Verifies member has read and understands the class syllabus: **Usage:** *./syllabus CYB101 or ./syllabus CYB220, etc.*",
                     inline=False)
     embed.add_field(name="**unban**", value="(Moderator) Unbans Discord member: **Usage:** *./unban member name*",
                     inline=False)
