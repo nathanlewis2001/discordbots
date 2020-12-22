@@ -5,6 +5,8 @@ Author: Professor Mark Scott (mscott@fhu.edu)
 Other contributors: 1. Cameron Pierce (pierce.cameron7@yahoo.com): original poll command
                     2. Other Open Source Projects
 --------------------------------------------------------------------------------
+Released under the MIT license
+
 The MIT License (MIT)
 Copyright © 2020 Professor Mark Scott
 
@@ -34,6 +36,7 @@ import datetime
 
 help_command = commands.DefaultHelpCommand(no_category = 'CYBi Commands')
 bot = commands.Bot(command_prefix='./', help_command = help_command)
+# disabled built-in help command in order to use custon help
 bot.remove_command('help')
 
 
@@ -76,6 +79,7 @@ async def bottime(ctx):
 @bot.command()
 @commands.has_role('Admin')
 async def clean(ctx, amount: int):
+         # this keeps the clean command from deleting pinned messages
          await ctx.channel.purge(limit=amount, check=lambda msg: not msg.pinned)
 
 @clean.error
@@ -97,7 +101,7 @@ async def cleanall_error(ctx, error):
     elif isinstance(error, commands.CheckFailure):
         await ctx.send("You need special permission to clean this channel!")
 
-# custom help sent to member via a DM
+# custom help sent to member via a DM embed
 @bot.command(pass_context=True)
 async def help(ctx):
     author = ctx.message.author
@@ -165,6 +169,7 @@ async def cybpoll(ctx, *, question, member: discord.Member = None):
     poll_embed = discord.Embed(title = "FHU CYB Class Poll", description=f"{question}")
     poll_embed.set_footer(text=f'~~~{member.display_name} (aka:{member.name})')
     poll_embed.set_thumbnail(url="https://drive.google.com/uc?id=14FBUSKg4Hz8HRITRaUiTzy97omZDDEwn")
+    # forces message to be created in the poll channel
     channel = bot.get_channel(778614115244703764)
     sent_message = await channel.send(embed = poll_embed)
     await ctx.message.delete()
@@ -186,9 +191,11 @@ async def cybpoll_error(ctx, error):
 async def present(ctx, course: str, member: discord.Member = None):
     member = ctx.author if not member else member
     await ctx.message.delete()
+    # forces present message to be created in the atendance channel
     channel = bot.get_channel(786278326519332894)
     await channel.send(f'{member.display_name} (aka: {member.name}) has been marked **present** in ' + (course) + '!')
     rightnow = datetime.datetime.now()
+    # creates attendance log on backend server
     with open("attendance.log", "a+") as file:
         file.write(str(rightnow))
         file.write('--' + course)
@@ -207,10 +214,12 @@ async def support(ctx, *, question, member: discord.Member = None):
     support_embed = discord.Embed(title = "Support request", description=f"{question}")
     support_embed.set_author(name=f'From:  {member.display_name} (aka:{member.name})')
     support_embed.set_thumbnail(url=ctx.message.author.avatar_url)
+    # creates a DM to the requestor that the request has been logged and that a support team member will contact
     channel = bot.get_channel(789239232836272159)
     await channel.send(embed = support_embed)
     author = ctx.message.author
     await author.send(f'{member.display_name}, thank you for using our support channel. A support team member will contact with soon!')
+    # creates alert message for moderators in the moderator-discussions channel that there is a new support request
     channel2 = bot.get_channel(743118001183916113)
     await channel2.send(f' There is a new support request from {member.display_name} (aka: {member.name}) in the #support channel. Can a mod respond?')
     await ctx.message.delete()
@@ -225,8 +234,10 @@ async def support_error(ctx, error):
 async def syllabus(ctx, course: str, member: discord.Member = None):
     member = ctx.author if not member else member
     await ctx.message.delete()
+    # forces syllabus message to be created in the syllabus channel
     channel = bot.get_channel(786421989912084512)
     await channel.send(f'{member.display_name} (aka:{member.name}) has read and understands the ' + (course) + ' syllabus!')
+    # creates syllabus log on backend server
     rightnow = datetime.datetime.now()
     with open("syllabus.log", "a+") as file:
         file.write(str(rightnow))
