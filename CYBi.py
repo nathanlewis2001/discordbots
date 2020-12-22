@@ -272,5 +272,7 @@ async def unban_error(ctx, error):
 # ------------------------------------------------------------------------------
 print("CYBi bot is starting..")
 
+# the hidden .env variable located on the server stores the bot token
 load_dotenv('.env')
+# getenv calls the bot token from the hidden .env variable on the server
 bot.run(os.getenv('DISCORD_TOKEN'))
