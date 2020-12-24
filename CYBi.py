@@ -270,6 +270,7 @@ async def unban_error(ctx, error):
     if isinstance(error, commands.CheckFailure):
         await ctx.send('You need special permission to unban!')
 # ------------------------------------------------------------------------------
+
 print("CYBi bot is starting..")
 
 # the hidden .env variable located on the server stores the bot token
