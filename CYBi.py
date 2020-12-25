@@ -218,9 +218,11 @@ async def stocky(ctx, ticker: str, member: discord.Member = None):
     price = si.get_live_price(ticker)
     Price = round(price,3)
     tickr = (ticker.upper())
-    stock_embed = discord.Embed(title = "Stock Price", description=f" Currently {tickr} is priced at ${Price}")
-    stock_embed.set_author(name=f'Prepared for: {member.display_name} (aka:{member.name})')
+    stock_embed = discord.Embed(colour=discord.Colour.green(), title = f'Prepared for: {member.display_name} (aka:{member.name})', description=f" Currently {tickr} is priced at ${Price}")
+    stock_embed.set_author(name="Stock Price")
+    stock_embed.set_thumbnail(url="https://play-lh.googleusercontent.com/K4eJEI8ogLQO2MkjUKgxC8FNWL4I5etsbFw2OXwQJ9Uch4DGkW1gEdoQk_k-cmtD4F4=s360")
     await channel.send(embed=stock_embed)
+    await ctx.message.delete()
 
 @stocky.error
 async def stocky_error(ctx, error):
