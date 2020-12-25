@@ -32,6 +32,8 @@ from discord.ext import commands
 from dotenv import load_dotenv
 import os
 import datetime
+from yahoo_fin import stock_info as si
+from yahoo_fin import options
 
 
 help_command = commands.DefaultHelpCommand(no_category = 'CYBi Commands')
@@ -207,12 +209,27 @@ async def present_error(ctx, error):
     if isinstance(error, commands.MissingRequiredArgument):
         await ctx.send('Please specify the **course number**, such as CYB101, CYB220, etc.')
 
+# pull stock info
+@bot.command()
+async def stocky(ctx, ticker: str):
+    channel = bot.get_channel(792085912095162368)
+    price = si.get_live_price(ticker)
+    tickr = (ticker.upper())
+    await channel.send(f' Currently {tickr} is priced at ${price}')
+    await ctx.message.delete()
+    print(price)
+
+@stocky.error
+async def stocky_error(ctx, error):
+    if isinstance(error, commands.MissingRequiredArgument):
+        await ctx.send('Please specify a stock symbol.')
+
 # support
 @bot.command(pass_context=True)
 async def support(ctx, *, question, member: discord.Member = None):
     member = ctx.author if not member else member
     support_embed = discord.Embed(title = "Support request", description=f"{question}")
-    support_embed.set_author(name=f'From:  {member.display_name} (aka:{member.name})')
+    support_embed.set_author(name=f'From: {member.display_name} (aka:{member.name})')
     support_embed.set_thumbnail(url=ctx.message.author.avatar_url)
     # creates a DM to the requestor that the request has been logged and that a support team member will contact
     channel = bot.get_channel(789239232836272159)
