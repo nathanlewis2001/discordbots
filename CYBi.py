@@ -213,11 +213,11 @@ async def present_error(ctx, error):
 @bot.command()
 async def stocky(ctx, ticker: str):
     channel = bot.get_channel(792085912095162368)
-    price = si.get_live_price(ticker)
-    tickr = (ticker.upper())
-    await channel.send(f' Currently {tickr} is priced at ${price}')
     await ctx.message.delete()
-    print(price)
+    price = si.get_live_price(ticker)
+    Price = round(price,3)
+    tickr = (ticker.upper())
+    await channel.send(f' Currently {tickr} is priced at ${Price}')
 
 @stocky.error
 async def stocky_error(ctx, error):
