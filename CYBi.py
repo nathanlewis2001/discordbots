@@ -211,13 +211,16 @@ async def present_error(ctx, error):
 
 # pull stock info
 @bot.command()
-async def stocky(ctx, ticker: str):
+async def stocky(ctx, ticker: str, member: discord.Member = None):
+    member = ctx.author if not member else member
     channel = bot.get_channel(792085912095162368)
     await ctx.message.delete()
     price = si.get_live_price(ticker)
     Price = round(price,3)
     tickr = (ticker.upper())
-    await channel.send(f' Currently {tickr} is priced at ${Price}')
+    stock_embed = discord.Embed(title = "Stock Price", description=f" Currently {tickr} is priced at ${Price}")
+    stock_embed.set_author(name=f'Prepared for: {member.display_name} (aka:{member.name})')
+    await channel.send(embed=stock_embed)
 
 @stocky.error
 async def stocky_error(ctx, error):
