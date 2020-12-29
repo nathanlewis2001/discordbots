@@ -34,7 +34,8 @@ import os
 import datetime
 from yahoo_fin import stock_info as si
 from yahoo_fin import options
-
+import requests
+import json
 
 help_command = commands.DefaultHelpCommand(no_category = 'CYBi Commands')
 bot = commands.Bot(command_prefix='./', help_command = help_command)
@@ -131,6 +132,7 @@ async def help(ctx):
     embed.add_field(name="**present**",
                     value="Marks member present for a live Discord class session: **Usage:** *./present CYB101 or ./present CYB220, etc.*",
                     inline=False)
+    embed.add_field(name="**stocky**", value="Retrieve current stock prices: **Usage:** *./stocky AAPL", inline=False)
     embed.add_field(name="**support**", value="Creates a support request: **Usage:** *./support I need help installing VirtualBox", inline=False)
     embed.add_field(name="**syllabus**",
                     value="Verifies member has read and understands the class syllabus: **Usage:** *./syllabus CYB101 or ./syllabus CYB220, etc.*",
@@ -219,7 +221,7 @@ async def stocky(ctx, ticker: str, member: discord.Member = None):
     Price = round(price,3)
     tickr = (ticker.upper())
     stock_embed = discord.Embed(colour=discord.Colour.green(), title = f'Prepared for: {member.display_name} (aka:{member.name})', description=f" Currently {tickr} is priced at ${Price}")
-    stock_embed.set_author(name="Stock Price")
+    stock_embed.set_author(name=f"{tickr} Stock Price")
     stock_embed.set_thumbnail(url="https://play-lh.googleusercontent.com/K4eJEI8ogLQO2MkjUKgxC8FNWL4I5etsbFw2OXwQJ9Uch4DGkW1gEdoQk_k-cmtD4F4=s360")
     await channel.send(embed=stock_embed)
     await ctx.message.delete()
@@ -227,7 +229,7 @@ async def stocky(ctx, ticker: str, member: discord.Member = None):
 @stocky.error
 async def stocky_error(ctx, error):
     if isinstance(error, commands.MissingRequiredArgument):
-        await ctx.send('Please specify a stock symbol.')
+        await ctx.send('Please specify a stock symbol, i.e., AAPL, TSLA, MSFT, etc.')
 
 # support
 @bot.command(pass_context=True)
@@ -236,7 +238,6 @@ async def support(ctx, *, question, member: discord.Member = None):
     support_embed = discord.Embed(title = "Support request", description=f"{question}")
     support_embed.set_author(name=f'From: {member.display_name} (aka:{member.name})')
     support_embed.set_thumbnail(url=ctx.message.author.avatar_url)
-    # creates a DM to the requestor that the request has been logged and that a support team member will contact
     channel = bot.get_channel(789239232836272159)
     await channel.send(embed = support_embed)
     author = ctx.message.author
@@ -291,6 +292,53 @@ async def unban(ctx, *, member):
 async def unban_error(ctx, error):
     if isinstance(error, commands.CheckFailure):
         await ctx.send('You need special permission to unban!')
+
+# pull weathr info by zipcode
+@bot.command()
+async def weather(ctx, zip: str):
+
+    await ctx.message.delete()
+    url = 'http://api.openweathermap.org/data/2.5/weather?zip={}&appid=0250aaf048c2f477e3a3f974820f9b20&units=imperial'.format(zip)
+    result = requests.get(url)
+    data = result.json()
+    desc = data['weather'][0]['description']
+    temp = data['main']['temp']
+    feels = data['main']['feels_like']
+    humid = data['main']['humidity']
+    press = data['main']['pressure']
+    vis = data['visibility']
+    wind = data['wind']['speed']
+    wind_dir = data['wind']['deg']
+    lat = data['coord']['lat']
+    lon = data['coord']['lon']
+    loc = data['name']
+
+    weather_embed = discord.Embed(colour=discord.Colour.blue(), title = f"Current Weather for {loc}")
+    weather_embed.set_thumbnail(url="https://openweathermap.org/themes/openweathermap/assets/img/logo_white_cropped.png")
+    weather_embed.add_field(name="Conditions: ", value=f"{desc}", inline=True)
+    weather_embed.add_field(name="Temperature (F): ", value=f"{temp}", inline=True)
+    weather_embed.add_field(name="Feels like (F): ", value=f"{feels}", inline=True)
+    weather_embed.add_field(name="Humidity (%): ", value=f"{humid}", inline=True)
+    weather_embed.add_field(name="Pressure (mb): ", value=f"{press}", inline=True)
+    weather_embed.add_field(name="Visibilit (ft): ", value=f"{vis}", inline=True)
+    weather_embed.add_field(name="Wind speed (mph): ", value=f"{wind}", inline=True)
+    weather_embed.add_field(name="Wind direction (degrees): ", value=f"{wind_dir}", inline=True)
+    weather_embed.add_field(name="Latitiude: ", value=f"{lat}", inline=True)
+    weather_embed.add_field(name="Longitude: ", value=f"{lon}", inline=True)
+
+    #weather_embed = discord.Embed(title = "Weather", description=f"Zipcode: {zip}")
+    #weather_embed.set_thumbnail(url="https://drive.google.com/uc?id=14FBUSKg4Hz8HRITRaUiTzy97omZDDEwn")
+    #weather_embed.add_field(name="Conditions", value=f"{desc}", inline=False)
+
+    channel = bot.get_channel(779368404392869918)
+    await channel.send(embed = weather_embed)
+
+@weather.error
+async def weather_error(ctx, error):
+    if isinstance(error, commands.MissingRequiredArgument):
+        await ctx.send('Please specify a zipcode.')
+
+
 # ------------------------------------------------------------------------------
 
 print("CYBi bot is starting..")
