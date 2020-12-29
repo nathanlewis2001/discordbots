@@ -116,29 +116,37 @@ async def help(ctx):
     )
     embed.set_thumbnail(url="https://drive.google.com/uc?id=14FBUSKg4Hz8HRITRaUiTzy97omZDDEwn")
     embed.set_footer(text="~~~Professor Scott")
+
+    embed.add_field(name="***-----------------UTILITIES-----------------***",value="~~~", inline=False)
     embed.add_field(name="**ban**",
                     value="(Moderator) Bans a Discord member from the guild: **Usage:** *./ban member name*",
                     inline=False)
-    embed.add_field(name="**bottime**", value="Gives the current date and time: **Usage:** *./bottime*", inline=False)
     embed.add_field(name="**clean**",
                     value="(Admin) Deletes channel messages except for pinned messages: **Usage:** *./clean 5 or ./clean 50*, etc.", inline=False)
     embed.add_field(name="**cleanall**",
                     value="(Admin) Deletes channel messages, including pinned messages: **Usage:** *./clean 5 or ./clean 50*, etc.", inline=False)
-    embed.add_field(name="**cybpoll**", value="Creates a quick yes or no poll: **Usage:** *./cybpoll Do you like eggs?*", inline=False)
     embed.add_field(name="**kick**",
                     value="(Moderator) Kicks Discord member from guild: **Usage:** *./kick member name*", inline=False)
-    embed.add_field(name="**mynick**", value="Gives member's current display name: **Usage:** *./mynick*", inline=False)
     embed.add_field(name="**ping**", value="Checks bot latency: **Usage:** *./ping*", inline=False)
+    embed.add_field(name="**support**", value="Creates a support request: **Usage:** *./support I need help installing VirtualBox", inline=False)
+    embed.add_field(name="**unban**", value="(Moderator) Unbans Discord member: **Usage:** *./unban member name*",
+                    inline=False)
+
+    embed.add_field(name="***-----------------CYB CLASSES-----------------***",value="~~~", inline=False)
+    embed.add_field(name="**cybpoll**", value="Creates a quick yes or no poll: **Usage:** *./cybpoll Do you like eggs?*", inline=False)
     embed.add_field(name="**present**",
                     value="Marks member present for a live Discord class session: **Usage:** *./present CYB101 or ./present CYB220, etc.*",
                     inline=False)
-    embed.add_field(name="**stocky**", value="Retrieve current stock prices: **Usage:** *./stocky AAPL", inline=False)
-    embed.add_field(name="**support**", value="Creates a support request: **Usage:** *./support I need help installing VirtualBox", inline=False)
     embed.add_field(name="**syllabus**",
                     value="Verifies member has read and understands the class syllabus: **Usage:** *./syllabus CYB101 or ./syllabus CYB220, etc.*",
                     inline=False)
-    embed.add_field(name="**unban**", value="(Moderator) Unbans Discord member: **Usage:** *./unban member name*",
-                    inline=False)
+
+    embed.add_field(name="***-----------------INFORMATIONAL-----------------***", value="~~~",inline=False)
+    embed.add_field(name="**bottime**", value="Gives the current date and time: **Usage:** *./bottime*", inline=False)
+    embed.add_field(name="**mynick**", value="Gives member's current display name: **Usage:** *./mynick*", inline=False)
+    embed.add_field(name="**stocky**", value="Retrieve current stock prices: **Usage:** *./stocky AAPL", inline=False)
+    embed.add_field(name="**current weather**", value="Gives the current weather by zipcode: **Usage:** *./weather 38340*", inline=False)
+
     await author.send(embed=embed)
 
 # kick member for mods and admins only
@@ -295,10 +303,11 @@ async def unban_error(ctx, error):
 
 # pull weathr info by zipcode
 @bot.command()
-async def weather(ctx, zip: str):
-
+async def weather(ctx, zip: str, member: discord.Member = None):
+    member = ctx.author if not member else member
     await ctx.message.delete()
     url = 'http://api.openweathermap.org/data/2.5/weather?zip={}&appid=0250aaf048c2f477e3a3f974820f9b20&units=imperial'.format(zip)
+    #url = 'http://api.openweathermap.org/data/2.5/weather?zip={}& + (appid) +&units=imperial'.format(zip)
     result = requests.get(url)
     data = result.json()
     desc = data['weather'][0]['description']
@@ -313,19 +322,19 @@ async def weather(ctx, zip: str):
     lon = data['coord']['lon']
     loc = data['name']
 
-    weather_embed = discord.Embed(colour=discord.Colour.blue(), title = f"Current Weather for {loc}")
+    weather_embed = discord.Embed(colour=discord.Colour.blue(), title = f"Current Weather for {loc}-{zip}")
     weather_embed.set_thumbnail(url="https://openweathermap.org/themes/openweathermap/assets/img/logo_white_cropped.png")
     weather_embed.add_field(name="Conditions: ", value=f"{desc}", inline=True)
     weather_embed.add_field(name="Temperature (F): ", value=f"{temp}", inline=True)
     weather_embed.add_field(name="Feels like (F): ", value=f"{feels}", inline=True)
     weather_embed.add_field(name="Humidity (%): ", value=f"{humid}", inline=True)
     weather_embed.add_field(name="Pressure (mb): ", value=f"{press}", inline=True)
-    weather_embed.add_field(name="Visibilit (ft): ", value=f"{vis}", inline=True)
+    weather_embed.add_field(name="Visibility (ft): ", value=f"{vis}", inline=True)
     weather_embed.add_field(name="Wind speed (mph): ", value=f"{wind}", inline=True)
     weather_embed.add_field(name="Wind direction (degrees): ", value=f"{wind_dir}", inline=True)
     weather_embed.add_field(name="Latitiude: ", value=f"{lat}", inline=True)
     weather_embed.add_field(name="Longitude: ", value=f"{lon}", inline=True)
-
+    weather_embed.set_footer(text=f'For {member.display_name} (aka:{member.name})')
     channel = bot.get_channel(779368404392869918)
     await channel.send(embed = weather_embed)
 
@@ -341,5 +350,6 @@ print("CYBi bot is starting..")
 
 # the hidden .env variable located on the server stores the bot token
 load_dotenv('.env')
+load_dotenv('.appid')
 # getenv calls the bot token from the hidden .env variable on the server
 bot.run(os.getenv('DISCORD_TOKEN'))
