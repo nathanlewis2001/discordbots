@@ -326,10 +326,6 @@ async def weather(ctx, zip: str):
     weather_embed.add_field(name="Latitiude: ", value=f"{lat}", inline=True)
     weather_embed.add_field(name="Longitude: ", value=f"{lon}", inline=True)
 
-    #weather_embed = discord.Embed(title = "Weather", description=f"Zipcode: {zip}")
-    #weather_embed.set_thumbnail(url="https://drive.google.com/uc?id=14FBUSKg4Hz8HRITRaUiTzy97omZDDEwn")
-    #weather_embed.add_field(name="Conditions", value=f"{desc}", inline=False)
-
     channel = bot.get_channel(779368404392869918)
     await channel.send(embed = weather_embed)
 
