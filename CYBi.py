@@ -306,7 +306,6 @@ async def unban_error(ctx, error):
 async def weather(ctx, zip: str, member: discord.Member = None):
     member = ctx.author if not member else member
     await ctx.message.delete()
-    url = 'http://api.openweathermap.org/data/2.5/weather?zip={}&appid=0250aaf048c2f477e3a3f974820f9b20&units=imperial'.format(zip)
     #url = 'http://api.openweathermap.org/data/2.5/weather?zip={}& + (appid) +&units=imperial'.format(zip)
     result = requests.get(url)
     data = result.json()
@@ -334,7 +333,7 @@ async def weather(ctx, zip: str, member: discord.Member = None):
     weather_embed.add_field(name="Wind direction (degrees): ", value=f"{wind_dir}", inline=True)
     weather_embed.add_field(name="Latitiude: ", value=f"{lat}", inline=True)
     weather_embed.add_field(name="Longitude: ", value=f"{lon}", inline=True)
-    weather_embed.set_footer(text=f'For {member.display_name} (aka:{member.name})')
+    #weather_embed.set_footer(text=f'For {member.display_name} (aka:{member.name})')
     channel = bot.get_channel(779368404392869918)
     await channel.send(embed = weather_embed)
 
