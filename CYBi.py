@@ -37,6 +37,8 @@ from yahoo_fin import options
 import requests
 import json
 
+appid = os.environ.get('OWM_API')
+
 help_command = commands.DefaultHelpCommand(no_category = 'CYBi Commands')
 bot = commands.Bot(command_prefix='./', help_command = help_command)
 # disabled built-in help command in order to use custon help
@@ -228,7 +230,7 @@ async def stocky(ctx, ticker: str, member: discord.Member = None):
     price = si.get_live_price(ticker)
     Price = round(price,3)
     tickr = (ticker.upper())
-    stock_embed = discord.Embed(colour=discord.Colour.green(), title = f'Prepared for: {member.display_name} (aka:{member.name})', description=f" Currently {tickr} is priced at ${Price}")
+    stock_embed = discord.Embed(colour=discord.Colour.green(), title = f'Currently {tickr} is priced at ${Price}')
     stock_embed.set_author(name=f"{tickr} Stock Price")
     stock_embed.set_thumbnail(url="https://play-lh.googleusercontent.com/K4eJEI8ogLQO2MkjUKgxC8FNWL4I5etsbFw2OXwQJ9Uch4DGkW1gEdoQk_k-cmtD4F4=s360")
     await channel.send(embed=stock_embed)
@@ -301,12 +303,12 @@ async def unban_error(ctx, error):
     if isinstance(error, commands.CheckFailure):
         await ctx.send('You need special permission to unban!')
 
-# pull weathr info by zipcode
+# pull weather info by zipcode
 @bot.command()
 async def weather(ctx, zip: str, member: discord.Member = None):
     member = ctx.author if not member else member
     await ctx.message.delete()
-    #url = 'http://api.openweathermap.org/data/2.5/weather?zip={}& + (appid) +&units=imperial'.format(zip)
+    url = 'http://api.openweathermap.org/data/2.5/weather?zip={}&appid={}&units=imperial'.format(zip, appid)
     result = requests.get(url)
     data = result.json()
     desc = data['weather'][0]['description']
@@ -327,7 +329,7 @@ async def weather(ctx, zip: str, member: discord.Member = None):
     weather_embed.add_field(name="Temperature (F): ", value=f"{temp}", inline=True)
     weather_embed.add_field(name="Feels like (F): ", value=f"{feels}", inline=True)
     weather_embed.add_field(name="Humidity (%): ", value=f"{humid}", inline=True)
-    weather_embed.add_field(name="Pressure (mb): ", value=f"{press}", inline=True)
+    weather_embed.add_field(name="Pressure (mm): ", value=f"{press}", inline=True)
     weather_embed.add_field(name="Visibility (ft): ", value=f"{vis}", inline=True)
     weather_embed.add_field(name="Wind speed (mph): ", value=f"{wind}", inline=True)
     weather_embed.add_field(name="Wind direction (degrees): ", value=f"{wind_dir}", inline=True)
@@ -349,6 +351,5 @@ print("CYBi bot is starting..")
 
 # the hidden .env variable located on the server stores the bot token
 load_dotenv('.env')
-load_dotenv('.appid')
 # getenv calls the bot token from the hidden .env variable on the server
 bot.run(os.getenv('DISCORD_TOKEN'))
