@@ -120,33 +120,33 @@ async def help(ctx):
     embed.set_footer(text="~~~Professor Scott")
 
     embed.add_field(name="_________UTILITIES_________",value="~", inline=False)
-    embed.add_field(name="**ban**",
+    embed.add_field(name="ban",
                     value="(Moderator) Bans a Discord member from the guild: **Usage:** *./ban member name*",
                     inline=False)
-    embed.add_field(name="**clean**",
+    embed.add_field(name="clean",
                     value="(Admin) Deletes channel messages except for pinned messages: **Usage:** *./clean 5 or ./clean 50*, etc.", inline=False)
-    embed.add_field(name="**cleanall**",
+    embed.add_field(name="cleanall",
                     value="(Admin) Deletes channel messages, including pinned messages: **Usage:** *./clean 5 or ./clean 50*, etc.", inline=False)
-    embed.add_field(name="**kick**",
+    embed.add_field(name="kick",
                     value="(Moderator) Kicks Discord member from guild: **Usage:** *./kick member name*", inline=False)
-    embed.add_field(name="**ping**", value="Checks bot latency: **Usage:** *./ping*", inline=False)
-    embed.add_field(name="**support**", value="Creates a support request: **Usage:** *./support I need help installing VirtualBox", inline=False)
-    embed.add_field(name="**unban**", value="(Moderator) Unbans Discord member: **Usage:** *./unban member name*",
+    embed.add_field(name="ping", value="Checks bot latency: **Usage:** *./ping*", inline=False)
+    embed.add_field(name="support", value="Creates a support request: **Usage:** *./support I need help installing VirtualBox", inline=False)
+    embed.add_field(name="unban", value="(Moderator) Unbans Discord member: **Usage:** *./unban member name*",
                     inline=False)
 
     embed.add_field(name="_________CYB CLASSES_________",value="~", inline=False)
-    embed.add_field(name="**cybpoll**", value="Creates a quick yes or no poll: **Usage:** *./cybpoll Do you like eggs?*", inline=False)
-    embed.add_field(name="**present**",
+    embed.add_field(name="cybpoll", value="Creates a quick yes or no poll: **Usage:** *./cybpoll Do you like eggs?*", inline=False)
+    embed.add_field(name="present",
                     value="Marks member present for a live Discord class session: **Usage:** *./present CYB101 or ./present CYB220, etc.*",
                     inline=False)
-    embed.add_field(name="**syllabus**",
+    embed.add_field(name="syllabus",
                     value="Verifies member has read and understands the class syllabus: **Usage:** *./syllabus CYB101 or ./syllabus CYB220, etc.*",
                     inline=False)
 
     embed.add_field(name="_________INFORMATIONAL_________", value="~",inline=False)
-    embed.add_field(name="**bottime**", value="Gives the current date and time: **Usage:** *./bottime*", inline=False)
-    embed.add_field(name="**stocky**", value="Retrieve current stock prices: **Usage:** *./stocky AAPL*", inline=False)
-    embed.add_field(name="**weather**", value="Gives the current weather by zipcode: **Usage:** *./weather 38340*", inline=False)
+    embed.add_field(name="bottime", value="Gives the current date and time: **Usage:** *./bottime*", inline=False)
+    embed.add_field(name="stocky", value="Retrieve current stock prices: **Usage:** *./stocky AAPL*", inline=False)
+    embed.add_field(name="weather", value="Gives the current weather by zipcode: **Usage:** *./weather 38340*", inline=False)
 
     await author.send(embed=embed)
 
@@ -340,7 +340,7 @@ async def weather_error(ctx, error):
 
 print("CYBi bot is starting..")
 
-# the hidden .env variable located on the server stores the bot token
+# the hidden .env variable located on the server stores the Discord bot token
 load_dotenv('.env')
 # getenv calls the bot token from the hidden .env variable on the server
 bot.run(os.getenv('DISCORD_TOKEN'))
