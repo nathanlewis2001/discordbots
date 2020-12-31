@@ -106,6 +106,46 @@ async def cleanall_error(ctx, error):
     elif isinstance(error, commands.CheckFailure):
         await ctx.send("You need special permission to clean this channel!")
 
+# Retrieve current Covid-19 stats by state
+@bot.command()
+async def covid(ctx, state: str):
+    await ctx.message.delete()
+    url = ('https://covidtracking.com/api/states?state={}'.format(state))
+    result = requests.get(url)
+    data = result.json()
+    desc = data['state']
+    date = data['date']
+    cases = data['positive']
+    hospitalized= data['hospitalizedCurrently']
+    new = data['hospitalizedIncrease']
+    icu = data['inIcuCurrently']
+    vent = data['onVentilatorCurrently']
+    deaths = data['deathConfirmed']
+    deaths2 = data['death']
+    deaths3 = data['deathIncrease']
+
+
+    covid_embed = discord.Embed(title = f"Covid-19 testing in {desc}")
+    covid_embed.set_thumbnail(url="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse4.mm.bing.net%2Fth%3Fid%3DOIP.HzXFdJrxdmvB6iTytSEUtQAAAA%26pid%3DApi&f=1")
+    covid_embed.add_field(name="Date: ", value=f"{date}", inline=True)
+    covid_embed.add_field(name="Cases: ", value=f"{cases}", inline=True)
+    covid_embed.add_field(name="Hospitalized: ", value=f"{hospitalized}", inline=True)
+    covid_embed.add_field(name="New hospitalized: ", value=f"{new}", inline=True)
+    covid_embed.add_field(name="ICU: ", value=f"{icu}", inline=True)
+    covid_embed.add_field(name="On ventilator: ", value=f"{vent}", inline=True)
+    covid_embed.add_field(name="Confirmed deaths: ", value=f"{deaths}", inline=True)
+    covid_embed.add_field(name="Confirmed death (includes probable): ", value=f"{deaths2}", inline=True)
+    covid_embed.add_field(name="New deaths: ", value=f"{deaths3}", inline=True)
+    covid_embed.set_footer(text="~~~Data retrieved from The COVID Tracking Project (https://covidtracking.com/about)")
+    channel = bot.get_channel(794303837989109771)
+    await channel.send(embed = covid_embed)
+
+@covid.error
+async def weather_error(ctx, error):
+    if isinstance(error, commands.MissingRequiredArgument):
+        await ctx.send('Please specify a state, i.e., CA, MO, TN, AL, KY, etc.')
+
+
 # custom help sent to member via a DM embed
 @bot.command(pass_context=True)
 async def help(ctx):
