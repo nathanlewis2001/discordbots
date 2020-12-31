@@ -146,7 +146,7 @@ async def help(ctx):
     embed.add_field(name="_________INFORMATIONAL_________", value="~",inline=False)
     embed.add_field(name="**bottime**", value="Gives the current date and time: **Usage:** *./bottime*", inline=False)
     embed.add_field(name="**stocky**", value="Retrieve current stock prices: **Usage:** *./stocky AAPL*", inline=False)
-    embed.add_field(name="**current weather**", value="Gives the current weather by zipcode: **Usage:** *./weather 38340*", inline=False)
+    embed.add_field(name="**weather**", value="Gives the current weather by zipcode: **Usage:** *./weather 38340*", inline=False)
 
     await author.send(embed=embed)
 
