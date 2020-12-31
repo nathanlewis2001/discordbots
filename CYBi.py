@@ -116,6 +116,8 @@ async def covid(ctx, state: str):
     desc = data['state']
     date = data['date']
     cases = data['positive']
+    newcase = data['positiveIncrease']
+    rec = data['recovered']
     hospitalized= data['hospitalizedCurrently']
     new = data['hospitalizedIncrease']
     icu = data['inIcuCurrently']
@@ -129,6 +131,8 @@ async def covid(ctx, state: str):
     covid_embed.set_thumbnail(url="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse4.mm.bing.net%2Fth%3Fid%3DOIP.HzXFdJrxdmvB6iTytSEUtQAAAA%26pid%3DApi&f=1")
     covid_embed.add_field(name="Date: ", value=f"{date}", inline=True)
     covid_embed.add_field(name="Cases: ", value=f"{cases}", inline=True)
+    covid_embed.add_field(name="New Cases: ", value=f"{newcase}", inline=True)
+    covid_embed.add_field(name="Recovered: ", value=f"{rec}", inline=True)
     covid_embed.add_field(name="Hospitalized: ", value=f"{hospitalized}", inline=True)
     covid_embed.add_field(name="New hospitalized: ", value=f"{new}", inline=True)
     covid_embed.add_field(name="ICU: ", value=f"{icu}", inline=True)
@@ -185,6 +189,7 @@ async def help(ctx):
 
     embed.add_field(name="_________INFORMATIONAL_________", value="~",inline=False)
     embed.add_field(name="bottime", value="Gives the current date and time: **Usage:** *./bottime*", inline=False)
+    embed.add_field(name="covid", value="Gives the current Covid stats by state: **Usage:** *./covid TN (or AL, KY, etc.)*", inline=False)
     embed.add_field(name="stocky", value="Retrieve current stock prices: **Usage:** *./stocky AAPL*", inline=False)
     embed.add_field(name="weather", value="Gives the current weather by zipcode: **Usage:** *./weather 38340*", inline=False)
 
@@ -337,8 +342,7 @@ async def unban_error(ctx, error):
 
 # pull weather info by zipcode
 @bot.command()
-async def weather(ctx, zip: str, member: discord.Member = None):
-    member = ctx.author if not member else member
+async def weather(ctx, zip: str):
     await ctx.message.delete()
     url = 'http://api.openweathermap.org/data/2.5/weather?zip={}&appid={}&units=imperial'.format(zip, appid)
     result = requests.get(url)
