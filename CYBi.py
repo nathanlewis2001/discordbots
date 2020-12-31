@@ -37,7 +37,7 @@ from yahoo_fin import options
 import requests
 import json
 
-appid = os.environ.get('OWM_API')
+appid = os.environ.get('OWM_API') #secured (hid) the OpenWeatherMap API token by calling it from an environment variable
 
 help_command = commands.DefaultHelpCommand(no_category = 'CYBi Commands')
 bot = commands.Bot(command_prefix='./', help_command = help_command)
@@ -327,7 +327,6 @@ async def weather(ctx, zip: str, member: discord.Member = None):
     weather_embed.add_field(name="Wind direction (degrees): ", value=f"{wind_dir}", inline=True)
     weather_embed.add_field(name="Latitiude: ", value=f"{lat}", inline=True)
     weather_embed.add_field(name="Longitude: ", value=f"{lon}", inline=True)
-    #weather_embed.set_footer(text=f'For {member.display_name} (aka:{member.name})')
     channel = bot.get_channel(779368404392869918)
     await channel.send(embed = weather_embed)
 
