@@ -119,7 +119,7 @@ async def help(ctx):
     embed.set_thumbnail(url="https://drive.google.com/uc?id=14FBUSKg4Hz8HRITRaUiTzy97omZDDEwn")
     embed.set_footer(text="~~~Professor Scott")
 
-    embed.add_field(name="***-----------------UTILITIES-----------------***",value="~~~", inline=False)
+    embed.add_field(name="_________UTILITIES_________",value="~", inline=False)
     embed.add_field(name="**ban**",
                     value="(Moderator) Bans a Discord member from the guild: **Usage:** *./ban member name*",
                     inline=False)
@@ -134,7 +134,7 @@ async def help(ctx):
     embed.add_field(name="**unban**", value="(Moderator) Unbans Discord member: **Usage:** *./unban member name*",
                     inline=False)
 
-    embed.add_field(name="***-----------------CYB CLASSES-----------------***",value="~~~", inline=False)
+    embed.add_field(name="_________CYB CLASSES_________",value="~", inline=False)
     embed.add_field(name="**cybpoll**", value="Creates a quick yes or no poll: **Usage:** *./cybpoll Do you like eggs?*", inline=False)
     embed.add_field(name="**present**",
                     value="Marks member present for a live Discord class session: **Usage:** *./present CYB101 or ./present CYB220, etc.*",
@@ -143,10 +143,9 @@ async def help(ctx):
                     value="Verifies member has read and understands the class syllabus: **Usage:** *./syllabus CYB101 or ./syllabus CYB220, etc.*",
                     inline=False)
 
-    embed.add_field(name="***-----------------INFORMATIONAL-----------------***", value="~~~",inline=False)
+    embed.add_field(name="_________INFORMATIONAL_________", value="~",inline=False)
     embed.add_field(name="**bottime**", value="Gives the current date and time: **Usage:** *./bottime*", inline=False)
-    embed.add_field(name="**mynick**", value="Gives member's current display name: **Usage:** *./mynick*", inline=False)
-    embed.add_field(name="**stocky**", value="Retrieve current stock prices: **Usage:** *./stocky AAPL", inline=False)
+    embed.add_field(name="**stocky**", value="Retrieve current stock prices: **Usage:** *./stocky AAPL*", inline=False)
     embed.add_field(name="**current weather**", value="Gives the current weather by zipcode: **Usage:** *./weather 38340*", inline=False)
 
     await author.send(embed=embed)
@@ -162,13 +161,6 @@ async def kick(ctx, member: discord.Member, *, reason=None):
 async def kick_error(ctx, error):
     if isinstance(error, commands.CheckFailure):
         await ctx.send('You DO NOT have permission to kick!')
-
-# mynick displays members nickname
-@bot.command()
-async def mynick(ctx, member: discord.Member = None):
-    member = ctx.author if not member else member
-    await ctx.message.delete()
-    await ctx.send(f"{member.display_name} is your nickname.")
 
 # ping to check bot latency
 @bot.command()
