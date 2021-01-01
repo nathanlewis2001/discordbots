@@ -127,7 +127,7 @@ async def covid(ctx, state: str):
     deaths3 = data['deathIncrease']
 
 
-    covid_embed = discord.Embed(title = f"Covid-19 testing in {desc}")
+    covid_embed = discord.Embed(title = f"Covid-19 stats for {desc}")
     covid_embed.set_thumbnail(url="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse4.mm.bing.net%2Fth%3Fid%3DOIP.HzXFdJrxdmvB6iTytSEUtQAAAA%26pid%3DApi&f=1")
     covid_embed.add_field(name="Date: ", value=f"{date}", inline=True)
     covid_embed.add_field(name="Cases: ", value=f"{cases}", inline=True)
