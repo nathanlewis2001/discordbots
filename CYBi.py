@@ -37,7 +37,7 @@ from yahoo_fin import options
 import requests
 import json
 
-appid = os.environ.get('OWM_API') #secured (hid) the OpenWeatherMap API token by calling it from an environment variable
+appid = os.environ.get('OWM_API') #secured (hide) the OpenWeatherMap API token by calling it from an environment variable
 
 help_command = commands.DefaultHelpCommand(no_category = 'CYBi Commands')
 bot = commands.Bot(command_prefix='./', help_command = help_command)
@@ -280,17 +280,19 @@ async def stocky_error(ctx, error):
 
 # support
 @bot.command(pass_context=True)
-async def support(ctx, *, question, member: discord.Member = None):
+async def support(ctx, *, question, member: discord.Member = None, role: discord.Role = ('Admin')):
     member = ctx.author if not member else member
     support_embed = discord.Embed(title = "Support request", description=f"{question}")
     support_embed.set_author(name=f'From: {member.display_name} (aka:{member.name})')
     support_embed.set_thumbnail(url=ctx.message.author.avatar_url)
     channel = bot.get_channel(789239232836272159)
+
     await channel.send(embed = support_embed)
     author = ctx.message.author
     await author.send(f'{member.display_name}, thank you for using our support channel. A support team member will contact with soon!')
     # creates alert message for moderators in the moderator-discussions channel that there is a new support request
     channel2 = bot.get_channel(743118001183916113)
+    await role.send(f' There is a new support request from {member.display_name} (aka: {member.name}) in the #support channel. Can a mod respond?')
     await channel2.send(f'There is a new support request from {member.display_name} (aka: {member.name}) in the #support channel. Can a mod respond?')
     await ctx.message.delete()
 
