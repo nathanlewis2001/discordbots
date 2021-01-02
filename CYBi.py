@@ -2,7 +2,7 @@
 CYBi Bot
 FHU CYB Discord bot 12/2020
 Author: Professor Mark Scott (mscott@fhu.edu)
-Other contributors: 1. Cameron Pierce (pierce.cameron7@yahoo.com): original poll command
+Other contributors: 1. Cameron Pierce (pierce.cameron7@yahoo.com): original poll command, added code to support command,
                     2. Other Open Source Projects
 --------------------------------------------------------------------------------
 Released under the MIT license
