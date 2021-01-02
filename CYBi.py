@@ -280,7 +280,7 @@ async def stocky_error(ctx, error):
 
 # support
 @bot.command(pass_context=True)
-async def support(ctx, *, question, member: discord.Member = None, role: discord.Role = ('Admin')):
+async def support(ctx, *, question, member: discord.Member = None):
     member = ctx.author if not member else member
     support_embed = discord.Embed(title = "Support request", description=f"{question}")
     support_embed.set_author(name=f'From: {member.display_name} (aka:{member.name})')
@@ -292,7 +292,7 @@ async def support(ctx, *, question, member: discord.Member = None, role: discord
     await author.send(f'{member.display_name}, thank you for using our support channel. A support team member will contact with soon!')
     # creates alert message for moderators in the moderator-discussions channel that there is a new support request
     channel2 = bot.get_channel(743118001183916113)
-    await channel2.send(f'<@&742848842554278020> There is a new support request from {member.display_name} (aka: {member.name}) in the #support channel. Can a mod respond?')
+    await channel2.send(f'<@&742848842554278020> there is a new support request from {member.display_name} (aka: {member.name}) in the #support channel. Can a mod respond?')
     await ctx.message.delete()
 
 @support.error
