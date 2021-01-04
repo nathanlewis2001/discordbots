@@ -167,7 +167,7 @@ async def cidr(ctx, ip1: str, ip2: str):
     @cidr.error
     async def cidr_error(ctx, error):
         if isinstance(error, commands.MissingRequiredArgument):
-            await ctx.send('Please specify a domain name.')
+            await ctx.send('Please specify a beginning and ending IP address.')
 
 
 
