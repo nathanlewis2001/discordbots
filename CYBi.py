@@ -170,7 +170,7 @@ async def covid_error(ctx, error):
     if isinstance(error, commands.MissingRequiredArgument):
         await ctx.send('Please specify a state, i.e., CA, MO, TN, AL, KY, etc.')
 
-#Resolve DNS by domain
+#Resolve domain IP address
 @bot.command()
 async def dns(ctx, ipA: str):
     await ctx.message.delete()
