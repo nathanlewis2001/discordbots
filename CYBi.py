@@ -374,6 +374,7 @@ async def weather(ctx, zip: str):
     weather_embed.add_field(name="Wind direction (degrees): ", value=f"{wind_dir}", inline=True)
     weather_embed.add_field(name="Latitiude: ", value=f"{lat}", inline=True)
     weather_embed.add_field(name="Longitude: ", value=f"{lon}", inline=True)
+    weather_embed.set_footer(text ='[For a 2-day forecast, use the forecast command "./forecast" along with your zipcode.]')
     channel = bot.get_channel(779368404392869918)
     await channel.send(embed = weather_embed)
 
@@ -479,18 +480,15 @@ async def forecast(ctx, zip: str):
     wind_dir8 = data['list'][16]['wind']['deg']
     desc8 = data['list'][16]['weather'][0]['description']
 
-    channel = bot.get_channel(779368404392869918)
-    await channel.send(f'Forecast for {zip} on {date}\n Outlook: {desc} | Temperature: {temp} | Feels like: {feels} | Wind Speed: {wind} | Wind Direction: {wind_dir}')
-    await channel.send(f'Forecast for {zip} on {date2}\n Outlook: {desc2} | Temperature: {temp2} | Feels like: {feels2} | Wind Speed: {wind2} | Wind Direction: {wind_dir2}')
-    await channel.send(f'Forecast for {zip} on {date3}\n Outlook: {desc3} | Temperature: {temp3} | Feels like: {feels3} | Wind Speed: {wind3} | Wind Direction: {wind_dir3}')
-    await channel.send(f'Forecast for {zip} on {date4}\n Outlook: {desc4} | Temperature: {temp4} | Feels like: {feels4} | Wind Speed: {wind4} | Wind Direction: {wind_dir4}')
-    await channel.send(f'Forecast for {zip} on {date6}\n Outlook: {desc6} | Temperature: {temp6} | Feels like: {feels6} | Wind Speed: {wind6} | Wind Direction: {wind_dir6}')
-    await channel.send(f'Forecast for {zip} on {date7}\n Outlook: {desc7} | Temperature: {temp7} | Feels like: {feels7} | Wind Speed: {wind7} | Wind Direction: {wind_dir7}')
-    await channel.send(f'Forecast for {zip} on {date8}\n Outlook: {desc8} | Temperature: {temp8} | Feels like: {feels8} | Wind Speed: {wind8} | Wind Direction: {wind_dir8}')
-    await channel.send(f'~~~ ~~~ ~~~ ~~~ ~~~ ~~~ ~~~ ~~~ ~~~ ~~~ ~~~ ~~~ ~~~ ~~~ ~~~ ~~~ ~~~ ~~~ ~~~ ~~~ ~~~ ~~~ ~~~ ~~~ ~~~ ~~~ ~~~ ~~~ ~~~ ~~~ ~~~ ~~~ ~~~ ~~~ ~~~ ~~~ ~~~')
-    await channel.send(f'~~~ Retrieved via the OpenWeatherMap API')
-    await channel.send(f'[For the current weather, use the weather command "./weather" along with your zipcode.]')
-
+    channel = bot.get_channel(795490169422610442)
+    await channel.send(f'```yaml\n Forecast for {zip} on {date}\n Outlook: {desc} | Temperature: {temp} | May feel like: {feels} | Wind Speed: {wind} | Wind Direction: {wind_dir}```')
+    await channel.send(f'```yaml\n Forecast for {zip} on {date2}\n Outlook: {desc2} | Temperature: {temp2} | May feel like: {feels2} | Wind Speed: {wind2} | Wind Direction: {wind_dir2}```')
+    await channel.send(f'```yaml\n Forecast for {zip} on {date3}\n Outlook: {desc3} | Temperature: {temp3} | May feel like: {feels3} | Wind Speed: {wind3} | Wind Direction: {wind_dir3}```')
+    await channel.send(f'```yaml\n Forecast for {zip} on {date4}\n Outlook: {desc4} | Temperature: {temp4} | May feel like: {feels4} | Wind Speed: {wind4} | Wind Direction: {wind_dir4}```')
+    await channel.send(f'```yaml\n Forecast for {zip} on {date6}\n Outlook: {desc6} | Temperature: {temp6} | May feel like: {feels6} | Wind Speed: {wind6} | Wind Direction: {wind_dir6}```')
+    await channel.send(f'```yaml\n Forecast for {zip} on {date7}\n Outlook: {desc7} | Temperature: {temp7} | May feel like: {feels7} | Wind Speed: {wind7} | Wind Direction: {wind_dir7}```')
+    await channel.send(f'```yaml\n Forecast for {zip} on {date8}\n Outlook: {desc8} | Temperature: {temp8} | May feel like: {feels8} | Wind Speed: {wind8} | Wind Direction: {wind_dir8}```')
+    await channel.send(f'```ini\n [~~~Retrieved via the OpenWeatherMap API. For the current weather, use the weather command "./weather" along with your zipcode.]```')
 
 @forecast.error
 async def forecasr_error(ctx, error):
