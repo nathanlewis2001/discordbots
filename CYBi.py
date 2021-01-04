@@ -40,6 +40,8 @@ import requests
 import json
 
 appid = os.environ.get('OWM_API') #secured the OpenWeatherMap API token by calling it from an environment variable
+rapidapi = os.environ.get('rapidapi_key') #secured the RAPIDAPI token by calling it from an environment variable
+#print(appid, rapidapi) #verify api
 
 help_command = commands.DefaultHelpCommand(no_category = 'CYBi Commands')
 bot = commands.Bot(command_prefix='./', help_command = help_command)
@@ -147,7 +149,7 @@ async def covid(ctx, state: str):
     await channel.send(embed = covid_embed)
 
 @covid.error
-async def weather_error(ctx, error):
+async def covid_error(ctx, error):
     if isinstance(error, commands.MissingRequiredArgument):
         await ctx.send('Please specify a state, i.e., CA, MO, TN, AL, KY, etc.')
 
