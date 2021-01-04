@@ -38,6 +38,7 @@ from yahoo_fin import stock_info as si
 from yahoo_fin import options
 import requests
 import json
+from ipwhois.utils import calculate_cidr
 
 appid = os.environ.get('OWM_API') #secured the OpenWeatherMap API token by calling it from an environment variable
 rapidapi = os.environ.get('rapidapi_key') #secured the RAPIDAPI token by calling it from an environment variable
@@ -152,6 +153,26 @@ async def covid(ctx, state: str):
 async def covid_error(ctx, error):
     if isinstance(error, commands.MissingRequiredArgument):
         await ctx.send('Please specify a state, i.e., CA, MO, TN, AL, KY, etc.')
+
+# Get a list of CIDR range(s) from a start and ending IP address
+@bot.command()
+async def cidr(ctx, ip1: str, ip2: str):
+    await ctx.message.delete()
+    data = (calculate_cidr(ip1, ip2))
+    channel = bot.get_channel(795746943216779284)
+    await channel.send(f'```yaml\n CIDR range(s) for {ip1} & {ip2}\n```'
+    f'```yaml\n {data}```'
+    )
+
+    @cidr.error
+    async def cidr_error(ctx, error):
+        if isinstance(error, commands.MissingRequiredArgument):
+            await ctx.send('Please specify a domain name.')
+
+
+
+
+
 
 
 # custom help sent to member via a DM embed
