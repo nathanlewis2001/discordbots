@@ -491,7 +491,7 @@ async def forecast(ctx, zip: str):
     await channel.send(f'```ini\n [~~~Retrieved via the OpenWeatherMap API. For the current weather, use the weather command "./weather" along with your zipcode.]```')
 
 @forecast.error
-async def forecasr_error(ctx, error):
+async def forecast_error(ctx, error):
     if isinstance(error, commands.MissingRequiredArgument):
         await ctx.send('Please specify a zipcode.')
 
