@@ -85,6 +85,21 @@ async def bottime(ctx):
     rightnow = dt.datetime.now()
     await ctx.send(rightnow)
 
+# Get a list of CIDR range(s) from a start and ending IP address
+@bot.command()
+async def cidr(ctx, ip1: str, ip2: str):
+    await ctx.message.delete()
+    data = (calculate_cidr(ip1, ip2))
+    channel = bot.get_channel(795746943216779284)
+    await channel.send(f'```yaml\n CIDR range(s) for {ip1} & {ip2}\n```'
+    f'```yaml\n {data}```'
+    )
+
+    @cidr.error
+    async def cidr_error(ctx, error):
+        if isinstance(error, commands.MissingRequiredArgument):
+            await ctx.send('Please specify a beginning and ending IP address.')
+
 # clean channel messages for Admin only
 @bot.command()
 @commands.has_role('Admin')
@@ -154,27 +169,6 @@ async def covid_error(ctx, error):
     if isinstance(error, commands.MissingRequiredArgument):
         await ctx.send('Please specify a state, i.e., CA, MO, TN, AL, KY, etc.')
 
-# Get a list of CIDR range(s) from a start and ending IP address
-@bot.command()
-async def cidr(ctx, ip1: str, ip2: str):
-    await ctx.message.delete()
-    data = (calculate_cidr(ip1, ip2))
-    channel = bot.get_channel(795746943216779284)
-    await channel.send(f'```yaml\n CIDR range(s) for {ip1} & {ip2}\n```'
-    f'```yaml\n {data}```'
-    )
-
-    @cidr.error
-    async def cidr_error(ctx, error):
-        if isinstance(error, commands.MissingRequiredArgument):
-            await ctx.send('Please specify a beginning and ending IP address.')
-
-
-
-
-
-
-
 # custom help sent to member via a DM embed
 @bot.command(pass_context=True)
 async def help(ctx):
@@ -214,6 +208,7 @@ async def help(ctx):
 
     embed.add_field(name="~~~", value="INFORMATIONAL",inline=False)
     embed.add_field(name="bottime", value="Gives the current date and time: **Usage:** *./bottime*", inline=False)
+    embed.add_field(name="cidr", value="Get a list of CIDR range(s) from a start and ending IP address: **Usage:** *./cidr ip1 ip2)*", inline=False)
     embed.add_field(name="covid", value="Gives the current Covid stats by state: **Usage:** *./covid TN (or AL, KY, etc.)*", inline=False)
     embed.add_field(name="forecast", value="Gives the 2-day weather forecast by zipcode: **Usage:** *./forecast 38340*", inline=False)
     embed.add_field(name="stocky", value="Retrieve current stock prices: **Usage:** *./stocky AAPL*", inline=False)
