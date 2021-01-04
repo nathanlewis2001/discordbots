@@ -165,7 +165,7 @@ async def help(ctx):
     embed.set_thumbnail(url="https://drive.google.com/uc?id=14FBUSKg4Hz8HRITRaUiTzy97omZDDEwn")
     embed.set_footer(text="~~~Professor Scott")
 
-    embed.add_field(name="_________UTILITIES_________",value="~", inline=False)
+    embed.add_field(name="~~~",value="UTILITIES", inline=False)
     embed.add_field(name="ban",
                     value="(Moderator) Bans a Discord member from the guild: **Usage:** *./ban member name*",
                     inline=False)
@@ -180,7 +180,7 @@ async def help(ctx):
     embed.add_field(name="unban", value="(Moderator) Unbans Discord member: **Usage:** *./unban member name*",
                     inline=False)
 
-    embed.add_field(name="_________CYB CLASSES_________",value="~", inline=False)
+    embed.add_field(name="~~~",value="CYB CLASSES", inline=False)
     embed.add_field(name="cybpoll", value="Creates a quick yes or no poll: **Usage:** *./cybpoll Do you like eggs?*", inline=False)
     embed.add_field(name="present",
                     value="Marks member present for a live Discord class session: **Usage:** *./present CYB101 or ./present CYB220, etc.*",
@@ -189,9 +189,10 @@ async def help(ctx):
                     value="Verifies member has read and understands the class syllabus: **Usage:** *./syllabus CYB101 or ./syllabus CYB220, etc.*",
                     inline=False)
 
-    embed.add_field(name="_________INFORMATIONAL_________", value="~",inline=False)
+    embed.add_field(name="~~~", value="INFORMATIONAL",inline=False)
     embed.add_field(name="bottime", value="Gives the current date and time: **Usage:** *./bottime*", inline=False)
     embed.add_field(name="covid", value="Gives the current Covid stats by state: **Usage:** *./covid TN (or AL, KY, etc.)*", inline=False)
+    embed.add_field(name="forecast", value="Gives the 2-day weather forecast by zipcode: **Usage:** *./forecast 38340*", inline=False)
     embed.add_field(name="stocky", value="Retrieve current stock prices: **Usage:** *./stocky AAPL*", inline=False)
     embed.add_field(name="weather", value="Gives the current weather by zipcode: **Usage:** *./weather 38340*", inline=False)
 
