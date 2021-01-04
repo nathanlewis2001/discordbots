@@ -32,8 +32,8 @@ from discord.ext import commands
 from dotenv import load_dotenv
 import os
 import time
-import datetime
-from datetime import datetime
+import datetime as dt
+from datetime import date, datetime
 from yahoo_fin import stock_info as si
 from yahoo_fin import options
 import requests
@@ -79,7 +79,7 @@ async def ban_error(ctx, error):
 @bot.command()
 async def bottime(ctx):
     await ctx.message.delete()
-    rightnow = datetime.datetime.now()
+    rightnow = dt.datetime.now()
     await ctx.send(rightnow)
 
 # clean channel messages for Admin only
@@ -248,7 +248,7 @@ async def present(ctx, course: str, member: discord.Member = None):
     # forces present message to be created in the atendance channel
     channel = bot.get_channel(786278326519332894)
     await channel.send(f'{member.display_name} (aka: {member.name}) has been marked **present** in ' + (course) + '!')
-    rightnow = datetime.datetime.now()
+    rightnow = dt.datetime.now()
     # creates attendance log on backend server
     with open("attendance.log", "a+") as file:
         file.write(str(rightnow))
@@ -312,7 +312,7 @@ async def syllabus(ctx, course: str, member: discord.Member = None):
     channel = bot.get_channel(786421989912084512)
     await channel.send(f'{member.display_name} (aka:{member.name}) has read and understands the ' + (course) + ' syllabus!')
     # creates syllabus log on backend server
-    rightnow = datetime.datetime.now()
+    rightnow = dt.datetime.now()
     with open("syllabus.log", "a+") as file:
         file.write(str(rightnow))
         file.write('--' + course)
