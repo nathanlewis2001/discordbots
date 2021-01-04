@@ -39,6 +39,7 @@ from yahoo_fin import options
 import requests
 import json
 from ipwhois.utils import calculate_cidr
+import socket
 
 appid = os.environ.get('OWM_API') #secured the OpenWeatherMap API token by calling it from an environment variable
 rapidapi = os.environ.get('rapidapi_key') #secured the RAPIDAPI token by calling it from an environment variable
@@ -169,6 +170,20 @@ async def covid_error(ctx, error):
     if isinstance(error, commands.MissingRequiredArgument):
         await ctx.send('Please specify a state, i.e., CA, MO, TN, AL, KY, etc.')
 
+#Resolve DNS by domain
+@bot.command()
+async def dns(ctx, ipA: str):
+    await ctx.message.delete()
+    address = socket.gethostbyname(ipA)
+    channel = bot.get_channel(795746943216779284)
+    await channel.send(f'```yaml\n The IP(s) for {ipA}\n```'
+    f'```yaml\n {address}```'
+    )
+@dns.error
+async def dns_error(ctx, error):
+    if isinstance(error, commands.MissingRequiredArgument):
+        await ctx.send('Please specify a domain.')
+
 # custom help sent to member via a DM embed
 @bot.command(pass_context=True)
 async def help(ctx):
@@ -210,6 +225,7 @@ async def help(ctx):
     embed.add_field(name="bottime", value="Gives the current date and time: **Usage:** *./bottime*", inline=False)
     embed.add_field(name="cidr", value="Get a list of CIDR range(s) from a start and ending IP address: **Usage:** *./cidr ip1 ip2)*", inline=False)
     embed.add_field(name="covid", value="Gives the current Covid stats by state: **Usage:** *./covid TN (or AL, KY, etc.)*", inline=False)
+    embed.add_field(name="DNS", value="Get Get the IP address of a doamin: **Usage:** *./dns domain)*", inline=False)
     embed.add_field(name="forecast", value="Gives the 2-day weather forecast by zipcode: **Usage:** *./forecast 38340*", inline=False)
     embed.add_field(name="stocky", value="Retrieve current stock prices: **Usage:** *./stocky AAPL*", inline=False)
     embed.add_field(name="weather", value="Gives the current weather by zipcode: **Usage:** *./weather 38340*", inline=False)
