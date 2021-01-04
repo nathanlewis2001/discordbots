@@ -391,6 +391,7 @@ async def forecast(ctx, zip: str):
     url = 'http://api.openweathermap.org/data/2.5/forecast?zip={}&exclude=hourly&appid={}&units=imperial'.format(zip, appid)
     result = requests.get(url)
     data = result.json()
+    loc = data['city']['name']
     timestamp = data['list'][2]['dt']
     # convert epoch timestamp to CST
     date = datetime.fromtimestamp(timestamp)
@@ -481,14 +482,14 @@ async def forecast(ctx, zip: str):
     desc8 = data['list'][16]['weather'][0]['description']
 
     channel = bot.get_channel(795490169422610442)
-    await channel.send(f'```yaml\n Forecast for {zip} on {date}\n Outlook: {desc} | Temperature: {temp} | May feel like: {feels} | Wind Speed: {wind} | Wind Direction: {wind_dir}```'
-      f'```yaml\n Forecast for {zip} on {date2}\n Outlook: {desc2} | Temperature: {temp2} | May feel like: {feels2} | Wind Speed: {wind2} | Wind Direction: {wind_dir2}```'
-      f'```yaml\n Forecast for {zip} on {date3}\n Outlook: {desc3} | Temperature: {temp3} | May feel like: {feels3} | Wind Speed: {wind3} | Wind Direction: {wind_dir3}```'
-      f'```yaml\n Forecast for {zip} on {date4}\n Outlook: {desc4} | Temperature: {temp4} | May feel like: {feels4} | Wind Speed: {wind4} | Wind Direction: {wind_dir4}```'
-      f'```yaml\n Forecast for {zip} on {date5}\n Outlook: {desc5} | Temperature: {temp5} | May feel like: {feels5} | Wind Speed: {wind5} | Wind Direction: {wind_dir5}```'
-      f'```yaml\n Forecast for {zip} on {date6}\n Outlook: {desc6} | Temperature: {temp6} | May feel like: {feels6} | Wind Speed: {wind6} | Wind Direction: {wind_dir6}```'
-      f'```yaml\n Forecast for {zip} on {date7}\n Outlook: {desc7} | Temperature: {temp7} | May feel like: {feels7} | Wind Speed: {wind7} | Wind Direction: {wind_dir7}```'
-      f'```yaml\n Forecast for {zip} on {date8}\n Outlook: {desc8} | Temperature: {temp8} | May feel like: {feels8} | Wind Speed: {wind8} | Wind Direction: {wind_dir8}```'
+    await channel.send(f'```yaml\n Forecast for {loc} ({zip}) on {date}\n Outlook: {desc} | Temperature: {temp} | May feel like: {feels} | Wind Speed: {wind} | Wind Direction: {wind_dir}```'
+      f'```yaml\n Forecast for {loc} ({zip}) on {date2}\n Outlook: {desc2} | Temperature: {temp2} | May feel like: {feels2} | Wind Speed: {wind2} | Wind Direction: {wind_dir2}```'
+      f'```yaml\n Forecast for {loc} ({zip}) on {date3}\n Outlook: {desc3} | Temperature: {temp3} | May feel like: {feels3} | Wind Speed: {wind3} | Wind Direction: {wind_dir3}```'
+      f'```yaml\n Forecast for {loc} ({zip}) on {date4}\n Outlook: {desc4} | Temperature: {temp4} | May feel like: {feels4} | Wind Speed: {wind4} | Wind Direction: {wind_dir4}```'
+      f'```yaml\n Forecast for {loc} ({zip}) on {date5}\n Outlook: {desc5} | Temperature: {temp5} | May feel like: {feels5} | Wind Speed: {wind5} | Wind Direction: {wind_dir5}```'
+      f'```yaml\n Forecast for {loc} ({zip}) on {date6}\n Outlook: {desc6} | Temperature: {temp6} | May feel like: {feels6} | Wind Speed: {wind6} | Wind Direction: {wind_dir6}```'
+      f'```yaml\n Forecast for {loc} ({zip}) on {date7}\n Outlook: {desc7} | Temperature: {temp7} | May feel like: {feels7} | Wind Speed: {wind7} | Wind Direction: {wind_dir7}```'
+      f'```yaml\n Forecast for {loc} ({zip}) on {date8}\n Outlook: {desc8} | Temperature: {temp8} | May feel like: {feels8} | Wind Speed: {wind8} | Wind Direction: {wind_dir8}```'
       f'```ini\n [~~~Retrieved via the OpenWeatherMap API. For the current weather, use the weather command "./weather" along with your zipcode.]```'
       )
 
