@@ -39,7 +39,7 @@ from yahoo_fin import options
 import requests
 import json
 
-appid = os.environ.get('OWM_API') #secured (hide) the OpenWeatherMap API token by calling it from an environment variable
+appid = os.environ.get('OWM_API') #secured the OpenWeatherMap API token by calling it from an environment variable
 
 help_command = commands.DefaultHelpCommand(no_category = 'CYBi Commands')
 bot = commands.Bot(command_prefix='./', help_command = help_command)
