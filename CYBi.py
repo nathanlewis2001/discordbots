@@ -258,14 +258,15 @@ async def ping(ctx, ip: str):
     hostname0 = (ip)
     response = os.system("ping -c 1 " + hostname0)
     if response == 0:
-        await channel.send(f'```yaml\n {hostname0} is up!\n```')
+        await channel.send(f'```yaml\n {hostname0} is up!```')
     else:
-        await channel.send(f'```yaml\n {hostname0} is down!\n```')
+        await channel.send(f'```yaml\n {hostname0} is down!```')
     await ctx.message.delete()
+
 @ping.error
 async def ping_error(ctx, error):
     if isinstance(error, commands.MissingRequiredArgument):
-        await ctx.send('Please specify an IP Address.')
+        await ctx.send('Please specify an IP Address or domain.')
 
 # simple yes or no poll
 @bot.command(pass_context=True)
