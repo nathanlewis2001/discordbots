@@ -201,13 +201,13 @@ async def help(ctx):
     embed.add_field(name="ban",
                     value="(Moderator) Bans a Discord member from the guild: **Usage:** *./ban member name*",
                     inline=False)
+    embed.add_field(name="botping", value="Checks bot latency: **Usage:** *./botping*", inline=False)
     embed.add_field(name="clean",
                     value="(Admin) Deletes channel messages except for pinned messages: **Usage:** *./clean 5 or ./clean 50*, etc.", inline=False)
     embed.add_field(name="cleanall",
                     value="(Admin) Deletes channel messages, including pinned messages: **Usage:** *./clean 5 or ./clean 50*, etc.", inline=False)
     embed.add_field(name="kick",
                     value="(Moderator) Kicks Discord member from guild: **Usage:** *./kick member name*", inline=False)
-    embed.add_field(name="ping", value="Checks bot latency: **Usage:** *./ping*", inline=False)
     embed.add_field(name="support", value="Creates a support request: **Usage:** *./support I need help installing VirtualBox", inline=False)
     embed.add_field(name="unban", value="(Moderator) Unbans Discord member: **Usage:** *./unban member name*",
                     inline=False)
@@ -227,6 +227,7 @@ async def help(ctx):
     embed.add_field(name="covid", value="Gives the current Covid stats by state: **Usage:** *./covid TN (or AL, KY, etc.)*", inline=False)
     embed.add_field(name="dns", value="Get Get the IP address of a domain: **Usage:** *./dns domain)*", inline=False)
     embed.add_field(name="forecast", value="Gives the 2-day weather forecast by zipcode: **Usage:** *./forecast 38340*", inline=False)
+    embed.add_field(name="ping", value="Check to see if domain or IP is active (up): **Usage:** *./ping domain or ./ping ip)*", inline=False)
     embed.add_field(name="stocky", value="Retrieve current stock prices: **Usage:** *./stocky AAPL*", inline=False)
     embed.add_field(name="weather", value="Gives the current weather by zipcode: **Usage:** *./weather 38340*", inline=False)
 
