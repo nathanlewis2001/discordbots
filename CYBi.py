@@ -246,9 +246,26 @@ async def kick_error(ctx, error):
 
 # ping to check bot latency
 @bot.command()
-async def ping(ctx):
+async def botping(ctx):
     await ctx.message.delete()
     await ctx.send(f'The ping latency to the bot server is {bot.latency}!')
+
+# ping IP address
+@bot.command()
+async def ping(ctx, ip: str):
+    await ctx.message.delete()
+    channel = bot.get_channel(795746943216779284)
+    hostname0 = (ip)
+    response = os.system("ping -c 1 " + hostname0)
+    if response == 0:
+        await channel.send(f'```yaml\n {hostname0} is up!\n```')
+    else:
+        await channel.send(f'```yaml\n {hostname0} is down!\n```')
+
+@ping.error
+async def ping_error(ctx, error):
+    if isinstance(error, commands.MissingRequiredArgument):
+        await ctx.send('Please specify an IP Address.')
 
 # simple yes or no poll
 @bot.command(pass_context=True)
