@@ -259,9 +259,9 @@ async def ping(ctx, ip: str):
     hostname0 = (ip)
     response = os.system("ping -c 1 " + hostname0)
     if response == 0:
-        await channel.send(f'```yaml\n {hostname0} is up!```')
+        await channel.send(f'```yaml\n Ping indicates that {hostname0} is up!```')
     else:
-        await channel.send(f'```yaml\n {hostname0} is down!```')
+        await channel.send(f'```yaml\n Ping indicates that {hostname0} is down!```')
     await ctx.message.delete()
 
 @ping.error
