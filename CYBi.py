@@ -261,7 +261,7 @@ async def ping(ctx, ip: str):
         await channel.send(f'```yaml\n {hostname0} is up!\n```')
     else:
         await channel.send(f'```yaml\n {hostname0} is down!\n```')
-
+    await ctx.message.delete()
 @ping.error
 async def ping_error(ctx, error):
     if isinstance(error, commands.MissingRequiredArgument):
