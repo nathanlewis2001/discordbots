@@ -605,7 +605,7 @@ async def forecast_error(ctx, error):
     if isinstance(error, commands.MissingRequiredArgument):
         await ctx.send('Please specify a zipcode.')
 
-# task to auto clean forecast channel and then retrieve forecast for Henderson, TN
+# task to auto clean forecast channel and then retrieve 2-day forecast for Henderson, TN
 @tasks.loop(hours=15)
 async def clean_forecast():
          channel = bot.get_channel(795490169422610442)
