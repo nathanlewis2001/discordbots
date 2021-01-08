@@ -56,6 +56,7 @@ bot.remove_command('help')
 async def on_ready():
     covid_auto.start() # starts the covid_auto task
     clean_forecast.start() # starts the clean_forecast task
+    clean_rss.start() # starts the clean_rss task
     print("CYBi Bot is ready")
     print('Logged on as', bot.user)
     print('Discord.py Version: {}'.format(discord.__version__))
@@ -118,6 +119,20 @@ async def clean_error(ctx, error):
     elif isinstance(error, commands.CheckFailure):
         await ctx.send("You need special permission to clean this channel!")
 
+# task to auto clean RSS feed cahnnels
+@tasks.loop(hours=15)
+async def clean_rss():
+         channel_espn = bot.get_channel(796091192634507304)
+         channel_cybersecurity= bot.get_channel(796100268844515348)
+         channel_newsheadlines = bot.get_channel(796102764400869376)
+         channel_technologynews = bot.get_channel(796828995253567508)
+          # this keeps the clean command from deleting pinned messages
+         await channel_espn.purge(limit=1000, check=lambda msg: not msg.pinned)
+         await channel_cybersecurity.purge(limit=1000, check=lambda msg: not msg.pinned)
+         await channel_newsheadlines.purge(limit=1000, check=lambda msg: not msg.pinned)
+         await channel_technologynews.purge(limit=1000, check=lambda msg: not msg.pinned)
+
+# clean all messages, including pinned
 @bot.command()
 @commands.has_role('Admin')
 async def cleanall(ctx, amount: int):
@@ -700,7 +715,6 @@ async def clean_forecast():
            f'```yaml\n {date8}: Outlook: {desc8} | Temperature: {temp8} | May feel like: {feels8} | Wind Speed: {wind8} | Wind Direction: {wind_dir8}```'
            f'```ini\n [~~~Retrieved via the OpenWeatherMap API. For the current weather, use the weather command "./weather" along with your zipcode.]```'
            )
-
 
 # ------------------------------------------------------------------------------
 
