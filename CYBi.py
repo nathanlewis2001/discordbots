@@ -173,7 +173,7 @@ async def covid_error(ctx, error):
         await ctx.send('Please specify a state, i.e., CA, MO, TN, AL, KY, etc.')
 
 # Task to auto retrieve current Covid-19 stats by state and print in Covid stats channel every day
-@tasks.loop(hours=1.0)
+@tasks.loop(hours=16.0)
 async def covid_auto():
     urla = ('https://covidtracking.com/api/states?state=TN')
     resulta = requests.get(urla)
