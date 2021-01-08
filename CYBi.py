@@ -71,7 +71,7 @@ CYBi Discord Automated Tasks
 ------------------------------------------------------------------------
 '''
 # task to auto clean RSS feed channels
-@tasks.loop(hours=8)
+@tasks.loop(hours=24.0)
 async def clean_rss():
          channel_espn = bot.get_channel(796091192634507304)
          channel_cybersecurity= bot.get_channel(796100268844515348)
@@ -84,7 +84,7 @@ async def clean_rss():
          await channel_technologynews.purge(limit=1000, check=lambda msg: not msg.pinned)
 
 # Task to auto retrieve current Covid-19 stats by state and print in Covid stats channel every day
-@tasks.loop(hours=8.0)
+@tasks.loop(hours=24.0)
 async def covid_auto():
     urla = ('https://covidtracking.com/api/states?state=TN')
     resulta = requests.get(urla)
@@ -120,7 +120,7 @@ async def covid_auto():
     await channel.send(embed = covid_auto_embed)
 
 # task to auto clean forecast channel and then retrieve 2-day forecast for Henderson, TN
-@tasks.loop(hours=8)
+@tasks.loop(hours=24.0)
 async def clean_forecast():
          channel = bot.get_channel(795490169422610442)
           # this keeps the clean command from deleting pinned messages
