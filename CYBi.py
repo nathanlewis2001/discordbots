@@ -119,7 +119,7 @@ async def clean_error(ctx, error):
     elif isinstance(error, commands.CheckFailure):
         await ctx.send("You need special permission to clean this channel!")
 
-# task to auto clean RSS feed cahnnels
+# task to auto clean RSS feed channels
 @tasks.loop(hours=15)
 async def clean_rss():
          channel_espn = bot.get_channel(796091192634507304)
