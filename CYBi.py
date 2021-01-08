@@ -126,7 +126,7 @@ async def clean_rss():
          channel_cybersecurity= bot.get_channel(796100268844515348)
          channel_newsheadlines = bot.get_channel(796102764400869376)
          channel_technologynews = bot.get_channel(796828995253567508)
-          # this keeps the clean command from deleting pinned messages
+          # this keeps the clean_rss command from deleting pinned messages
          await channel_espn.purge(limit=1000, check=lambda msg: not msg.pinned)
          await channel_cybersecurity.purge(limit=1000, check=lambda msg: not msg.pinned)
          await channel_newsheadlines.purge(limit=1000, check=lambda msg: not msg.pinned)
