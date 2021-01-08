@@ -54,14 +54,181 @@ bot.remove_command('help')
 
 @bot.event
 async def on_ready():
+    clean_rss.start() # starts the clean_rss task
     covid_auto.start() # starts the covid_auto task
     clean_forecast.start() # starts the clean_forecast task
-    clean_rss.start() # starts the clean_rss task
     print("CYBi Bot is ready")
     print('Logged on as', bot.user)
     print('Discord.py Version: {}'.format(discord.__version__))
     await bot.change_presence(status=discord.Status.online,
                               activity=discord.Activity(type=discord.ActivityType.watching, name="over FHU CYB"))
+
+'''
+------------------------------------------------------------------------
+
+CYBi Discord Automated Tasks
+
+------------------------------------------------------------------------
+'''
+# task to auto clean RSS feed channels
+@tasks.loop(hours=8)
+async def clean_rss():
+         channel_espn = bot.get_channel(796091192634507304)
+         channel_cybersecurity= bot.get_channel(796100268844515348)
+         channel_newsheadlines = bot.get_channel(796102764400869376)
+         channel_technologynews = bot.get_channel(796828995253567508)
+          # this keeps the clean_rss command from deleting pinned messages
+         await channel_espn.purge(limit=1000, check=lambda msg: not msg.pinned)
+         await channel_cybersecurity.purge(limit=1000, check=lambda msg: not msg.pinned)
+         await channel_newsheadlines.purge(limit=1000, check=lambda msg: not msg.pinned)
+         await channel_technologynews.purge(limit=1000, check=lambda msg: not msg.pinned)
+
+# Task to auto retrieve current Covid-19 stats by state and print in Covid stats channel every day
+@tasks.loop(hours=8.0)
+async def covid_auto():
+    urla = ('https://covidtracking.com/api/states?state=TN')
+    resulta = requests.get(urla)
+    dataa = resulta.json()
+    desca = dataa['state']
+    datea = dataa['date']
+    casesa = dataa['positive']
+    newcasea = dataa['positiveIncrease']
+    reca = dataa['recovered']
+    hospitalizeda= dataa['hospitalizedCurrently']
+    newa = dataa['hospitalizedIncrease']
+    icua = dataa['inIcuCurrently']
+    venta = dataa['onVentilatorCurrently']
+    deathsa = dataa['deathConfirmed']
+    deaths2a = dataa['death']
+    deaths3a = dataa['deathIncrease']
+
+    covid_auto_embed = discord.Embed(title = f"Covid-19 stats for {desca}")
+    covid_auto_embed.set_thumbnail(url="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse4.mm.bing.net%2Fth%3Fid%3DOIP.HzXFdJrxdmvB6iTytSEUtQAAAA%26pid%3DApi&f=1")
+    covid_auto_embed.add_field(name="Date: ", value=f"{datea}", inline=True)
+    covid_auto_embed.add_field(name="Cases: ", value=f"{casesa}", inline=True)
+    covid_auto_embed.add_field(name="New Cases: ", value=f"{newcasea}", inline=True)
+    covid_auto_embed.add_field(name="Recovered: ", value=f"{reca}", inline=True)
+    covid_auto_embed.add_field(name="Hospitalized: ", value=f"{hospitalizeda}", inline=True)
+    covid_auto_embed.add_field(name="New hospitalized: ", value=f"{newa}", inline=True)
+    covid_auto_embed.add_field(name="ICU: ", value=f"{icua}", inline=True)
+    covid_auto_embed.add_field(name="On ventilator: ", value=f"{venta}", inline=True)
+    covid_auto_embed.add_field(name="Confirmed deaths: ", value=f"{deathsa}", inline=True)
+    covid_auto_embed.add_field(name="Confirmed death (includes probable): ", value=f"{deaths2a}", inline=True)
+    covid_auto_embed.add_field(name="New deaths: ", value=f"{deaths3a}", inline=True)
+    covid_auto_embed.set_footer(text="~~~Data retrieved from The COVID Tracking Project (https://covidtracking.com/about)")
+    channel = bot.get_channel(794303837989109771)
+    await channel.send(embed = covid_auto_embed)
+
+# task to auto clean forecast channel and then retrieve 2-day forecast for Henderson, TN
+@tasks.loop(hours=8)
+async def clean_forecast():
+         channel = bot.get_channel(795490169422610442)
+          # this keeps the clean command from deleting pinned messages
+         await channel.purge(limit=100, check=lambda msg: not msg.pinned)
+
+         url = 'http://api.openweathermap.org/data/2.5/forecast?zip=38340&exclude=hourly&appid={}&units=imperial'.format(appid)
+         result = requests.get(url)
+         data = result.json()
+         loc = data['city']['name']
+         timestamp = data['list'][2]['dt']
+         # convert epoch timestamp to CST
+         date = datetime.fromtimestamp(timestamp)
+         temp = data['list'][2]['main']['temp']
+         feels = data['list'][2]['main']['feels_like']
+         humid = data['list'][2]['main']['humidity']
+         press = data['list'][2]['main']['pressure']
+         wind = data['list'][2]['wind']['speed']
+         wind_dir = data['list'][2]['wind']['deg']
+         vis = data['list'][2]['visibility']
+         desc = data['list'][2]['weather'][0]['description']
+
+         timestamp2 = data['list'][4]['dt']
+         # convert epoch timestamp to CST
+         date2 = datetime.fromtimestamp(timestamp2)
+         temp2 = data['list'][4]['main']['temp']
+         feels2 = data['list'][4]['main']['feels_like']
+         humid2 = data['list'][4]['main']['humidity']
+         press2 = data['list'][4]['main']['pressure']
+         wind2 = data['list'][4]['wind']['speed']
+         wind_dir2 = data['list'][4]['wind']['deg']
+         desc2 = data['list'][4]['weather'][0]['description']
+
+         timestamp3 = data['list'][6]['dt']
+         # convert epoch timestamp to CST
+         date3 = datetime.fromtimestamp(timestamp3)
+         temp3 = data['list'][6]['main']['temp']
+         feels3 = data['list'][6]['main']['feels_like']
+         humid3 = data['list'][6]['main']['humidity']
+         press3 = data['list'][6]['main']['pressure']
+         wind3 = data['list'][6]['wind']['speed']
+         wind_dir3 = data['list'][6]['wind']['deg']
+         desc3 = data['list'][6]['weather'][0]['description']
+
+         timestamp4 = data['list'][8]['dt']
+         # convert epoch timestamp to CST
+         date4 = datetime.fromtimestamp(timestamp4)
+         temp4 = data['list'][8]['main']['temp']
+         feels4 = data['list'][8]['main']['feels_like']
+         humid4 = data['list'][8]['main']['humidity']
+         press4 = data['list'][8]['main']['pressure']
+         wind4 = data['list'][8]['wind']['speed']
+         wind_dir4 = data['list'][8]['wind']['deg']
+         desc4 = data['list'][8]['weather'][0]['description']
+
+         timestamp5 = data['list'][10]['dt']
+         # convert epoch timestamp to CST
+         date5 = datetime.fromtimestamp(timestamp5)
+         temp5 = data['list'][10]['main']['temp']
+         feels5 = data['list'][10]['main']['feels_like']
+         humid5 = data['list'][10]['main']['humidity']
+         press5 = data['list'][10]['main']['pressure']
+         wind5 = data['list'][10]['wind']['speed']
+         wind_dir5= data['list'][10]['wind']['deg']
+         desc5= data['list'][10]['weather'][0]['description']
+
+         timestamp6 = data['list'][12]['dt']
+         # convert epoch timestamp to CST
+         date6 = datetime.fromtimestamp(timestamp6)
+         temp6 = data['list'][12]['main']['temp']
+         feels6 = data['list'][12]['main']['feels_like']
+         humid6 = data['list'][12]['main']['humidity']
+         press6 = data['list'][12]['main']['pressure']
+         wind6 = data['list'][12]['wind']['speed']
+         wind_dir6 = data['list'][12]['wind']['deg']
+         desc6 = data['list'][12]['weather'][0]['description']
+
+         timestamp7 = data['list'][14]['dt']
+         # convert epoch timestamp to CST
+         date7 = datetime.fromtimestamp(timestamp7)
+         temp7 = data['list'][14]['main']['temp']
+         feels7 = data['list'][14]['main']['feels_like']
+         humid7 = data['list'][14]['main']['humidity']
+         press7 = data['list'][14]['main']['pressure']
+         wind7 = data['list'][14]['wind']['speed']
+         wind_dir7 = data['list'][14]['wind']['deg']
+         desc7 = data['list'][14]['weather'][0]['description']
+
+         timestamp8 = data['list'][16]['dt']
+         # convert epoch timestamp to CST
+         date8 = datetime.fromtimestamp(timestamp8)
+         temp8 = data['list'][16]['main']['temp']
+         feels8 = data['list'][16]['main']['feels_like']
+         humid8 = data['list'][16]['main']['humidity']
+         press8 = data['list'][16]['main']['pressure']
+         wind8 = data['list'][16]['wind']['speed']
+         wind_dir8 = data['list'][16]['wind']['deg']
+         desc8 = data['list'][16]['weather'][0]['description']
+
+         channel = bot.get_channel(795490169422610442)
+         await channel.send(f'```yaml\n 2-Day Forecast for {loc} (38340)\n {date}: Outlook: {desc} | Temperature: {temp} | May feel like: {feels} | Wind Speed: {wind} | Wind Direction: {wind_dir}```'
+           f'```yaml\n {date2}: Outlook: {desc2} | Temperature: {temp2} | May feel like: {feels2} | Wind Speed: {wind2} | Wind Direction: {wind_dir2}```'
+           f'```yaml\n {date3}: Outlook: {desc3} | Temperature: {temp3} | May feel like: {feels3} | Wind Speed: {wind3} | Wind Direction: {wind_dir3}```'
+           f'```yaml\n {date4}: Outlook: {desc4} | Temperature: {temp4} | May feel like: {feels4} | Wind Speed: {wind4} | Wind Direction: {wind_dir4}```'
+           f'```yaml\n {date6}: Outlook: {desc6} | Temperature: {temp6} | May feel like: {feels6} | Wind Speed: {wind6} | Wind Direction: {wind_dir6}```'
+           f'```yaml\n {date7}: Outlook: {desc7} | Temperature: {temp7} | May feel like: {feels7} | Wind Speed: {wind7} | Wind Direction: {wind_dir7}```'
+           f'```yaml\n {date8}: Outlook: {desc8} | Temperature: {temp8} | May feel like: {feels8} | Wind Speed: {wind8} | Wind Direction: {wind_dir8}```'
+           f'```ini\n [~~~Retrieved via the OpenWeatherMap API. For the current weather, use the weather command "./weather" along with your zipcode.]```'
+           )
 
 '''
 ------------------------------------------------------------------------
@@ -119,19 +286,6 @@ async def clean_error(ctx, error):
     elif isinstance(error, commands.CheckFailure):
         await ctx.send("You need special permission to clean this channel!")
 
-# task to auto clean RSS feed channels
-@tasks.loop(hours=15)
-async def clean_rss():
-         channel_espn = bot.get_channel(796091192634507304)
-         channel_cybersecurity= bot.get_channel(796100268844515348)
-         channel_newsheadlines = bot.get_channel(796102764400869376)
-         channel_technologynews = bot.get_channel(796828995253567508)
-          # this keeps the clean_rss command from deleting pinned messages
-         await channel_espn.purge(limit=1000, check=lambda msg: not msg.pinned)
-         await channel_cybersecurity.purge(limit=1000, check=lambda msg: not msg.pinned)
-         await channel_newsheadlines.purge(limit=1000, check=lambda msg: not msg.pinned)
-         await channel_technologynews.purge(limit=1000, check=lambda msg: not msg.pinned)
-
 # clean all messages, including pinned
 @bot.command()
 @commands.has_role('Admin')
@@ -187,42 +341,6 @@ async def covid(ctx, state: str):
 async def covid_error(ctx, error):
     if isinstance(error, commands.MissingRequiredArgument):
         await ctx.send('Please specify a state, i.e., CA, MO, TN, AL, KY, etc.')
-
-# Task to auto retrieve current Covid-19 stats by state and print in Covid stats channel every day
-@tasks.loop(hours=16.0)
-async def covid_auto():
-    urla = ('https://covidtracking.com/api/states?state=TN')
-    resulta = requests.get(urla)
-    dataa = resulta.json()
-    desca = dataa['state']
-    datea = dataa['date']
-    casesa = dataa['positive']
-    newcasea = dataa['positiveIncrease']
-    reca = dataa['recovered']
-    hospitalizeda= dataa['hospitalizedCurrently']
-    newa = dataa['hospitalizedIncrease']
-    icua = dataa['inIcuCurrently']
-    venta = dataa['onVentilatorCurrently']
-    deathsa = dataa['deathConfirmed']
-    deaths2a = dataa['death']
-    deaths3a = dataa['deathIncrease']
-
-    covid_auto_embed = discord.Embed(title = f"Covid-19 stats for {desca}")
-    covid_auto_embed.set_thumbnail(url="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse4.mm.bing.net%2Fth%3Fid%3DOIP.HzXFdJrxdmvB6iTytSEUtQAAAA%26pid%3DApi&f=1")
-    covid_auto_embed.add_field(name="Date: ", value=f"{datea}", inline=True)
-    covid_auto_embed.add_field(name="Cases: ", value=f"{casesa}", inline=True)
-    covid_auto_embed.add_field(name="New Cases: ", value=f"{newcasea}", inline=True)
-    covid_auto_embed.add_field(name="Recovered: ", value=f"{reca}", inline=True)
-    covid_auto_embed.add_field(name="Hospitalized: ", value=f"{hospitalizeda}", inline=True)
-    covid_auto_embed.add_field(name="New hospitalized: ", value=f"{newa}", inline=True)
-    covid_auto_embed.add_field(name="ICU: ", value=f"{icua}", inline=True)
-    covid_auto_embed.add_field(name="On ventilator: ", value=f"{venta}", inline=True)
-    covid_auto_embed.add_field(name="Confirmed deaths: ", value=f"{deathsa}", inline=True)
-    covid_auto_embed.add_field(name="Confirmed death (includes probable): ", value=f"{deaths2a}", inline=True)
-    covid_auto_embed.add_field(name="New deaths: ", value=f"{deaths3a}", inline=True)
-    covid_auto_embed.set_footer(text="~~~Data retrieved from The COVID Tracking Project (https://covidtracking.com/about)")
-    channel = bot.get_channel(794303837989109771)
-    await channel.send(embed = covid_auto_embed)
 
 #Resolve domain IP address
 @bot.command()
@@ -491,7 +609,7 @@ async def weather_error(ctx, error):
     if isinstance(error, commands.MissingRequiredArgument):
         await ctx.send('Please specify a zipcode.')
 
-# pull 5 day weather forecast info by zipcode
+# pull 2 day weather forecast info by zipcode
 @bot.command()
 async def forecast(ctx, zip: str):
     await ctx.message.delete()
@@ -599,122 +717,10 @@ async def forecast(ctx, zip: str):
       f'```ini\n [~~~Retrieved via the OpenWeatherMap API. For the current weather, use the weather command "./weather" along with your zipcode.]```'
       )
 
-
 @forecast.error
 async def forecast_error(ctx, error):
     if isinstance(error, commands.MissingRequiredArgument):
         await ctx.send('Please specify a zipcode.')
-
-# task to auto clean forecast channel and then retrieve 2-day forecast for Henderson, TN
-@tasks.loop(hours=15)
-async def clean_forecast():
-         channel = bot.get_channel(795490169422610442)
-          # this keeps the clean command from deleting pinned messages
-         await channel.purge(limit=100, check=lambda msg: not msg.pinned)
-
-         url = 'http://api.openweathermap.org/data/2.5/forecast?zip=38340&exclude=hourly&appid={}&units=imperial'.format(appid)
-         result = requests.get(url)
-         data = result.json()
-         loc = data['city']['name']
-         timestamp = data['list'][2]['dt']
-         # convert epoch timestamp to CST
-         date = datetime.fromtimestamp(timestamp)
-         temp = data['list'][2]['main']['temp']
-         feels = data['list'][2]['main']['feels_like']
-         humid = data['list'][2]['main']['humidity']
-         press = data['list'][2]['main']['pressure']
-         wind = data['list'][2]['wind']['speed']
-         wind_dir = data['list'][2]['wind']['deg']
-         vis = data['list'][2]['visibility']
-         desc = data['list'][2]['weather'][0]['description']
-
-         timestamp2 = data['list'][4]['dt']
-         # convert epoch timestamp to CST
-         date2 = datetime.fromtimestamp(timestamp2)
-         temp2 = data['list'][4]['main']['temp']
-         feels2 = data['list'][4]['main']['feels_like']
-         humid2 = data['list'][4]['main']['humidity']
-         press2 = data['list'][4]['main']['pressure']
-         wind2 = data['list'][4]['wind']['speed']
-         wind_dir2 = data['list'][4]['wind']['deg']
-         desc2 = data['list'][4]['weather'][0]['description']
-
-         timestamp3 = data['list'][6]['dt']
-         # convert epoch timestamp to CST
-         date3 = datetime.fromtimestamp(timestamp3)
-         temp3 = data['list'][6]['main']['temp']
-         feels3 = data['list'][6]['main']['feels_like']
-         humid3 = data['list'][6]['main']['humidity']
-         press3 = data['list'][6]['main']['pressure']
-         wind3 = data['list'][6]['wind']['speed']
-         wind_dir3 = data['list'][6]['wind']['deg']
-         desc3 = data['list'][6]['weather'][0]['description']
-
-         timestamp4 = data['list'][8]['dt']
-         # convert epoch timestamp to CST
-         date4 = datetime.fromtimestamp(timestamp4)
-         temp4 = data['list'][8]['main']['temp']
-         feels4 = data['list'][8]['main']['feels_like']
-         humid4 = data['list'][8]['main']['humidity']
-         press4 = data['list'][8]['main']['pressure']
-         wind4 = data['list'][8]['wind']['speed']
-         wind_dir4 = data['list'][8]['wind']['deg']
-         desc4 = data['list'][8]['weather'][0]['description']
-
-         timestamp5 = data['list'][10]['dt']
-         # convert epoch timestamp to CST
-         date5 = datetime.fromtimestamp(timestamp5)
-         temp5 = data['list'][10]['main']['temp']
-         feels5 = data['list'][10]['main']['feels_like']
-         humid5 = data['list'][10]['main']['humidity']
-         press5 = data['list'][10]['main']['pressure']
-         wind5 = data['list'][10]['wind']['speed']
-         wind_dir5= data['list'][10]['wind']['deg']
-         desc5= data['list'][10]['weather'][0]['description']
-
-         timestamp6 = data['list'][12]['dt']
-         # convert epoch timestamp to CST
-         date6 = datetime.fromtimestamp(timestamp6)
-         temp6 = data['list'][12]['main']['temp']
-         feels6 = data['list'][12]['main']['feels_like']
-         humid6 = data['list'][12]['main']['humidity']
-         press6 = data['list'][12]['main']['pressure']
-         wind6 = data['list'][12]['wind']['speed']
-         wind_dir6 = data['list'][12]['wind']['deg']
-         desc6 = data['list'][12]['weather'][0]['description']
-
-         timestamp7 = data['list'][14]['dt']
-         # convert epoch timestamp to CST
-         date7 = datetime.fromtimestamp(timestamp7)
-         temp7 = data['list'][14]['main']['temp']
-         feels7 = data['list'][14]['main']['feels_like']
-         humid7 = data['list'][14]['main']['humidity']
-         press7 = data['list'][14]['main']['pressure']
-         wind7 = data['list'][14]['wind']['speed']
-         wind_dir7 = data['list'][14]['wind']['deg']
-         desc7 = data['list'][14]['weather'][0]['description']
-
-         timestamp8 = data['list'][16]['dt']
-         # convert epoch timestamp to CST
-         date8 = datetime.fromtimestamp(timestamp8)
-         temp8 = data['list'][16]['main']['temp']
-         feels8 = data['list'][16]['main']['feels_like']
-         humid8 = data['list'][16]['main']['humidity']
-         press8 = data['list'][16]['main']['pressure']
-         wind8 = data['list'][16]['wind']['speed']
-         wind_dir8 = data['list'][16]['wind']['deg']
-         desc8 = data['list'][16]['weather'][0]['description']
-
-         channel = bot.get_channel(795490169422610442)
-         await channel.send(f'```yaml\n 2-Day Forecast for {loc} (38340)\n {date}: Outlook: {desc} | Temperature: {temp} | May feel like: {feels} | Wind Speed: {wind} | Wind Direction: {wind_dir}```'
-           f'```yaml\n {date2}: Outlook: {desc2} | Temperature: {temp2} | May feel like: {feels2} | Wind Speed: {wind2} | Wind Direction: {wind_dir2}```'
-           f'```yaml\n {date3}: Outlook: {desc3} | Temperature: {temp3} | May feel like: {feels3} | Wind Speed: {wind3} | Wind Direction: {wind_dir3}```'
-           f'```yaml\n {date4}: Outlook: {desc4} | Temperature: {temp4} | May feel like: {feels4} | Wind Speed: {wind4} | Wind Direction: {wind_dir4}```'
-           f'```yaml\n {date6}: Outlook: {desc6} | Temperature: {temp6} | May feel like: {feels6} | Wind Speed: {wind6} | Wind Direction: {wind_dir6}```'
-           f'```yaml\n {date7}: Outlook: {desc7} | Temperature: {temp7} | May feel like: {feels7} | Wind Speed: {wind7} | Wind Direction: {wind_dir7}```'
-           f'```yaml\n {date8}: Outlook: {desc8} | Temperature: {temp8} | May feel like: {feels8} | Wind Speed: {wind8} | Wind Direction: {wind_dir8}```'
-           f'```ini\n [~~~Retrieved via the OpenWeatherMap API. For the current weather, use the weather command "./weather" along with your zipcode.]```'
-           )
 
 # ------------------------------------------------------------------------------
 
