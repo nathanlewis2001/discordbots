@@ -29,6 +29,7 @@ OR OTHER DEALINGS IN THE SOFTWARE.
 
 import discord
 from discord.ext import commands
+from discord.ext import tasks
 from dotenv import load_dotenv
 import os
 import time
@@ -53,6 +54,7 @@ bot.remove_command('help')
 
 @bot.event
 async def on_ready():
+    covid_auto.start() # starts the covid_auto task
     print("CYBi Bot is ready")
     print('Logged on as', bot.user)
     print('Discord.py Version: {}'.format(discord.__version__))
@@ -169,6 +171,44 @@ async def covid(ctx, state: str):
 async def covid_error(ctx, error):
     if isinstance(error, commands.MissingRequiredArgument):
         await ctx.send('Please specify a state, i.e., CA, MO, TN, AL, KY, etc.')
+
+# Task to auto retrieve current Covid-19 stats by state and print in Covid stats channel every day
+@tasks.loop(hours=1.0)
+async def covid_auto():
+    urla = ('https://covidtracking.com/api/states?state=TN')
+    resulta = requests.get(urla)
+    print(resulta)
+    dataa = resulta.json()
+    desca = dataa['state']
+    print(desca)
+    datea = dataa['date']
+    casesa = dataa['positive']
+    newcasea = dataa['positiveIncrease']
+    reca = dataa['recovered']
+    hospitalizeda= dataa['hospitalizedCurrently']
+    newa = dataa['hospitalizedIncrease']
+    icua = dataa['inIcuCurrently']
+    venta = dataa['onVentilatorCurrently']
+    deathsa = dataa['deathConfirmed']
+    deaths2a = dataa['death']
+    deaths3a = dataa['deathIncrease']
+
+    covid_auto_embed = discord.Embed(title = f"Covid-19 stats for {desca}")
+    covid_auto_embed.set_thumbnail(url="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse4.mm.bing.net%2Fth%3Fid%3DOIP.HzXFdJrxdmvB6iTytSEUtQAAAA%26pid%3DApi&f=1")
+    covid_auto_embed.add_field(name="Date: ", value=f"{datea}", inline=True)
+    covid_auto_embed.add_field(name="Cases: ", value=f"{casesa}", inline=True)
+    covid_auto_embed.add_field(name="New Cases: ", value=f"{newcasea}", inline=True)
+    covid_auto_embed.add_field(name="Recovered: ", value=f"{reca}", inline=True)
+    covid_auto_embed.add_field(name="Hospitalized: ", value=f"{hospitalizeda}", inline=True)
+    covid_auto_embed.add_field(name="New hospitalized: ", value=f"{newa}", inline=True)
+    covid_auto_embed.add_field(name="ICU: ", value=f"{icua}", inline=True)
+    covid_auto_embed.add_field(name="On ventilator: ", value=f"{venta}", inline=True)
+    covid_auto_embed.add_field(name="Confirmed deaths: ", value=f"{deathsa}", inline=True)
+    covid_auto_embed.add_field(name="Confirmed death (includes probable): ", value=f"{deaths2a}", inline=True)
+    covid_auto_embed.add_field(name="New deaths: ", value=f"{deaths3a}", inline=True)
+    covid_auto_embed.set_footer(text="~~~Data retrieved from The COVID Tracking Project (https://covidtracking.com/about)")
+    channel = bot.get_channel(794303837989109771)
+    await channel.send(embed = covid_auto_embed)
 
 #Resolve domain IP address
 @bot.command()
@@ -535,14 +575,13 @@ async def forecast(ctx, zip: str):
     desc8 = data['list'][16]['weather'][0]['description']
 
     channel = bot.get_channel(795490169422610442)
-    await channel.send(f'```yaml\n Forecast for {loc} ({zip}) on {date}\n Outlook: {desc} | Temperature: {temp} | May feel like: {feels} | Wind Speed: {wind} | Wind Direction: {wind_dir}```'
-      f'```yaml\n Forecast for {loc} ({zip}) on {date2}\n Outlook: {desc2} | Temperature: {temp2} | May feel like: {feels2} | Wind Speed: {wind2} | Wind Direction: {wind_dir2}```'
-      f'```yaml\n Forecast for {loc} ({zip}) on {date3}\n Outlook: {desc3} | Temperature: {temp3} | May feel like: {feels3} | Wind Speed: {wind3} | Wind Direction: {wind_dir3}```'
-      f'```yaml\n Forecast for {loc} ({zip}) on {date4}\n Outlook: {desc4} | Temperature: {temp4} | May feel like: {feels4} | Wind Speed: {wind4} | Wind Direction: {wind_dir4}```'
-      f'```yaml\n Forecast for {loc} ({zip}) on {date5}\n Outlook: {desc5} | Temperature: {temp5} | May feel like: {feels5} | Wind Speed: {wind5} | Wind Direction: {wind_dir5}```'
-      f'```yaml\n Forecast for {loc} ({zip}) on {date6}\n Outlook: {desc6} | Temperature: {temp6} | May feel like: {feels6} | Wind Speed: {wind6} | Wind Direction: {wind_dir6}```'
-      f'```yaml\n Forecast for {loc} ({zip}) on {date7}\n Outlook: {desc7} | Temperature: {temp7} | May feel like: {feels7} | Wind Speed: {wind7} | Wind Direction: {wind_dir7}```'
-      f'```yaml\n Forecast for {loc} ({zip}) on {date8}\n Outlook: {desc8} | Temperature: {temp8} | May feel like: {feels8} | Wind Speed: {wind8} | Wind Direction: {wind_dir8}```'
+    await channel.send(f'```yaml\n 2-Day Forecast for {loc} ({zip})\n {date}: Outlook: {desc} | Temperature: {temp} | May feel like: {feels} | Wind Speed: {wind} | Wind Direction: {wind_dir}```'
+      f'```yaml\n {date2}: Outlook: {desc2} | Temperature: {temp2} | May feel like: {feels2} | Wind Speed: {wind2} | Wind Direction: {wind_dir2}```'
+      f'```yaml\n {date3}: Outlook: {desc3} | Temperature: {temp3} | May feel like: {feels3} | Wind Speed: {wind3} | Wind Direction: {wind_dir3}```'
+      f'```yaml\n {date4}: Outlook: {desc4} | Temperature: {temp4} | May feel like: {feels4} | Wind Speed: {wind4} | Wind Direction: {wind_dir4}```'
+      f'```yaml\n {date6}: Outlook: {desc6} | Temperature: {temp6} | May feel like: {feels6} | Wind Speed: {wind6} | Wind Direction: {wind_dir6}```'
+      f'```yaml\n {date7}: Outlook: {desc7} | Temperature: {temp7} | May feel like: {feels7} | Wind Speed: {wind7} | Wind Direction: {wind_dir7}```'
+      f'```yaml\n {date8}: Outlook: {desc8} | Temperature: {temp8} | May feel like: {feels8} | Wind Speed: {wind8} | Wind Direction: {wind_dir8}```'
       f'```ini\n [~~~Retrieved via the OpenWeatherMap API. For the current weather, use the weather command "./weather" along with your zipcode.]```'
       )
 
