@@ -246,7 +246,7 @@ async def clean_weather():
     url = 'http://api.openweathermap.org/data/2.5/weather?zip=38340&appid={}&units=imperial'.format(appid)
 
     resultc = requests.get(url)
-    datac = result.json()
+    datac = resultc.json()
     descc = data['weather'][0]['description']
     tempc = data['main']['temp']
     feelsc = data['main']['feels_like']
