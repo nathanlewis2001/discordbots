@@ -227,7 +227,7 @@ async def clean_forecast():
          desc8 = data['list'][16]['weather'][0]['description']
 
          channelf = bot.get_channel(795490169422610442)
-         await channel.send(f'```yaml\n 2-Day Forecast for {loc} (38340)\n {date}: Outlook: {desc} | Temperature: {temp} | May feel like: {feels} | Wind Speed: {wind} | Wind Direction: {wind_dir}```'
+         await channelf.send(f'```yaml\n 2-Day Forecast for {loc} (38340)\n {date}: Outlook: {desc} | Temperature: {temp} | May feel like: {feels} | Wind Speed: {wind} | Wind Direction: {wind_dir}```'
            f'```yaml\n {date2}: Outlook: {desc2} | Temperature: {temp2} | May feel like: {feels2} | Wind Speed: {wind2} | Wind Direction: {wind_dir2}```'
            f'```yaml\n {date3}: Outlook: {desc3} | Temperature: {temp3} | May feel like: {feels3} | Wind Speed: {wind3} | Wind Direction: {wind_dir3}```'
            f'```yaml\n {date4}: Outlook: {desc4} | Temperature: {temp4} | May feel like: {feels4} | Wind Speed: {wind4} | Wind Direction: {wind_dir4}```'
