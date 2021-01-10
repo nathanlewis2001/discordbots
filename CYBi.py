@@ -247,17 +247,17 @@ async def clean_weather():
 
     resultc = requests.get(url)
     datac = resultc.json()
-    descc = data['weather'][0]['description']
-    tempc = data['main']['temp']
-    feelsc = data['main']['feels_like']
-    humidc = data['main']['humidity']
-    pressc = data['main']['pressure']
-    visc = data['visibility']
-    windc = data['wind']['speed']
-    wind_dir = data['wind']['deg']
-    latc = data['coord']['lat']
-    lonc = data['coord']['lon']
-    locc = data['name']
+    descc = datac['weather'][0]['description']
+    tempc = datac['main']['temp']
+    feelsc = datac['main']['feels_like']
+    humidc = datac['main']['humidity']
+    pressc = datac['main']['pressure']
+    visc = datac['visibility']
+    windc = datac['wind']['speed']
+    wind_dir = datac['wind']['deg']
+    latc = datac['coord']['lat']
+    lonc = datac['coord']['lon']
+    locc = datac['name']
 
     weatherc_embed = discord.Embed(colour=discord.Colour.blue(), title = f"Current Weather for {locc} (38340)")
     weatherc_embed.set_thumbnail(url="https://openweathermap.org/themes/openweathermap/assets/img/logo_white_cropped.png")
