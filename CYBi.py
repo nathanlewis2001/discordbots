@@ -129,9 +129,9 @@ async def covid_auto():
 # task to auto clean forecast channel and then retrieve 2-day forecast for Henderson, TN
 @tasks.loop(hours=12.0)
 async def clean_forecast():
-         channel = bot.get_channel(795490169422610442)
+         channelf = bot.get_channel(795490169422610442)
           # this keeps the clean command from deleting pinned messages
-         await channel.purge(limit=100, check=lambda msg: not msg.pinned)
+         await channelf.purge(limit=100, check=lambda msg: not msg.pinned)
 
          url = 'http://api.openweathermap.org/data/2.5/forecast?zip=38340&exclude=hourly&appid={}&units=imperial'.format(appid)
          result = requests.get(url)
@@ -226,7 +226,7 @@ async def clean_forecast():
          wind_dir8 = data['list'][16]['wind']['deg']
          desc8 = data['list'][16]['weather'][0]['description']
 
-         channel = bot.get_channel(795490169422610442)
+         channelf = bot.get_channel(795490169422610442)
          await channel.send(f'```yaml\n 2-Day Forecast for {loc} (38340)\n {date}: Outlook: {desc} | Temperature: {temp} | May feel like: {feels} | Wind Speed: {wind} | Wind Direction: {wind_dir}```'
            f'```yaml\n {date2}: Outlook: {desc2} | Temperature: {temp2} | May feel like: {feels2} | Wind Speed: {wind2} | Wind Direction: {wind_dir2}```'
            f'```yaml\n {date3}: Outlook: {desc3} | Temperature: {temp3} | May feel like: {feels3} | Wind Speed: {wind3} | Wind Direction: {wind_dir3}```'
@@ -240,9 +240,9 @@ async def clean_forecast():
 # task to auto clean weather channel and then retrieve 2-day forecast for Henderson, TN
 @tasks.loop(hours=12.0)
 async def clean_weather():
-    channel = bot.get_channel(779368404392869918)
+    channelw = bot.get_channel(779368404392869918)
      # this keeps the clean command from deleting pinned messages
-    await channel.purge(limit=100, check=lambda msg: not msg.pinned)
+    await channelw.purge(limit=100, check=lambda msg: not msg.pinned)
     url = 'http://api.openweathermap.org/data/2.5/weather?zip=38340&appid={}&units=imperial'.format(appid)
 
     resultc = requests.get(url)
@@ -273,7 +273,7 @@ async def clean_weather():
     weatherc_embed.add_field(name="Longitude: ", value=f"{lonc}", inline=True)
     weatherc_embed.set_footer(text ='[For a 2-day forecast, use the forecast command "./forecast" along with your zipcode.]')
     channel = bot.get_channel(779368404392869918)
-    await channel.send(embed = weatherc_embed)
+    await channelw.send(embed = weatherc_embed)
 
 '''
 ------------------------------------------------------------------------
