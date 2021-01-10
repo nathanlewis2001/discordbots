@@ -254,7 +254,7 @@ async def clean_weather():
     pressc = datac['main']['pressure']
     visc = datac['visibility']
     windc = datac['wind']['speed']
-    wind_dir = datac['wind']['deg']
+    wind_dirc = datac['wind']['deg']
     latc = datac['coord']['lat']
     lonc = datac['coord']['lon']
     locc = datac['name']
