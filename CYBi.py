@@ -72,26 +72,22 @@ CYBi Discord Automated Tasks
 ------------------------------------------------------------------------
 '''
 # task to auto clean RSS feed channels
-@tasks.loop(hours=12.0)
+@tasks.loop(hours=6.0)
 async def clean_rss():
          channel_espn = bot.get_channel(796091192634507304)
          channel_cybersecurity= bot.get_channel(796100268844515348)
          channel_newsheadlines = bot.get_channel(796102764400869376)
          channel_technologynews = bot.get_channel(796828995253567508)
-         channel_covid = bot.get_channel(794303837989109771)
-         channel_weather = bot.get_channel(779368404392869918)
          channel_stocks = bot.get_channel(792085912095162368)
-         # check=lambda msg: not msg.pinned, keeps the purge command from deleting pinned messages
+         # "check=lambda msg: not msg.pinned" keeps the purge command from deleting pinned messages
          await channel_espn.purge(limit=1000, check=lambda msg: not msg.pinned)
          await channel_cybersecurity.purge(limit=1000, check=lambda msg: not msg.pinned)
          await channel_newsheadlines.purge(limit=1000, check=lambda msg: not msg.pinned)
          await channel_technologynews.purge(limit=1000, check=lambda msg: not msg.pinned)
-         await channel_covid.purge(limit=1000, check=lambda msg: not msg.pinned)
-         await channel_weather.purge(limit=1000, check=lambda msg: not msg.pinned)
          await channel_stocks.purge(limit=1000, check=lambda msg: not msg.pinned)
 
 # Task to auto retrieve current Covid-19 stats by state and print in Covid stats channel every day
-@tasks.loop(hours=12.0)
+@tasks.loop(hours=6.0)
 async def covid_auto():
     urla = ('https://covidtracking.com/api/states?state=TN')
     resulta = requests.get(urla)
@@ -127,7 +123,7 @@ async def covid_auto():
     await channel.send(embed = covid_auto_embed)
 
 # task to auto clean forecast channel and then retrieve 2-day forecast for Henderson, TN
-@tasks.loop(hours=12.0)
+@tasks.loop(hours=6.0)
 async def clean_forecast():
          channelf = bot.get_channel(795490169422610442)
           # this keeps the clean command from deleting pinned messages
@@ -238,42 +234,43 @@ async def clean_forecast():
            )
 
 # task to auto clean weather channel and then retrieve 2-day forecast for Henderson, TN
-@tasks.loop(hours=12.0)
+@tasks.loop(hours=6.0)
 async def clean_weather():
     channelw = bot.get_channel(779368404392869918)
      # this keeps the clean command from deleting pinned messages
     await channelw.purge(limit=100, check=lambda msg: not msg.pinned)
     urlw = 'http://api.openweathermap.org/data/2.5/weather?zip=38340&appid={}&units=imperial'.format(appid)
 
-    resultc = requests.get(urlw)
-    datac = resultc.json()
-    descc = datac['weather'][0]['description']
-    tempc = datac['main']['temp']
-    feelsc = datac['main']['feels_like']
-    humidc = datac['main']['humidity']
-    pressc = datac['main']['pressure']
-    visc = datac['visibility']
-    windc = datac['wind']['speed']
-    wind_dirc = datac['wind']['deg']
-    latc = datac['coord']['lat']
-    lonc = datac['coord']['lon']
-    locc = datac['name']
 
-    weatherc_embed = discord.Embed(colour=discord.Colour.blue(), title = f"Current Weather for {locc} (38340)")
-    weatherc_embed.set_thumbnail(url="https://openweathermap.org/themes/openweathermap/assets/img/logo_white_cropped.png")
-    weatherc_embed.add_field(name="Conditions: ", value=f"{descc}", inline=True)
-    weatherc_embed.add_field(name="Temperature (F): ", value=f"{tempc}", inline=True)
-    weatherc_embed.add_field(name="Feels like (F): ", value=f"{feelsc}", inline=True)
-    weatherc_embed.add_field(name="Humidity (%): ", value=f"{humidc}", inline=True)
-    weatherc_embed.add_field(name="Pressure (mm): ", value=f"{pressc}", inline=True)
-    weatherc_embed.add_field(name="Visibility (ft): ", value=f"{visc}", inline=True)
-    weatherc_embed.add_field(name="Wind speed (mph): ", value=f"{windc}", inline=True)
-    weatherc_embed.add_field(name="Wind direction (degrees): ", value=f"{wind_dirc}", inline=True)
-    weatherc_embed.add_field(name="Latitiude: ", value=f"{latc}", inline=True)
-    weatherc_embed.add_field(name="Longitude: ", value=f"{lonc}", inline=True)
-    weatherc_embed.set_footer(text ='[For a 2-day forecast, use the forecast command "./forecast" along with your zipcode.]')
+    resultw = requests.get(urlw)
+    dataw = resultw.json()
+    descw = dataw['weather'][0]['description']
+    tempw = dataw['main']['temp']
+    feelsw = dataw['main']['feels_like']
+    humidw = dataw['main']['humidity']
+    pressw = dataw['main']['pressure']
+    visw = dataw['visibility']
+    windw = dataw['wind']['speed']
+    wind_dirw = dataw['wind']['deg']
+    latw = dataw['coord']['lat']
+    lonw = dataw['coord']['lon']
+    locw = dataw['name']
+
+    weatherw_embed = discord.Embed(colour=discord.Colour.blue(), title = f"Current Weather for {locw} (38340)")
+    weatherw_embed.set_thumbnail(url="https://openweathermap.org/themes/openweathermap/assets/img/logo_white_cropped.png")
+    weatherw_embed.add_field(name="Conditions: ", value=f"{descw}", inline=True)
+    weatherw_embed.add_field(name="Temperature (F): ", value=f"{tempw}", inline=True)
+    weatherw_embed.add_field(name="Feels like (F): ", value=f"{feelsw}", inline=True)
+    weatherw_embed.add_field(name="Humidity (%): ", value=f"{humidw}", inline=True)
+    weatherw_embed.add_field(name="Pressure (mm): ", value=f"{pressw}", inline=True)
+    weatherw_embed.add_field(name="Visibility (ft): ", value=f"{visw}", inline=True)
+    weatherw_embed.add_field(name="Wind speed (mph): ", value=f"{windw}", inline=True)
+    weatherw_embed.add_field(name="Wind direction (degrees): ", value=f"{wind_dirw}", inline=True)
+    weatherw_embed.add_field(name="Latitiude: ", value=f"{latw}", inline=True)
+    weatherw_embed.add_field(name="Longitude: ", value=f"{lonw}", inline=True)
+    weatherw_embed.set_footer(text ='[For a 2-day forecast, use the forecast command "./forecast" along with your zipcode.]')
     channelw = bot.get_channel(779368404392869918)
-    await channelw.send(embed = weatherc_embed)
+    await channelw.send(embed = weatherw_embed)
 
 '''
 ------------------------------------------------------------------------
