@@ -182,7 +182,7 @@ async def clean_forecast():
          wind_dir4f = dataf['list'][8]['wind']['deg']
          desc4f = dataf['list'][8]['weather'][0]['description']
 
-         timestamp5f = data['list'][10]['dt']
+         timestamp5f = dataf['list'][10]['dt']
          # convert epoch timestamp to CST
          date5f = datetime.fromtimestamp(timestamp5f)
          temp5f = dataf['list'][10]['main']['temp']
@@ -193,7 +193,7 @@ async def clean_forecast():
          wind_dir5f = dataf['list'][10]['wind']['deg']
          desc5f = dataf['list'][10]['weather'][0]['description']
 
-         timestamp6f = data['list'][12]['dt']
+         timestamp6f = dataf['list'][12]['dt']
          # convert epoch timestamp to CST
          date6f = datetime.fromtimestamp(timestamp6f)
          temp6f = dataf['list'][12]['main']['temp']
@@ -204,7 +204,7 @@ async def clean_forecast():
          wind_dir6f = dataf['list'][12]['wind']['deg']
          desc6f = dataf['list'][12]['weather'][0]['description']
 
-         timestamp7f = data['list'][14]['dt']
+         timestamp7f = dataf['list'][14]['dt']
          # convert epoch timestamp to CST
          date7f = datetime.fromtimestamp(timestamp7)
          temp7f = dataf['list'][14]['main']['temp']
@@ -215,7 +215,7 @@ async def clean_forecast():
          wind_dir7f = dataf['list'][14]['wind']['deg']
          desc7f = dataf['list'][14]['weather'][0]['description']
 
-         timestamp8f = data['list'][16]['dt']
+         timestamp8f = dataf['list'][16]['dt']
          # convert epoch timestamp to CST
          date8f = datetime.fromtimestamp(timestamp8f)
          temp8f = dataf['list'][16]['main']['temp']
