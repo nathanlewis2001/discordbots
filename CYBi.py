@@ -57,6 +57,7 @@ async def on_ready():
     clean_rss.start() # starts the clean_rss task
     covid_auto.start() # starts the covid_auto task
     clean_forecast.start() # starts the clean_forecast task
+    clean_weather.start() # starts the clean_weather task
     print("CYBi Bot is ready")
     print('Logged on as', bot.user)
     print('Discord.py Version: {}'.format(discord.__version__))
@@ -235,6 +236,44 @@ async def clean_forecast():
            f'```yaml\n {date8}: Outlook: {desc8} | Temperature: {temp8} | May feel like: {feels8} | Wind Speed: {wind8} | Wind Direction: {wind_dir8}```'
            f'```ini\n [~~~Retrieved via the OpenWeatherMap API. For the current weather, use the weather command "./weather" along with your zipcode.]```'
            )
+
+# task to auto clean weather channel and then retrieve 2-day forecast for Henderson, TN
+@tasks.loop(hours=12.0)
+async def clean_weather():
+    channel = bot.get_channel(779368404392869918)
+     # this keeps the clean command from deleting pinned messages
+    await channel.purge(limit=100, check=lambda msg: not msg.pinned)
+    url = 'http://api.openweathermap.org/data/2.5/weather?zip=38340&appid={}&units=imperial'.format(appid)
+
+    result = requests.get(url)
+    data = result.json()
+    desc = data['weather'][0]['description']
+    temp = data['main']['temp']
+    feels = data['main']['feels_like']
+    humid = data['main']['humidity']
+    press = data['main']['pressure']
+    vis = data['visibility']
+    wind = data['wind']['speed']
+    wind_dir = data['wind']['deg']
+    lat = data['coord']['lat']
+    lon = data['coord']['lon']
+    loc = data['name']
+
+    weather_embed = discord.Embed(colour=discord.Colour.blue(), title = f"Current Weather for {loc}-{zip}")
+    weather_embed.set_thumbnail(url="https://openweathermap.org/themes/openweathermap/assets/img/logo_white_cropped.png")
+    weather_embed.add_field(name="Conditions: ", value=f"{desc}", inline=True)
+    weather_embed.add_field(name="Temperature (F): ", value=f"{temp}", inline=True)
+    weather_embed.add_field(name="Feels like (F): ", value=f"{feels}", inline=True)
+    weather_embed.add_field(name="Humidity (%): ", value=f"{humid}", inline=True)
+    weather_embed.add_field(name="Pressure (mm): ", value=f"{press}", inline=True)
+    weather_embed.add_field(name="Visibility (ft): ", value=f"{vis}", inline=True)
+    weather_embed.add_field(name="Wind speed (mph): ", value=f"{wind}", inline=True)
+    weather_embed.add_field(name="Wind direction (degrees): ", value=f"{wind_dir}", inline=True)
+    weather_embed.add_field(name="Latitiude: ", value=f"{lat}", inline=True)
+    weather_embed.add_field(name="Longitude: ", value=f"{lon}", inline=True)
+    weather_embed.set_footer(text ='[For a 2-day forecast, use the forecast command "./forecast" along with your zipcode.]')
+    channel = bot.get_channel(779368404392869918)
+    await channel.send(embed = weather_embed)
 
 '''
 ------------------------------------------------------------------------
