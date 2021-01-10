@@ -269,7 +269,7 @@ async def clean_weather():
     weatherc_embed.add_field(name="Visibility (ft): ", value=f"{visc}", inline=True)
     weatherc_embed.add_field(name="Wind speed (mph): ", value=f"{windc}", inline=True)
     weatherc_embed.add_field(name="Wind direction (degrees): ", value=f"{wind_dirc}", inline=True)
-    weatherc_embed.add_field(name="Latitiude: ", value=f"{latc", inline=True)
+    weatherc_embed.add_field(name="Latitiude: ", value=f"{latc}", inline=True)
     weatherc_embed.add_field(name="Longitude: ", value=f"{lonc}", inline=True)
     weatherc_embed.set_footer(text ='[For a 2-day forecast, use the forecast command "./forecast" along with your zipcode.]')
     channel = bot.get_channel(779368404392869918)
