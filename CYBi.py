@@ -171,7 +171,7 @@ async def clean_forecast():
          wind_dir3f = dataf['list'][6]['wind']['deg']
          desc3f = dataf['list'][6]['weather'][0]['description']
 
-         timestamp4f = data['list'][8]['dt']
+         timestamp4f = dataf['list'][8]['dt']
          # convert epoch timestamp to CST
          date4f = datetime.fromtimestamp(timestamp4f)
          temp4f = dataf['list'][8]['main']['temp']
