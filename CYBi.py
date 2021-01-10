@@ -79,6 +79,7 @@ async def clean_rss():
          channel_technologynews = bot.get_channel(796828995253567508)
          channel_covid = bot.get_channel(794303837989109771)
          channel_weather = bot.get_channel(779368404392869918)
+         channel_stocks = bot.get_channel(792085912095162368)
          # check=lambda msg: not msg.pinned, keeps the purge command from deleting pinned messages
          await channel_espn.purge(limit=1000, check=lambda msg: not msg.pinned)
          await channel_cybersecurity.purge(limit=1000, check=lambda msg: not msg.pinned)
@@ -86,6 +87,7 @@ async def clean_rss():
          await channel_technologynews.purge(limit=1000, check=lambda msg: not msg.pinned)
          await channel_covid.purge(limit=1000, check=lambda msg: not msg.pinned)
          await channel_weather.purge(limit=1000, check=lambda msg: not msg.pinned)
+         await channel_stocks.purge(limit=1000, check=lambda msg: not msg.pinned)
 
 # Task to auto retrieve current Covid-19 stats by state and print in Covid stats channel every day
 @tasks.loop(hours=12.0)
