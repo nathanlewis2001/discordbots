@@ -245,35 +245,35 @@ async def clean_weather():
     await channel.purge(limit=100, check=lambda msg: not msg.pinned)
     url = 'http://api.openweathermap.org/data/2.5/weather?zip=38340&appid={}&units=imperial'.format(appid)
 
-    result = requests.get(url)
-    data = result.json()
-    desc = data['weather'][0]['description']
-    temp = data['main']['temp']
-    feels = data['main']['feels_like']
-    humid = data['main']['humidity']
-    press = data['main']['pressure']
-    vis = data['visibility']
-    wind = data['wind']['speed']
+    resultc = requests.get(url)
+    datac = result.json()
+    descc = data['weather'][0]['description']
+    tempc = data['main']['temp']
+    feelsc = data['main']['feels_like']
+    humidc = data['main']['humidity']
+    pressc = data['main']['pressure']
+    visc = data['visibility']
+    windc = data['wind']['speed']
     wind_dir = data['wind']['deg']
-    lat = data['coord']['lat']
-    lon = data['coord']['lon']
-    loc = data['name']
+    latc = data['coord']['lat']
+    lonc = data['coord']['lon']
+    locc = data['name']
 
-    weather_embed = discord.Embed(colour=discord.Colour.blue(), title = f"Current Weather for {loc}-{zip}")
-    weather_embed.set_thumbnail(url="https://openweathermap.org/themes/openweathermap/assets/img/logo_white_cropped.png")
-    weather_embed.add_field(name="Conditions: ", value=f"{desc}", inline=True)
-    weather_embed.add_field(name="Temperature (F): ", value=f"{temp}", inline=True)
-    weather_embed.add_field(name="Feels like (F): ", value=f"{feels}", inline=True)
-    weather_embed.add_field(name="Humidity (%): ", value=f"{humid}", inline=True)
-    weather_embed.add_field(name="Pressure (mm): ", value=f"{press}", inline=True)
-    weather_embed.add_field(name="Visibility (ft): ", value=f"{vis}", inline=True)
-    weather_embed.add_field(name="Wind speed (mph): ", value=f"{wind}", inline=True)
-    weather_embed.add_field(name="Wind direction (degrees): ", value=f"{wind_dir}", inline=True)
-    weather_embed.add_field(name="Latitiude: ", value=f"{lat}", inline=True)
-    weather_embed.add_field(name="Longitude: ", value=f"{lon}", inline=True)
-    weather_embed.set_footer(text ='[For a 2-day forecast, use the forecast command "./forecast" along with your zipcode.]')
+    weatherc_embed = discord.Embed(colour=discord.Colour.blue(), title = f"Current Weather for {locc} (38340)")
+    weatherc_embed.set_thumbnail(url="https://openweathermap.org/themes/openweathermap/assets/img/logo_white_cropped.png")
+    weatherc_embed.add_field(name="Conditions: ", value=f"{descc}", inline=True)
+    weatherc_embed.add_field(name="Temperature (F): ", value=f"{tempc}", inline=True)
+    weatherc_embed.add_field(name="Feels like (F): ", value=f"{feelsc}", inline=True)
+    weatherc_embed.add_field(name="Humidity (%): ", value=f"{humidc}", inline=True)
+    weatherc_embed.add_field(name="Pressure (mm): ", value=f"{pressc}", inline=True)
+    weatherc_embed.add_field(name="Visibility (ft): ", value=f"{visc}", inline=True)
+    weatherc_embed.add_field(name="Wind speed (mph): ", value=f"{windc}", inline=True)
+    weatherc_embed.add_field(name="Wind direction (degrees): ", value=f"{wind_dirc}", inline=True)
+    weatherc_embed.add_field(name="Latitiude: ", value=f"{latc", inline=True)
+    weatherc_embed.add_field(name="Longitude: ", value=f"{lonc}", inline=True)
+    weatherc_embed.set_footer(text ='[For a 2-day forecast, use the forecast command "./forecast" along with your zipcode.]')
     channel = bot.get_channel(779368404392869918)
-    await channel.send(embed = weather_embed)
+    await channel.send(embed = weatherc_embed)
 
 '''
 ------------------------------------------------------------------------
