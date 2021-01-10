@@ -133,107 +133,107 @@ async def clean_forecast():
           # this keeps the clean command from deleting pinned messages
          await channelf.purge(limit=100, check=lambda msg: not msg.pinned)
 
-         url = 'http://api.openweathermap.org/data/2.5/forecast?zip=38340&exclude=hourly&appid={}&units=imperial'.format(appid)
-         result = requests.get(url)
-         data = result.json()
-         loc = data['city']['name']
-         timestamp = data['list'][2]['dt']
+         urlf = 'http://api.openweathermap.org/data/2.5/forecast?zip=38340&exclude=hourly&appid={}&units=imperial'.format(appid)
+         resultf = requests.get(urlf)
+         dataf = resultf.json()
+         locf = dataf['city']['name']
+         timestampf = dataf['list'][2]['dt']
          # convert epoch timestamp to CST
-         date = datetime.fromtimestamp(timestamp)
-         temp = data['list'][2]['main']['temp']
-         feels = data['list'][2]['main']['feels_like']
-         humid = data['list'][2]['main']['humidity']
-         press = data['list'][2]['main']['pressure']
-         wind = data['list'][2]['wind']['speed']
-         wind_dir = data['list'][2]['wind']['deg']
-         vis = data['list'][2]['visibility']
-         desc = data['list'][2]['weather'][0]['description']
+         datef = datetime.fromtimestamp(timestampf)
+         tempf = dataf['list'][2]['main']['temp']
+         feelsf = dataf['list'][2]['main']['feels_like']
+         humidf = dataf['list'][2]['main']['humidity']
+         pressf = dataf['list'][2]['main']['pressure']
+         windf = dataf['list'][2]['wind']['speed']
+         wind_dirf = dataf['list'][2]['wind']['deg']
+         visf = dataf['list'][2]['visibility']
+         descf = dataf['list'][2]['weather'][0]['description']
 
-         timestamp2 = data['list'][4]['dt']
+         timestamp2f = dataf['list'][4]['dt']
          # convert epoch timestamp to CST
-         date2 = datetime.fromtimestamp(timestamp2)
-         temp2 = data['list'][4]['main']['temp']
-         feels2 = data['list'][4]['main']['feels_like']
-         humid2 = data['list'][4]['main']['humidity']
-         press2 = data['list'][4]['main']['pressure']
-         wind2 = data['list'][4]['wind']['speed']
-         wind_dir2 = data['list'][4]['wind']['deg']
-         desc2 = data['list'][4]['weather'][0]['description']
+         date2f = datetime.fromtimestamp(timestamp2f)
+         temp2f = dataf['list'][4]['main']['temp']
+         feels2f = dataf['list'][4]['main']['feels_like']
+         humid2f = dataf['list'][4]['main']['humidity']
+         press2f = dataf['list'][4]['main']['pressure']
+         wind2f = dataf['list'][4]['wind']['speed']
+         wind_dir2f = dataf['list'][4]['wind']['deg']
+         desc2f = dataf['list'][4]['weather'][0]['description']
 
-         timestamp3 = data['list'][6]['dt']
+         timestamp3f = dataf['list'][6]['dt']
          # convert epoch timestamp to CST
-         date3 = datetime.fromtimestamp(timestamp3)
-         temp3 = data['list'][6]['main']['temp']
-         feels3 = data['list'][6]['main']['feels_like']
-         humid3 = data['list'][6]['main']['humidity']
-         press3 = data['list'][6]['main']['pressure']
-         wind3 = data['list'][6]['wind']['speed']
-         wind_dir3 = data['list'][6]['wind']['deg']
-         desc3 = data['list'][6]['weather'][0]['description']
+         date3f = datetime.fromtimestamp(timestamp3f)
+         temp3f = dataf['list'][6]['main']['temp']
+         feels3f = dataf['list'][6]['main']['feels_like']
+         humid3f = dataf['list'][6]['main']['humidity']
+         press3f = dataf['list'][6]['main']['pressure']
+         wind3f = dataf['list'][6]['wind']['speed']
+         wind_dir3f = dataf['list'][6]['wind']['deg']
+         desc3f = dataf['list'][6]['weather'][0]['description']
 
-         timestamp4 = data['list'][8]['dt']
+         timestamp4f = data['list'][8]['dt']
          # convert epoch timestamp to CST
-         date4 = datetime.fromtimestamp(timestamp4)
-         temp4 = data['list'][8]['main']['temp']
-         feels4 = data['list'][8]['main']['feels_like']
-         humid4 = data['list'][8]['main']['humidity']
-         press4 = data['list'][8]['main']['pressure']
-         wind4 = data['list'][8]['wind']['speed']
-         wind_dir4 = data['list'][8]['wind']['deg']
-         desc4 = data['list'][8]['weather'][0]['description']
+         date4f = datetime.fromtimestamp(timestamp4f)
+         temp4f = dataf['list'][8]['main']['temp']
+         feels4f = dataf['list'][8]['main']['feels_like']
+         humid4f = dataf['list'][8]['main']['humidity']
+         press4f = dataf['list'][8]['main']['pressure']
+         wind4f = dataf['list'][8]['wind']['speed']
+         wind_dir4f = dataf['list'][8]['wind']['deg']
+         desc4f = dataf['list'][8]['weather'][0]['description']
 
-         timestamp5 = data['list'][10]['dt']
+         timestamp5f = data['list'][10]['dt']
          # convert epoch timestamp to CST
-         date5 = datetime.fromtimestamp(timestamp5)
-         temp5 = data['list'][10]['main']['temp']
-         feels5 = data['list'][10]['main']['feels_like']
-         humid5 = data['list'][10]['main']['humidity']
-         press5 = data['list'][10]['main']['pressure']
-         wind5 = data['list'][10]['wind']['speed']
-         wind_dir5= data['list'][10]['wind']['deg']
-         desc5= data['list'][10]['weather'][0]['description']
+         date5f = datetime.fromtimestamp(timestamp5f)
+         temp5f = dataf['list'][10]['main']['temp']
+         feels5f = dataf['list'][10]['main']['feels_like']
+         humid5f = dataf['list'][10]['main']['humidity']
+         press5f = dataf['list'][10]['main']['pressure']
+         wind5f = dataf['list'][10]['wind']['speed']
+         wind_dir5f = dataf['list'][10]['wind']['deg']
+         desc5f = dataf['list'][10]['weather'][0]['description']
 
-         timestamp6 = data['list'][12]['dt']
+         timestamp6f = data['list'][12]['dt']
          # convert epoch timestamp to CST
-         date6 = datetime.fromtimestamp(timestamp6)
-         temp6 = data['list'][12]['main']['temp']
-         feels6 = data['list'][12]['main']['feels_like']
-         humid6 = data['list'][12]['main']['humidity']
-         press6 = data['list'][12]['main']['pressure']
-         wind6 = data['list'][12]['wind']['speed']
-         wind_dir6 = data['list'][12]['wind']['deg']
-         desc6 = data['list'][12]['weather'][0]['description']
+         date6f = datetime.fromtimestamp(timestamp6f)
+         temp6f = dataf['list'][12]['main']['temp']
+         feels6f = dataf['list'][12]['main']['feels_like']
+         humid6f = dataf['list'][12]['main']['humidity']
+         press6f = dataf['list'][12]['main']['pressure']
+         wind6f = dataf['list'][12]['wind']['speed']
+         wind_dir6f = dataf['list'][12]['wind']['deg']
+         desc6f = dataf['list'][12]['weather'][0]['description']
 
-         timestamp7 = data['list'][14]['dt']
+         timestamp7f = data['list'][14]['dt']
          # convert epoch timestamp to CST
-         date7 = datetime.fromtimestamp(timestamp7)
-         temp7 = data['list'][14]['main']['temp']
-         feels7 = data['list'][14]['main']['feels_like']
-         humid7 = data['list'][14]['main']['humidity']
-         press7 = data['list'][14]['main']['pressure']
-         wind7 = data['list'][14]['wind']['speed']
-         wind_dir7 = data['list'][14]['wind']['deg']
-         desc7 = data['list'][14]['weather'][0]['description']
+         date7f = datetime.fromtimestamp(timestamp7)
+         temp7f = dataf['list'][14]['main']['temp']
+         feels7f = dataf['list'][14]['main']['feels_like']
+         humid7f = dataf['list'][14]['main']['humidity']
+         press7f = dataf['list'][14]['main']['pressure']
+         wind7f = dataf['list'][14]['wind']['speed']
+         wind_dir7f = dataf['list'][14]['wind']['deg']
+         desc7f = dataf['list'][14]['weather'][0]['description']
 
-         timestamp8 = data['list'][16]['dt']
+         timestamp8f = data['list'][16]['dt']
          # convert epoch timestamp to CST
-         date8 = datetime.fromtimestamp(timestamp8)
-         temp8 = data['list'][16]['main']['temp']
-         feels8 = data['list'][16]['main']['feels_like']
-         humid8 = data['list'][16]['main']['humidity']
-         press8 = data['list'][16]['main']['pressure']
-         wind8 = data['list'][16]['wind']['speed']
-         wind_dir8 = data['list'][16]['wind']['deg']
-         desc8 = data['list'][16]['weather'][0]['description']
+         date8f = datetime.fromtimestamp(timestamp8f)
+         temp8f = dataf['list'][16]['main']['temp']
+         feels8f = dataf['list'][16]['main']['feels_like']
+         humid8ff = dataf['list'][16]['main']['humidity']
+         press8f = dataf['list'][16]['main']['pressure']
+         wind8f = dataf['list'][16]['wind']['speed']
+         wind_dir8f = dataf['list'][16]['wind']['deg']
+         desc8f = dataf['list'][16]['weather'][0]['description']
 
          channelf = bot.get_channel(795490169422610442)
-         await channelf.send(f'```yaml\n 2-Day Forecast for {loc} (38340)\n {date}: Outlook: {desc} | Temperature: {temp} | May feel like: {feels} | Wind Speed: {wind} | Wind Direction: {wind_dir}```'
-           f'```yaml\n {date2}: Outlook: {desc2} | Temperature: {temp2} | May feel like: {feels2} | Wind Speed: {wind2} | Wind Direction: {wind_dir2}```'
-           f'```yaml\n {date3}: Outlook: {desc3} | Temperature: {temp3} | May feel like: {feels3} | Wind Speed: {wind3} | Wind Direction: {wind_dir3}```'
-           f'```yaml\n {date4}: Outlook: {desc4} | Temperature: {temp4} | May feel like: {feels4} | Wind Speed: {wind4} | Wind Direction: {wind_dir4}```'
-           f'```yaml\n {date6}: Outlook: {desc6} | Temperature: {temp6} | May feel like: {feels6} | Wind Speed: {wind6} | Wind Direction: {wind_dir6}```'
-           f'```yaml\n {date7}: Outlook: {desc7} | Temperature: {temp7} | May feel like: {feels7} | Wind Speed: {wind7} | Wind Direction: {wind_dir7}```'
-           f'```yaml\n {date8}: Outlook: {desc8} | Temperature: {temp8} | May feel like: {feels8} | Wind Speed: {wind8} | Wind Direction: {wind_dir8}```'
+         await channelf.send(f'```yaml\n 2-Day Forecast for {locf} (38340)\n {datef}: Outlook: {descf} | Temperature: {tempf} | May feel like: {feelsf} | Wind Speed: {windf} | Wind Direction: {wind_dirf}```'
+           f'```yaml\n {date2f}: Outlook: {desc2f} | Temperature: {temp2f} | May feel like: {feels2f} | Wind Speed: {wind2f} | Wind Direction: {wind_dir2f}```'
+           f'```yaml\n {date3f}: Outlook: {desc3f} | Temperature: {temp3f} | May feel like: {feels3f} | Wind Speed: {wind3f} | Wind Direction: {wind_dir3f}```'
+           f'```yaml\n {date4f}: Outlook: {desc4f} | Temperature: {temp4f} | May feel like: {feels4f} | Wind Speed: {wind4f} | Wind Direction: {wind_dir4f}```'
+           f'```yaml\n {date6f}: Outlook: {desc6f} | Temperature: {temp6f} | May feel like: {feels6f} | Wind Speed: {wind6f} | Wind Direction: {wind_dir6f}```'
+           f'```yaml\n {date7f}: Outlook: {desc7f} | Temperature: {temp7f} | May feel like: {feels7f} | Wind Speed: {wind7f} | Wind Direction: {wind_dir7f}```'
+           f'```yaml\n {date8f}: Outlook: {desc8f} | Temperature: {temp8f} | May feel like: {feels8f} | Wind Speed: {wind8f} | Wind Direction: {wind_dir8f}```'
            f'```ini\n [~~~Retrieved via the OpenWeatherMap API. For the current weather, use the weather command "./weather" along with your zipcode.]```'
            )
 
@@ -243,9 +243,9 @@ async def clean_weather():
     channelw = bot.get_channel(779368404392869918)
      # this keeps the clean command from deleting pinned messages
     await channelw.purge(limit=100, check=lambda msg: not msg.pinned)
-    url = 'http://api.openweathermap.org/data/2.5/weather?zip=38340&appid={}&units=imperial'.format(appid)
+    urlw = 'http://api.openweathermap.org/data/2.5/weather?zip=38340&appid={}&units=imperial'.format(appid)
 
-    resultc = requests.get(url)
+    resultc = requests.get(urlw)
     datac = resultc.json()
     descc = datac['weather'][0]['description']
     tempc = datac['main']['temp']
