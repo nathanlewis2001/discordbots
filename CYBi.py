@@ -27,20 +27,20 @@ TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR TH
 OR OTHER DEALINGS IN THE SOFTWARE.
 '''
 
+import datetime as dt
+from datetime import date, datetime
 import discord
 from discord.ext import commands
 from discord.ext import tasks
 from dotenv import load_dotenv
+from ipwhois.utils import calculate_cidr
+import json
 import os
+import requests
+import socket
 import time
-import datetime as dt
-from datetime import date, datetime
 from yahoo_fin import stock_info as si
 from yahoo_fin import options
-import requests
-import json
-from ipwhois.utils import calculate_cidr
-import socket
 
 appid = os.environ.get('OWM_API') #secured the OpenWeatherMap API token by calling it from an environment variable
 rapidapi = os.environ.get('rapidapi_key') #secured the RAPIDAPI token by calling it from an environment variable
