@@ -206,7 +206,7 @@ async def clean_forecast():
 
          timestamp7f = dataf['list'][14]['dt']
          # convert epoch timestamp to CST
-         date7f = datetime.fromtimestamp(timestamp7)
+         date7f = datetime.fromtimestamp(timestamp7f)
          temp7f = dataf['list'][14]['main']['temp']
          feels7f = dataf['list'][14]['main']['feels_like']
          humid7f = dataf['list'][14]['main']['humidity']
