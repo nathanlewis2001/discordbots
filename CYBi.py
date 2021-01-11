@@ -434,6 +434,7 @@ async def help(ctx):
     embed.add_field(name="present",
                     value="Marks member present for a live Discord class session: **Usage:** *./present CYB101 or ./present CYB220, etc.*",
                     inline=False)
+    embed.add_field(name="rules", value="Verifies member has read and understands the Discord rules: **Usage:** *./rules*", inline=False)
     embed.add_field(name="syllabus",
                     value="Verifies member has read and understands the class syllabus: **Usage:** *./syllabus CYB101 or ./syllabus CYB220, etc.*",
                     inline=False)
