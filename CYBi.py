@@ -537,10 +537,10 @@ async def present_error(ctx, error):
 @bot.command()
 async def rules(ctx, member: discord.Member = None):
     member = ctx.author if not member else member
-    await ctx.message.delete()
     # forces present message to be created in the rules channel
     channel = bot.get_channel(778286477691191347)
     await channel.send(f'{member.display_name} (aka: {member.name}) has read and agrees to abide by these rules!')
+    await ctx.message.delete()
     rightnow = dt.datetime.now()
     # creates rules verification log on backend server
     with open("rules.log", "a+") as file:
