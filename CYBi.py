@@ -517,7 +517,7 @@ async def cybpoll_error(ctx, error):
 async def present(ctx, course: str, member: discord.Member = None):
     member = ctx.author if not member else member
     await ctx.message.delete()
-    # forces present message to be created in the atendance channel
+    # forces present message to be created in the attendance channel
     channel = bot.get_channel(786278326519332894)
     await channel.send(f'{member.display_name} (aka: {member.name}) has been marked **present** in ' + (course) + '!')
     rightnow = dt.datetime.now()
@@ -532,6 +532,21 @@ async def present(ctx, course: str, member: discord.Member = None):
 async def present_error(ctx, error):
     if isinstance(error, commands.MissingRequiredArgument):
         await ctx.send('Please specify the **course number**, such as CYB101, CYB220, etc.')
+
+# rules verification
+@bot.command()
+async def rules(ctx, member: discord.Member = None):
+    member = ctx.author if not member else member
+    await ctx.message.delete()
+    # forces present message to be created in the rules channel
+    channel = bot.get_channel(778286477691191347)
+    await channel.send(f'{member.display_name} (aka: {member.name}) has read and agrees to abide by these rules!')
+    rightnow = dt.datetime.now()
+    # creates rules verification log on backend server
+    with open("rules.log", "a+") as file:
+        file.write(str(rightnow))
+        file.write(f'--{member.display_name} (aka:{member.name})\n')
+        file.close()
 
 # pull stock info
 @bot.command()
