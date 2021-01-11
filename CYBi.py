@@ -64,7 +64,7 @@ async def on_ready():
     await bot.change_presence(status=discord.Status.online,
                               activity=discord.Activity(type=discord.ActivityType.watching, name="over FHU CYB"))
 
-    
+
 
 '''
 ------------------------------------------------------------------------
@@ -91,6 +91,9 @@ async def clean_rss():
 # Task to auto retrieve current Covid-19 stats by state and print in Covid stats channel every day
 @tasks.loop(hours=6.0)
 async def covid_auto():
+    channel_covid = bot.get_channel(794303837989109771)
+     # this keeps the clean command from deleting pinned messages
+    await channel_covid.purge(limit=100, check=lambda msg: not msg.pinned)
     urla = ('https://covidtracking.com/api/states?state=TN')
     resulta = requests.get(urla)
     dataa = resulta.json()
@@ -122,7 +125,7 @@ async def covid_auto():
     covid_auto_embed.add_field(name="New deaths: ", value=f"{deaths3a}", inline=True)
     covid_auto_embed.set_footer(text="~~~Data retrieved from The COVID Tracking Project (https://covidtracking.com/about)")
     channel = bot.get_channel(794303837989109771)
-    await channel.send(embed = covid_auto_embed)
+    await channel_covid.send(embed = covid_auto_embed)
 
 # task to auto clean forecast channel and then retrieve 2-day forecast for Henderson, TN
 @tasks.loop(hours=6.0)
