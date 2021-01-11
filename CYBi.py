@@ -64,6 +64,8 @@ async def on_ready():
     await bot.change_presence(status=discord.Status.online,
                               activity=discord.Activity(type=discord.ActivityType.watching, name="over FHU CYB"))
 
+    
+
 '''
 ------------------------------------------------------------------------
 
