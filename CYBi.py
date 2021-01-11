@@ -590,7 +590,7 @@ async def support_error(ctx, error):
     if isinstance(error, commands.MissingRequiredArgument):
         await ctx.send('Please specify what you need help with.')
 
-# read and understand class syllabus and creates a permanent record on bot server
+# student read and understood class syllabus and creates a permanent record on bot server
 @bot.command()
 async def syllabus(ctx, course: str, member: discord.Member = None):
     member = ctx.author if not member else member
