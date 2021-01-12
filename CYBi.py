@@ -48,7 +48,7 @@ rapidapi = os.environ.get('rapidapi_key') #secured the RAPIDAPI token by calling
 
 help_command = commands.DefaultHelpCommand(no_category = 'CYBi Commands')
 bot = commands.Bot(command_prefix='./', help_command = help_command)
-# disabled built-in help command in order to use custon help
+# disabled built-in help command in order to use custom help
 bot.remove_command('help')
 
 
