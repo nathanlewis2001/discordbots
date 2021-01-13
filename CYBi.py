@@ -61,7 +61,7 @@ async def on_command_error(ctx, error):
         error = getattr(error, 'original', error)
 
         if isinstance(error, commands.CommandNotFound):
-            await ctx.send("Command not found!")
+            await ctx.send("That CYBi command is not found. For help, use the ./help command.")
 
 @bot.event
 async def on_ready():
