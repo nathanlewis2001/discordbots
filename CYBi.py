@@ -51,6 +51,17 @@ bot = commands.Bot(command_prefix='./', help_command = help_command)
 # disabled built-in help command in order to use custom help
 bot.remove_command('help')
 
+@bot.event
+async def on_command_error(ctx, error):
+        # if command has local error handler, return
+        if hasattr(ctx.command, 'on_error'):
+            return
+
+        # get the original exception
+        error = getattr(error, 'original', error)
+
+        if isinstance(error, commands.CommandNotFound):
+            await ctx.send("Command not found!")
 
 @bot.event
 async def on_ready():
