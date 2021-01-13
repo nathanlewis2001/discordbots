@@ -53,15 +53,15 @@ bot.remove_command('help')
 
 @bot.event
 async def on_command_error(ctx, error):
-        # if command has local error handler, return
-        if hasattr(ctx.command, 'on_error'):
-            return
+    # if command has local error handler, return
+    if hasattr(ctx.command, 'on_error'):
+        return
 
-        # get the original exception
-        error = getattr(error, 'original', error)
+    # get the original exception
+    error = getattr(error, 'original', error)
 
-        if isinstance(error, commands.CommandNotFound):
-            await ctx.send("That CYBi command is not found. All commands must begin with a period and forward slash, like this: ./ and for more help, use the ./help command.")
+    if isinstance(error, commands.CommandNotFound):
+        await ctx.send("That CYBi command is not found. All commands must begin with a period and forward slash, like this: ./ and for more help, use the ./help command.")
 
 @bot.event
 async def on_ready():
