@@ -61,7 +61,7 @@ async def on_command_error(ctx, error):
         error = getattr(error, 'original', error)
 
         if isinstance(error, commands.CommandNotFound):
-            await ctx.send("That CYBi command is not found. All commands must begin with a period and forward slash, like this: "./". For more help, use the ./help command.")
+            await ctx.send("That CYBi command is not found. All commands must begin with a period and forward slash, like this: ./ and for more help, use the ./help command.")
 
 @bot.event
 async def on_ready():
