@@ -2,7 +2,7 @@
 CYBi Bot
 FHU CYB Discord bot 12/2020
 
-~~~~    This monster bot is loaded with commands to demonstrate all the things one can do with a Discord bot ~~~
+~~~~    This monster, 1000+ lines of code bot, is loaded with commands to demonstrate all the things one can do with a Discord bot ~~~
 
 Author: Professor Mark Scott (mscott@fhu.edu)
 Other contributors: 1. Cameron Pierce (pierce.cameron7@yahoo.com): original poll command, added code to support command,
@@ -79,6 +79,7 @@ async def on_ready():
     espn.start() # starts the ESPN RSS feed
     foxnews.start() # starts the FoxNews RSS feed
     krebs.start() # starts the Krebs on Security RSS feed
+    live.start() # starts the We Live Security RSS feed
     mac.start() # starts the 9to5 Mac RSS feed
     npr.start() # starts the NPR News RSS feed
     tr.start() # starts the TechRepublic RSS feed
@@ -454,6 +455,22 @@ async def usa():
         usa_embed.add_field(name="Title: ", value=f"{title}", inline=True)
         usa_embed.add_field(name="Link: ", value=f"{link}", inline=True)
         await channel_usa.send(embed = usa_embed)
+
+# Task to auto retrieve current We Live Security RSS feed
+@tasks.loop(hours=2.0)
+async def live():
+    channel_live = bot.get_channel(800033797214175262)
+    # this keeps the clean command from deleting pinned messages
+    await channel_live.purge(limit=100, check=lambda msg: not msg.pinned)
+    feed = feedparser.parse("http://feeds.feedburner.com/eset/blog")
+    for entry in feed.entries:
+        title = (entry.title)
+        link = (entry.link)
+        live_embed = discord.Embed(title = f"We Live Security Blog")
+        live_embed.set_thumbnail(url="https://i1.feedspot.com/242328.jpg?t=1590122512")
+        live_embed.add_field(name="Title: ", value=f"{title}", inline=True)
+        live_embed.add_field(name="Link: ", value=f"{link}", inline=True)
+        await channel_live.send(embed = live_embed)
 
 # Task to auto retrieve current USA Today RSS feed
 @tasks.loop(hours=2.0)
