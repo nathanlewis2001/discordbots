@@ -86,9 +86,9 @@ CYBi Discord Automated Tasks
 
 ------------------------------------------------------------------------
 '''
-# task to auto clean RSS feed channels
+# task to auto clean channels
 
-@tasks.loop(hours=6.0)
+@tasks.loop(hours=12.0)
 async def clean_channels():
          channel_stocks = bot.get_channel(792085912095162368)
          # "check=lambda msg: not msg.pinned" keeps the purge command from deleting pinned messages
