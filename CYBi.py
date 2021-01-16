@@ -67,6 +67,8 @@ async def on_command_error(ctx, error):
 @bot.event
 async def on_ready():
     bleeping.start() # starts the Bleeping Computer RSS feed
+    cisa.start() # starts the CISA alerts RSS feed
+    cisab.start() # starts the CISA bulletin RSS feed
     clean_channels.start() # starts the clean_rss task
     covid_auto.start() # starts the covid_auto task
     clean_forecast.start() # starts the clean_forecast task
@@ -75,6 +77,7 @@ async def on_ready():
     foxnews.start() # starts the FoxNews RSS feed
     mac.start() # starts the 9to5 Mac RSS feed
     usa.start() # starts the USAToday RSS feed
+    windows.start() # starts the Windows Central RSS feed
     print("CYBi Bot is ready")
     print('Logged on as', bot.user)
     print('Discord.py Version: {}'.format(discord.__version__))
@@ -288,22 +291,6 @@ Tasks to pull RSS feeds
 
 # Task to auto retrieve current Bleeping Computer RSS feed
 @tasks.loop(hours=1.0)
-async def mac():
-    channel_mac = bot.get_channel(796828995253567508)
-    # this keeps the clean command from deleting pinned messages
-    await channel_mac.purge(limit=100, check=lambda msg: not msg.pinned)
-    feed = feedparser.parse("https://9to5mac.com/feed/")
-    for entry in feed.entries:
-        title = (entry.title)
-        link = (entry.link)
-        mac_embed = discord.Embed(title = f"9to5 Mac Headlines")
-        mac_embed.set_thumbnail(url="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.mm.bing.net%2Fth%3Fid%3DOIP.BW2WrStek36BtXEwCe9LtgHaHa%26pid%3DApi&f=1")
-        mac_embed.add_field(name="Title: ", value=f"{title}", inline=True)
-        mac_embed.add_field(name="Link: ", value=f"{link}", inline=True)
-        await channel_mac.send(embed = mac_embed)
-
-# Task to auto retrieve current Bleeping Computer RSS feed
-@tasks.loop(hours=1.0)
 async def bleeping():
     channel_bleeping = bot.get_channel(796100268844515348)
     # this keeps the clean command from deleting pinned messages
@@ -317,6 +304,38 @@ async def bleeping():
         bleeping_embed.add_field(name="Title: ", value=f"{title}", inline=True)
         bleeping_embed.add_field(name="Link: ", value=f"{link}", inline=True)
         await channel_bleeping.send(embed = bleeping_embed)
+
+# Task to auto retrieve current CISA alerts RSS feed
+@tasks.loop(hours=1.0)
+async def cisa():
+    channel_cisa = bot.get_channel(800016247210115092)
+    # this keeps the clean command from deleting pinned messages
+    await channel_cisa.purge(limit=100, check=lambda msg: not msg.pinned)
+    feed = feedparser.parse("https://us-cert.cisa.gov/ncas/alerts.xml")
+    for entry in feed.entries:
+        title = (entry.title)
+        link = (entry.link)
+        cisa_embed = discord.Embed(title = f"CISA Alerts")
+        cisa_embed.set_thumbnail(url="https://www.cisa.gov/sites/default/files/cisa/logo_verbose.png")
+        cisa_embed.add_field(name="Title: ", value=f"{title}", inline=True)
+        cisa_embed.add_field(name="Link: ", value=f"{link}", inline=True)
+        await channel_cisa.send(embed = cisa_embed)
+
+# Task to auto retrieve current CISA bulletins RSS feed
+@tasks.loop(hours=1.0)
+async def cisab():
+    channel_cisab = bot.get_channel(800019411984711680)
+    # this keeps the clean command from deleting pinned messages
+    await channel_cisab.purge(limit=100, check=lambda msg: not msg.pinned)
+    feed = feedparser.parse("https://us-cert.cisa.gov/ncas/bulletins.xml")
+    for entry in feed.entries:
+        title = (entry.title)
+        link = (entry.link)
+        cisab_embed = discord.Embed(title = f"CISA Bulletins")
+        cisab_embed.set_thumbnail(url="https://www.cisa.gov/sites/default/files/cisa/logo_verbose.png")
+        cisab_embed.add_field(name="Title: ", value=f"{title}", inline=True)
+        cisab_embed.add_field(name="Link: ", value=f"{link}", inline=True)
+        await channel_cisab.send(embed = cisab_embed)
 
 # Task to auto retrieve current ESPN RSS feed
 @tasks.loop(hours=1.0)
@@ -350,6 +369,22 @@ async def foxnews():
         fox_embed.add_field(name="Link: ", value=f"{link}", inline=True)
         await channel_foxnews.send(embed = fox_embed)
 
+# Task to auto retrieve current Bleeping Computer RSS feed
+@tasks.loop(hours=1.0)
+async def mac():
+    channel_mac = bot.get_channel(796828995253567508)
+    # this keeps the clean command from deleting pinned messages
+    await channel_mac.purge(limit=100, check=lambda msg: not msg.pinned)
+    feed = feedparser.parse("https://9to5mac.com/feed/")
+    for entry in feed.entries:
+        title = (entry.title)
+        link = (entry.link)
+        mac_embed = discord.Embed(title = f"9to5 Mac Headlines")
+        mac_embed.set_thumbnail(url="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.mm.bing.net%2Fth%3Fid%3DOIP.BW2WrStek36BtXEwCe9LtgHaHa%26pid%3DApi&f=1")
+        mac_embed.add_field(name="Title: ", value=f"{title}", inline=True)
+        mac_embed.add_field(name="Link: ", value=f"{link}", inline=True)
+        await channel_mac.send(embed = mac_embed)
+
 # Task to auto retrieve current USA Today RSS feed
 @tasks.loop(hours=1.0)
 async def usa():
@@ -366,6 +401,21 @@ async def usa():
         usa_embed.add_field(name="Link: ", value=f"{link}", inline=True)
         await channel_usa.send(embed = usa_embed)
 
+# Task to auto retrieve current USA Today RSS feed
+@tasks.loop(hours=1.0)
+async def windows():
+    channel_windows = bot.get_channel(800017495317938236)
+    # this keeps the clean command from deleting pinned messages
+    await channel_windows.purge(limit=100, check=lambda msg: not msg.pinned)
+    feed = feedparser.parse("https://www.windowscentral.com/rss")
+    for entry in feed.entries:
+        title = (entry.title)
+        link = (entry.link)
+        windows_embed = discord.Embed(title = f"Windows Central Headlines")
+        windows_embed.set_thumbnail(url="https://i1.feedspot.com/4702117.jpg?t=1526276931")
+        windows_embed.add_field(name="Title: ", value=f"{title}", inline=True)
+        windows_embed.add_field(name="Link: ", value=f"{link}", inline=True)
+        await channel_windows.send(embed = windows_embed)
 
 '''
 ------------------------------------------------------------------------
