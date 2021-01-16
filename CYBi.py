@@ -482,7 +482,7 @@ async def windows():
     for entry in feed.entries:
         title = (entry.title)
         link = (entry.link)
-        windows_embed = discord.Embed(title = f"Windows Central Headlines")
+        windows_embed = discord.Embed(title = f"Windows Central Blog")
         windows_embed.set_thumbnail(url="https://i1.feedspot.com/4702117.jpg?t=1526276931")
         windows_embed.add_field(name="Title: ", value=f"{title}", inline=True)
         windows_embed.add_field(name="Link: ", value=f"{link}", inline=True)
