@@ -72,7 +72,7 @@ async def on_ready():
     clean_weather.start() # starts the clean_weather task
     foxnews.start() # starts the FoxNews RSS feed
     espn.start() # starts the ESPN RSS feed
-    bleping.start() # starts the Bleeping Computer RSS feed
+    bleeping.start() # starts the Bleeping Computer RSS feed
     print("CYBi Bot is ready")
     print('Logged on as', bot.user)
     print('Discord.py Version: {}'.format(discord.__version__))
