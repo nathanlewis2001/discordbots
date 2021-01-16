@@ -66,13 +66,15 @@ async def on_command_error(ctx, error):
 
 @bot.event
 async def on_ready():
+    bleeping.start() # starts the Bleeping Computer RSS feed
     clean_channels.start() # starts the clean_rss task
     covid_auto.start() # starts the covid_auto task
     clean_forecast.start() # starts the clean_forecast task
     clean_weather.start() # starts the clean_weather task
-    foxnews.start() # starts the FoxNews RSS feed
     espn.start() # starts the ESPN RSS feed
-    bleeping.start() # starts the Bleeping Computer RSS feed
+    foxnews.start() # starts the FoxNews RSS feed
+    mac.start() # starts the 9to5 Mac RSS feed
+    usa.start() # starts the USAToday RSS feed
     print("CYBi Bot is ready")
     print('Logged on as', bot.user)
     print('Discord.py Version: {}'.format(discord.__version__))
@@ -134,7 +136,7 @@ async def covid_auto():
     await channel_covid.send(embed = covid_auto_embed)
 
 # task to auto clean forecast channel and then retrieve 2-day forecast for Henderson, TN
-@tasks.loop(hours=6.0)
+@tasks.loop(hours=3.0)
 async def clean_forecast():
          channelf = bot.get_channel(795490169422610442)
           # this keeps the clean command from deleting pinned messages
@@ -244,7 +246,7 @@ async def clean_forecast():
            )
 
 # task to auto clean weather channel and then retrieve 2-day forecast for Henderson, TN
-@tasks.loop(hours=6.0)
+@tasks.loop(hours=3.0)
 async def clean_weather():
     channelw = bot.get_channel(779368404392869918)
      # this keeps the clean command from deleting pinned messages
@@ -280,21 +282,41 @@ async def clean_weather():
     channelw = bot.get_channel(779368404392869918)
     await channelw.send(embed = weatherw_embed)
 
-# Task to auto retrieve current FoxNews RSS feed
-@tasks.loop(hours=0.25)
-async def foxnews():
-    channel_foxnews = bot.get_channel(796102764400869376)
+'''
+Tasks to pull RSS feeds
+'''
+
+# Task to auto retrieve current Bleeping Computer RSS feed
+@tasks.loop(hours=1.0)
+async def mac():
+    channel_mac = bot.get_channel(796828995253567508)
     # this keeps the clean command from deleting pinned messages
-    await channel_foxnews.purge(limit=100, check=lambda msg: not msg.pinned)
-    feed = feedparser.parse("http://feeds.foxnews.com/foxnews/latest")
+    await channel_mac.purge(limit=100, check=lambda msg: not msg.pinned)
+    feed = feedparser.parse("https://9to5mac.com/feed/")
     for entry in feed.entries:
         title = (entry.title)
         link = (entry.link)
-        fox_embed = discord.Embed(title = f"FoxNews Headlines")
-        fox_embed.set_thumbnail(url="https://upload.wikimedia.org/wikipedia/commons/d/d4/Fox_News_Channel_logo.png")
-        fox_embed.add_field(name="Title: ", value=f"{title}", inline=True)
-        fox_embed.add_field(name="Link: ", value=f"{link}", inline=True)
-        await channel_foxnews.send(embed = fox_embed)
+        mac_embed = discord.Embed(title = f"9to5 Mac Headlines")
+        mac_embed.set_thumbnail(url="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.mm.bing.net%2Fth%3Fid%3DOIP.BW2WrStek36BtXEwCe9LtgHaHa%26pid%3DApi&f=1")
+        mac_embed.add_field(name="Title: ", value=f"{title}", inline=True)
+        mac_embed.add_field(name="Link: ", value=f"{link}", inline=True)
+        await channel_mac.send(embed = mac_embed)
+
+# Task to auto retrieve current Bleeping Computer RSS feed
+@tasks.loop(hours=1.0)
+async def bleeping():
+    channel_bleeping = bot.get_channel(796100268844515348)
+    # this keeps the clean command from deleting pinned messages
+    await channel_bleeping.purge(limit=100, check=lambda msg: not msg.pinned)
+    feed = feedparser.parse("https://www.bleepingcomputer.com/feed/")
+    for entry in feed.entries:
+        title = (entry.title)
+        link = (entry.link)
+        bleeping_embed = discord.Embed(title = f"Bleeping Computer Headlines")
+        bleeping_embed.set_thumbnail(url="https://lh3.googleusercontent.com/-4ts0XcinJ80/AAAAAAAAAAI/AAAAAAAAADk/2mofc2zkSxA/s640/photo.jpg")
+        bleeping_embed.add_field(name="Title: ", value=f"{title}", inline=True)
+        bleeping_embed.add_field(name="Link: ", value=f"{link}", inline=True)
+        await channel_bleeping.send(embed = bleeping_embed)
 
 # Task to auto retrieve current ESPN RSS feed
 @tasks.loop(hours=1.0)
@@ -312,21 +334,37 @@ async def espn():
         espn_embed.add_field(name="Link: ", value=f"{link}", inline=True)
         await channel_espn.send(embed = espn_embed)
 
-# Task to auto retrieve current Bleeping Computer RSS feed
-@tasks.loop(hours=1.0)
-async def bleeping():
-    channel_bleeping = bot.get_channel(796100268844515348)
+# Task to auto retrieve current FoxNews RSS feed
+@tasks.loop(hours=0.25)
+async def foxnews():
+    channel_foxnews = bot.get_channel(796102764400869376)
     # this keeps the clean command from deleting pinned messages
-    await channel_bleeping.purge(limit=100, check=lambda msg: not msg.pinned)
-    feed = feedparser.parse("https://www.bleepingcomputer.com/feed/")
+    await channel_foxnews.purge(limit=100, check=lambda msg: not msg.pinned)
+    feed = feedparser.parse("http://feeds.foxnews.com/foxnews/latest")
     for entry in feed.entries:
         title = (entry.title)
         link = (entry.link)
-        bleeping_embed = discord.Embed(title = f"Bleeping Computer Headlines")
-        bleeping_embed.set_thumbnail(url="https://lh3.googleusercontent.com/-4ts0XcinJ80/AAAAAAAAAAI/AAAAAAAAADk/2mofc2zkSxA/s640/photo.jpg")
-        bleeping_embed.add_field(name="Title: ", value=f"{title}", inline=True)
-        bleeping_embed.add_field(name="Link: ", value=f"{link}", inline=True)
-        await channel_bleeping.send(embed = bleeping_embed)
+        fox_embed = discord.Embed(title = f"FoxNews Headlines")
+        fox_embed.set_thumbnail(url="https://upload.wikimedia.org/wikipedia/commons/d/d4/Fox_News_Channel_logo.png")
+        fox_embed.add_field(name="Title: ", value=f"{title}", inline=True)
+        fox_embed.add_field(name="Link: ", value=f"{link}", inline=True)
+        await channel_foxnews.send(embed = fox_embed)
+
+# Task to auto retrieve current USA Today RSS feed
+@tasks.loop(hours=1.0)
+async def usa():
+    channel_usa = bot.get_channel(800010602089152533)
+    # this keeps the clean command from deleting pinned messages
+    await channel_usa.purge(limit=100, check=lambda msg: not msg.pinned)
+    feed = feedparser.parse("http://rssfeeds.usatoday.com/usatoday-NewsTopStories")
+    for entry in feed.entries:
+        title = (entry.title)
+        link = (entry.link)
+        usa_embed = discord.Embed(title = f"USA Today Headlines")
+        usa_embed.set_thumbnail(url="https://i1.feedspot.com/87.jpg?t=1522754187")
+        usa_embed.add_field(name="Title: ", value=f"{title}", inline=True)
+        usa_embed.add_field(name="Link: ", value=f"{link}", inline=True)
+        await channel_usa.send(embed = usa_embed)
 
 
 '''
