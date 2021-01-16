@@ -331,7 +331,7 @@ async def bleeping():
         title = (entry.title)
         link = (entry.link)
         bleeping_embed = discord.Embed(title = f"Bleeping Computer Headlines")
-        bleeping_embed.set_thumbnail(url="https://www.bleepstatic.com/logo/bleepingcomputer-logo.png")
+        bleeping_embed.set_thumbnail(url="https://lh3.googleusercontent.com/-4ts0XcinJ80/AAAAAAAAAAI/AAAAAAAAADk/2mofc2zkSxA/s640/photo.jpg")
         bleeping_embed.add_field(name="Date: ", value=f"{date}", inline=True)
         bleeping_embed.add_field(name="Title: ", value=f"{title}", inline=True)
         bleeping_embed.add_field(name="Link: ", value=f"{link}", inline=True)
