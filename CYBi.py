@@ -33,6 +33,7 @@ import discord
 from discord.ext import commands
 from discord.ext import tasks
 from dotenv import load_dotenv
+import feedparser
 from ipwhois.utils import calculate_cidr
 import json
 import os
@@ -65,10 +66,13 @@ async def on_command_error(ctx, error):
 
 @bot.event
 async def on_ready():
-    clean_rss.start() # starts the clean_rss task
+    clean_channels.start() # starts the clean_rss task
     covid_auto.start() # starts the covid_auto task
     clean_forecast.start() # starts the clean_forecast task
     clean_weather.start() # starts the clean_weather task
+    foxnews.start() # starts the FoxNews RSS feed
+    espn.start() # starts the ESPN RSS feed
+    bleping.start() # starts the Bleeping Computer RSS feed
     print("CYBi Bot is ready")
     print('Logged on as', bot.user)
     print('Discord.py Version: {}'.format(discord.__version__))
@@ -83,19 +87,12 @@ CYBi Discord Automated Tasks
 ------------------------------------------------------------------------
 '''
 # task to auto clean RSS feed channels
+
 @tasks.loop(hours=6.0)
-async def clean_rss():
-         channel_espn = bot.get_channel(796091192634507304)
-         channel_cybersecurity= bot.get_channel(796100268844515348)
-         channel_newsheadlines = bot.get_channel(796102764400869376)
-         channel_technologynews = bot.get_channel(796828995253567508)
+async def clean_channels():
          channel_stocks = bot.get_channel(792085912095162368)
          # "check=lambda msg: not msg.pinned" keeps the purge command from deleting pinned messages
-         await channel_espn.purge(limit=1000, check=lambda msg: not msg.pinned)
-         await channel_cybersecurity.purge(limit=1000, check=lambda msg: not msg.pinned)
-         await channel_newsheadlines.purge(limit=1000, check=lambda msg: not msg.pinned)
-         await channel_technologynews.purge(limit=1000, check=lambda msg: not msg.pinned)
-         await channel_stocks.purge(limit=1000, check=lambda msg: not msg.pinned)
+         await channel_stocks.purge(limit=100, check=lambda msg: not msg.pinned)
 
 # Task to auto retrieve current Covid-19 stats by state and print in Covid stats channel every day
 @tasks.loop(hours=6.0)
@@ -285,6 +282,61 @@ async def clean_weather():
     weatherw_embed.set_footer(text ='[For a 2-day forecast, use the forecast command "./forecast" along with your zipcode.]')
     channelw = bot.get_channel(779368404392869918)
     await channelw.send(embed = weatherw_embed)
+
+# Task to auto retrieve current FoxNews RSS feed
+@tasks.loop(hours=0.25)
+async def foxnews():
+    channel_foxnews = bot.get_channel(796102764400869376)
+    # this keeps the clean command from deleting pinned messages
+    await channel_foxnews.purge(limit=100, check=lambda msg: not msg.pinned)
+    feed = feedparser.parse("http://feeds.foxnews.com/foxnews/latest")
+    for entry in feed.entries:
+        date = (entry.published)
+        title = (entry.title)
+        link = (entry.link)
+        fox_embed = discord.Embed(title = f"FoxNews Headlines")
+        fox_embed.set_thumbnail(url="https://upload.wikimedia.org/wikipedia/commons/d/d4/Fox_News_Channel_logo.png")
+        fox_embed.add_field(name="Date: ", value=f"{date}", inline=True)
+        fox_embed.add_field(name="Title: ", value=f"{title}", inline=True)
+        fox_embed.add_field(name="Link: ", value=f"{link}", inline=True)
+        await channel_foxnews.send(embed = fox_embed)
+
+# Task to auto retrieve current ESPN RSS feed
+@tasks.loop(hours=0.50)
+async def espn():
+    channel_espn = bot.get_channel(796091192634507304)
+    # this keeps the clean command from deleting pinned messages
+    await channel_espn.purge(limit=100, check=lambda msg: not msg.pinned)
+    feed = feedparser.parse("https://www.espn.com/espn/rss/news")
+    for entry in feed.entries:
+        date = (entry.published)
+        title = (entry.title)
+        link = (entry.link)
+        espn_embed = discord.Embed(title = f"ESPN Headlines")
+        espn_embed.set_thumbnail(url="http://movietvtechgeeks.com/wp-content/uploads/2015/08/espn-earning-hatred-nfl-nba-2015-images.png")
+        espn_embed.add_field(name="Date: ", value=f"{date}", inline=True)
+        espn_embed.add_field(name="Title: ", value=f"{title}", inline=True)
+        espn_embed.add_field(name="Link: ", value=f"{link}", inline=True)
+        await channel_espn.send(embed = espn_embed)
+
+# Task to auto retrieve current Bleeping Computer RSS feed
+@tasks.loop(hours=0.50)
+async def bleeping():
+    channel_bleeping = bot.get_channel(796100268844515348)
+    # this keeps the clean command from deleting pinned messages
+    await channel_bleeping.purge(limit=100, check=lambda msg: not msg.pinned)
+    feed = feedparser.parse("https://www.bleepingcomputer.com/feed/")
+    for entry in feed.entries:
+        date = (entry.published)
+        title = (entry.title)
+        link = (entry.link)
+        bleeping_embed = discord.Embed(title = f"Bleeping Computer Headlines")
+        bleeping_embed.set_thumbnail(url="https://www.bleepstatic.com/logo/bleepingcomputer-logo.png")
+        bleeping_embed.add_field(name="Date: ", value=f"{date}", inline=True)
+        bleeping_embed.add_field(name="Title: ", value=f"{title}", inline=True)
+        bleeping_embed.add_field(name="Link: ", value=f"{link}", inline=True)
+        await channel_bleeping.send(embed = bleeping_embed)
+
 
 '''
 ------------------------------------------------------------------------
