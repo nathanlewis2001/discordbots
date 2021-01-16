@@ -139,7 +139,6 @@ async def clean_forecast():
          channelf = bot.get_channel(795490169422610442)
           # this keeps the clean command from deleting pinned messages
          await channelf.purge(limit=100, check=lambda msg: not msg.pinned)
-
          urlf = 'http://api.openweathermap.org/data/2.5/forecast?zip=38340&exclude=hourly&appid={}&units=imperial'.format(appid)
          resultf = requests.get(urlf)
          dataf = resultf.json()
@@ -251,8 +250,6 @@ async def clean_weather():
      # this keeps the clean command from deleting pinned messages
     await channelw.purge(limit=100, check=lambda msg: not msg.pinned)
     urlw = 'http://api.openweathermap.org/data/2.5/weather?zip=38340&appid={}&units=imperial'.format(appid)
-
-
     resultw = requests.get(urlw)
     dataw = resultw.json()
     descw = dataw['weather'][0]['description']
@@ -291,48 +288,42 @@ async def foxnews():
     await channel_foxnews.purge(limit=100, check=lambda msg: not msg.pinned)
     feed = feedparser.parse("http://feeds.foxnews.com/foxnews/latest")
     for entry in feed.entries:
-        date = (entry.published)
         title = (entry.title)
         link = (entry.link)
         fox_embed = discord.Embed(title = f"FoxNews Headlines")
         fox_embed.set_thumbnail(url="https://upload.wikimedia.org/wikipedia/commons/d/d4/Fox_News_Channel_logo.png")
-        fox_embed.add_field(name="Date: ", value=f"{date}", inline=True)
         fox_embed.add_field(name="Title: ", value=f"{title}", inline=True)
         fox_embed.add_field(name="Link: ", value=f"{link}", inline=True)
         await channel_foxnews.send(embed = fox_embed)
 
 # Task to auto retrieve current ESPN RSS feed
-@tasks.loop(hours=0.50)
+@tasks.loop(hours=1.0)
 async def espn():
     channel_espn = bot.get_channel(796091192634507304)
     # this keeps the clean command from deleting pinned messages
     await channel_espn.purge(limit=100, check=lambda msg: not msg.pinned)
     feed = feedparser.parse("https://www.espn.com/espn/rss/news")
     for entry in feed.entries:
-        date = (entry.published)
         title = (entry.title)
         link = (entry.link)
         espn_embed = discord.Embed(title = f"ESPN Headlines")
         espn_embed.set_thumbnail(url="http://movietvtechgeeks.com/wp-content/uploads/2015/08/espn-earning-hatred-nfl-nba-2015-images.png")
-        espn_embed.add_field(name="Date: ", value=f"{date}", inline=True)
         espn_embed.add_field(name="Title: ", value=f"{title}", inline=True)
         espn_embed.add_field(name="Link: ", value=f"{link}", inline=True)
         await channel_espn.send(embed = espn_embed)
 
 # Task to auto retrieve current Bleeping Computer RSS feed
-@tasks.loop(hours=0.50)
+@tasks.loop(hours=1.0)
 async def bleeping():
     channel_bleeping = bot.get_channel(796100268844515348)
     # this keeps the clean command from deleting pinned messages
     await channel_bleeping.purge(limit=100, check=lambda msg: not msg.pinned)
     feed = feedparser.parse("https://www.bleepingcomputer.com/feed/")
     for entry in feed.entries:
-        date = (entry.published)
         title = (entry.title)
         link = (entry.link)
         bleeping_embed = discord.Embed(title = f"Bleeping Computer Headlines")
         bleeping_embed.set_thumbnail(url="https://lh3.googleusercontent.com/-4ts0XcinJ80/AAAAAAAAAAI/AAAAAAAAADk/2mofc2zkSxA/s640/photo.jpg")
-        bleeping_embed.add_field(name="Date: ", value=f"{date}", inline=True)
         bleeping_embed.add_field(name="Title: ", value=f"{title}", inline=True)
         bleeping_embed.add_field(name="Link: ", value=f"{link}", inline=True)
         await channel_bleeping.send(embed = bleeping_embed)
