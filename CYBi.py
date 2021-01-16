@@ -89,7 +89,6 @@ async def on_ready():
     mac.start() # starts the 9to5 Mac RSS feed
     npr.start() # starts the NPR News RSS feed
     tr.start() # starts the TechRepublic RSS feed
-    usa.start() # starts the USAToday RSS feed
     windows.start() # starts the Windows Central RSS feed
     print("CYBi Bot is ready")
     print('Logged on as', bot.user)
@@ -398,7 +397,7 @@ async def krebs():
         krebs_embed.add_field(name="Link: ", value=f"{link}", inline=True)
         await channel_krebs.send(embed = krebs_embed)
 
-# Task to auto retrieve current Bleeping Computer RSS feed
+# Task to auto retrieve current 9to5 Mac RSS feed
 @tasks.loop(hours=1.0)
 async def mac():
     channel_mac = bot.get_channel(796828995253567508)
@@ -414,7 +413,7 @@ async def mac():
         mac_embed.add_field(name="Link: ", value=f"{link}", inline=True)
         await channel_mac.send(embed = mac_embed)
 
-# Task to auto retrieve current Bleeping Computer RSS feed
+# Task to auto retrieve current NPR RSS feed
 @tasks.loop(hours=1.0)
 async def npr():
     channel_npr = bot.get_channel(800025710428946432)
@@ -430,7 +429,7 @@ async def npr():
         npr_embed.add_field(name="Link: ", value=f"{link}", inline=True)
         await channel_npr.send(embed = npr_embed)
 
-# Task to auto retrieve current Bleeping Computer RSS feed
+# Task to auto retrieve current TechRepublic RSS feed
 @tasks.loop(hours=1.0)
 async def tr():
     channel_tr = bot.get_channel(800027149292535848)
@@ -445,22 +444,6 @@ async def tr():
         tr_embed.add_field(name="Title: ", value=f"{title}", inline=True)
         tr_embed.add_field(name="Link: ", value=f"{link}", inline=True)
         await channel_tr.send(embed = tr_embed)
-
-# Task to auto retrieve current USA Today RSS feed
-@tasks.loop(hours=1.0)
-async def usa():
-    channel_usa = bot.get_channel(800010602089152533)
-    # this keeps the clean command from deleting pinned messages
-    await channel_usa.purge(limit=100, check=lambda msg: not msg.pinned)
-    feed = feedparser.parse("http://rssfeeds.usatoday.com/usatoday-NewsTopStories")
-    for entry in feed.entries:
-        title = (entry.title)
-        link = (entry.link)
-        usa_embed = discord.Embed(title = f"USA Today Headlines")
-        usa_embed.set_thumbnail(url="https://i1.feedspot.com/87.jpg?t=1522754187")
-        usa_embed.add_field(name="Title: ", value=f"{title}", inline=True)
-        usa_embed.add_field(name="Link: ", value=f"{link}", inline=True)
-        await channel_usa.send(embed = usa_embed)
 
 # Task to auto retrieve current We Live Security RSS feed
 @tasks.loop(hours=2.0)
@@ -478,7 +461,7 @@ async def live():
         live_embed.add_field(name="Link: ", value=f"{link}", inline=True)
         await channel_live.send(embed = live_embed)
 
-# Task to auto retrieve current USA Today RSS feed
+# Task to auto retrieve current Windows Central RSS feed
 @tasks.loop(hours=2.0)
 async def windows():
     channel_windows = bot.get_channel(800017495317938236)
