@@ -1,6 +1,9 @@
 '''
 CYBi Bot
 FHU CYB Discord bot 12/2020
+
+~~~~    This bot is loaded with commands; to demonstrate all the things one can do with a Discord bot ~~~
+
 Author: Professor Mark Scott (mscott@fhu.edu)
 Other contributors: 1. Cameron Pierce (pierce.cameron7@yahoo.com): original poll command, added code to support command,
                     2. Other Open Source Projects
@@ -75,7 +78,10 @@ async def on_ready():
     clean_weather.start() # starts the clean_weather task
     espn.start() # starts the ESPN RSS feed
     foxnews.start() # starts the FoxNews RSS feed
+    krebs.start() # starts the Krebs on Security RSS feed
     mac.start() # starts the 9to5 Mac RSS feed
+    npr.start() # starts the NPR News RSS feed
+    tr.start() # starts the TechRepublic RSS feed
     usa.start() # starts the USAToday RSS feed
     windows.start() # starts the Windows Central RSS feed
     print("CYBi Bot is ready")
@@ -369,6 +375,22 @@ async def foxnews():
         fox_embed.add_field(name="Link: ", value=f"{link}", inline=True)
         await channel_foxnews.send(embed = fox_embed)
 
+# Task to auto retrieve current Krebs RSS feed
+@tasks.loop(hours=0.25)
+async def krebs():
+    channel_krebs = bot.get_channel(800024147781746708)
+    # this keeps the clean command from deleting pinned messages
+    await channel_krebs.purge(limit=100, check=lambda msg: not msg.pinned)
+    feed = feedparser.parse("https://feeds.feedburner.com/KrebsOnSecurity")
+    for entry in feed.entries:
+        title = (entry.title)
+        link = (entry.link)
+        krebs_embed = discord.Embed(title = f"Krebs On Security")
+        krebs_embed.set_thumbnail(url="https://krebsonsecurity.com/wp-content/themes/krebsads/krebsads/images/header.jpg")
+        krebs_embed.add_field(name="Title: ", value=f"{title}", inline=True)
+        krebs_embed.add_field(name="Link: ", value=f"{link}", inline=True)
+        await channel_krebs.send(embed = krebs_embed)
+
 # Task to auto retrieve current Bleeping Computer RSS feed
 @tasks.loop(hours=1.0)
 async def mac():
@@ -384,6 +406,38 @@ async def mac():
         mac_embed.add_field(name="Title: ", value=f"{title}", inline=True)
         mac_embed.add_field(name="Link: ", value=f"{link}", inline=True)
         await channel_mac.send(embed = mac_embed)
+
+# Task to auto retrieve current Bleeping Computer RSS feed
+@tasks.loop(hours=1.0)
+async def npr():
+    channel_npr = bot.get_channel(800025710428946432)
+    # this keeps the clean command from deleting pinned messages
+    await channel_npr.purge(limit=100, check=lambda msg: not msg.pinned)
+    feed = feedparser.parse("https://feeds.npr.org/1001/rss.xml")
+    for entry in feed.entries:
+        title = (entry.title)
+        link = (entry.link)
+        npr_embed = discord.Embed(title = f"NPR News Headlines")
+        npr_embed.set_thumbnail(url="https://duckduckgo.com/i/257b6233.png")
+        npr_embed.add_field(name="Title: ", value=f"{title}", inline=True)
+        npr_embed.add_field(name="Link: ", value=f"{link}", inline=True)
+        await channel_npr.send(embed = npr_embed)
+
+# Task to auto retrieve current Bleeping Computer RSS feed
+@tasks.loop(hours=1.0)
+async def tr():
+    channel_tr = bot.get_channel(800027149292535848)
+    # this keeps the clean command from deleting pinned messages
+    await channel_tr.purge(limit=100, check=lambda msg: not msg.pinned)
+    feed = feedparser.parse("http://www.techrepublic.com/rssfeeds/topic/security/?feedType=rssfeeds")
+    for entry in feed.entries:
+        title = (entry.title)
+        link = (entry.link)
+        tr_embed = discord.Embed(title = f"TechRepublic")
+        tr_embed.set_thumbnail(url="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse2.mm.bing.net%2Fth%3Fid%3DOIP.E9S8EggSg7EGSDtE3mi86QHaHa%26pid%3DApi&f=1")
+        tr_embed.add_field(name="Title: ", value=f"{title}", inline=True)
+        tr_embed.add_field(name="Link: ", value=f"{link}", inline=True)
+        await channel_tr.send(embed = tr_embed)
 
 # Task to auto retrieve current USA Today RSS feed
 @tasks.loop(hours=1.0)
