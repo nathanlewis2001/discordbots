@@ -344,7 +344,7 @@ async def cisab():
         await channel_cisab.send(embed = cisab_embed)
 
 # Task to auto retrieve current ESPN RSS feed
-@tasks.loop(hours=1.0)
+@tasks.loop(hours=2.0)
 async def espn():
     channel_espn = bot.get_channel(796091192634507304)
     # this keeps the clean command from deleting pinned messages
@@ -376,7 +376,7 @@ async def foxnews():
         await channel_foxnews.send(embed = fox_embed)
 
 # Task to auto retrieve current Krebs RSS feed
-@tasks.loop(hours=0.25)
+@tasks.loop(hours=2.0)
 async def krebs():
     channel_krebs = bot.get_channel(800024147781746708)
     # this keeps the clean command from deleting pinned messages
@@ -456,7 +456,7 @@ async def usa():
         await channel_usa.send(embed = usa_embed)
 
 # Task to auto retrieve current USA Today RSS feed
-@tasks.loop(hours=1.0)
+@tasks.loop(hours=2.0)
 async def windows():
     channel_windows = bot.get_channel(800017495317938236)
     # this keeps the clean command from deleting pinned messages
