@@ -2,7 +2,7 @@
 CYBi Bot
 FHU CYB Discord bot 12/2020
 
-~~~~    This monster bot is loaded with commands; to demonstrate all the things one can do with a Discord bot ~~~
+~~~~    This monster bot is loaded with commands to demonstrate all the things one can do with a Discord bot ~~~
 
 Author: Professor Mark Scott (mscott@fhu.edu)
 Other contributors: 1. Cameron Pierce (pierce.cameron7@yahoo.com): original poll command, added code to support command,
