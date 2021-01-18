@@ -50,6 +50,7 @@ import openpyxl
 import os
 import pandas as pd
 import requests
+import schedule
 import socket
 import time
 from yahoo_fin import stock_info as si
@@ -123,7 +124,7 @@ async def clean_channels():
          await channel_stocks.purge(limit=100, check=lambda msg: not msg.pinned)
 
 # Task to auto retrieve current Covid-19 stats by state and print in Covid stats channel every day
-@tasks.loop(hours=12.0)
+@tasks.loop(hours=4.0)
 async def covid_auto():
     channel_covid = bot.get_channel(794303837989109771)
      # this keeps the clean command from deleting pinned messages
@@ -163,10 +164,10 @@ async def covid_auto():
 
 # Task to auto retrieve current Covid-19 stats from TN Dept Health datasets for Chester County, TN
 # and print in the Covid stats channel every day
-@tasks.loop(hours=12.0)
+@tasks.loop(hours=4.0)
 async def covid_auto_county():
     channel_covid = bot.get_channel(794303837989109771)
-     # this keeps the clean command from deleting pinned messages
+    # this keeps the clean command from deleting pinned messages
     await channel_covid.purge(limit=100, check=lambda msg: not msg.pinned)
     # TN Health Dept Covid data set is always for yesterday and create yesterday in correct format
     yesterday = ((d.today() - timedelta(days=1)).strftime('%Y-%m-%d'))
