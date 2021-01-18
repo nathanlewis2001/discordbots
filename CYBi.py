@@ -124,7 +124,7 @@ async def clean_channels():
          await channel_stocks.purge(limit=100, check=lambda msg: not msg.pinned)
 
 # Task to auto retrieve current Covid-19 stats by state and print in Covid stats channel every day
-@tasks.loop(hours=4.0)
+@tasks.loop(hours=3.0)
 async def covid_auto():
     channel_covid = bot.get_channel(794303837989109771)
      # this keeps the clean command from deleting pinned messages
@@ -145,7 +145,7 @@ async def covid_auto():
     deaths2a = dataa['death']
     deaths3a = dataa['deathIncrease']
 
-    covid_auto_embed = discord.Embed(title = f"Covid-19 stats for {desca}")
+    covid_auto_embed = discord.Embed(title = f"{desca} Covid")
     covid_auto_embed.set_thumbnail(url="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse4.mm.bing.net%2Fth%3Fid%3DOIP.HzXFdJrxdmvB6iTytSEUtQAAAA%26pid%3DApi&f=1")
     covid_auto_embed.add_field(name="Date: ", value=f"{datea}", inline=True)
     covid_auto_embed.add_field(name="Cases: ", value=f"{casesa}", inline=True)
@@ -164,7 +164,7 @@ async def covid_auto():
 
 # Task to auto retrieve current Covid-19 stats from TN Dept Health datasets for Chester County, TN
 # and print in the Covid stats channel every day
-@tasks.loop(hours=4.0)
+@tasks.loop(hours=3.0)
 async def covid_auto_county():
     channel_covid = bot.get_channel(794303837989109771)
     # TN Health Dept Covid data set is always for yesterday and create yesterday in correct format
@@ -192,7 +192,7 @@ async def covid_auto_county():
                 new_hospitalized = entry['NEW_HOSPITALIZED']
 
     # write data into embed
-    covid_auto_county_embed = discord.Embed(title = f"Covid-19 stats for {county} County")
+    covid_auto_county_embed = discord.Embed(title = f"{county} County Covid")
     covid_auto_county_embed.set_thumbnail(url="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftha.com%2Fwp-content%2Fuploads%2F2017%2F04%2FTN-depart-of-health-website-graphic.png&f=1&nofb=1")
     covid_auto_county_embed.add_field(name="Date: ", value=f"{date}", inline=False)
     covid_auto_county_embed.add_field(name="Total Cases: ", value=f"{total_cases[:-2]}", inline=False)
