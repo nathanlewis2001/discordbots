@@ -50,7 +50,6 @@ import openpyxl
 import os
 import pandas as pd
 import requests
-import schedule
 import socket
 import time
 from yahoo_fin import stock_info as si
