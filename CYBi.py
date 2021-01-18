@@ -204,7 +204,7 @@ async def covid_auto_county():
     covid_auto_embed.add_field(name="Total Hospitalized: ", value=f"{total_hospitalized[:-2]}", inline=False)
     covid_auto_embed.add_field(name="New Hospitalized: ", value=f"{new_hospitalized[:-2]}", inline=False)
     covid_auto_embed.add_field(name="Total Active: ", value=f"{total_active[:-2]}", inline=False)
-    covid_auto_embed.set_footer(text="~~~Data retrieved from Tennessee Dept Health (https://www.tn.gov/health/cedep/ncov/data/downloadable-datasets.html)")
+    covid_auto_embed.set_footer(text="~~~Data retrieved from Tennessee Dept of Health (https://www.tn.gov/health/cedep/ncov/data/downloadable-datasets.html)")
     channel = bot.get_channel(794303837989109771)
     await channel_covid.send(embed = covid_auto_embed)
 
