@@ -30,8 +30,9 @@ TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR TH
 OR OTHER DEALINGS IN THE SOFTWARE.
 '''
 
+import csv
 import datetime as dt
-from datetime import date, datetime
+from datetime import date as d, datetime, timedelta
 import discord
 from discord.ext import commands
 from discord.ext import tasks
@@ -39,12 +40,15 @@ from dotenv import load_dotenv
 import feedparser
 from ipwhois.utils import calculate_cidr
 import json
+import openpyxl
 import os
+import pandas as pd
 import requests
 import socket
 import time
 from yahoo_fin import stock_info as si
 from yahoo_fin import options
+from urllib.request import urlretrieve as retrieve
 
 appid = os.environ.get('OWM_API') #secured the OpenWeatherMap API token by calling it from an environment variable
 rapidapi = os.environ.get('rapidapi_key') #secured the RAPIDAPI token by calling it from an environment variable
@@ -80,6 +84,7 @@ async def on_ready():
     cisab.start() # starts the CISA bulletin RSS feed
     clean_channels.start() # starts the clean_rss task
     covid_auto.start() # starts the covid_auto task
+    covid_auto_county.start() # starts the covid_auto_county task
     clean_forecast.start() # starts the clean_forecast task
     clean_weather.start() # starts the clean_weather task
     espn.start() # starts the ESPN RSS feed
@@ -147,6 +152,39 @@ async def covid_auto():
     covid_auto_embed.add_field(name="Confirmed death (includes probable): ", value=f"{deaths2a}", inline=True)
     covid_auto_embed.add_field(name="New deaths: ", value=f"{deaths3a}", inline=True)
     covid_auto_embed.set_footer(text="~~~Data retrieved from The COVID Tracking Project (https://covidtracking.com/about)")
+    channel = bot.get_channel(794303837989109771)
+    await channel_covid.send(embed = covid_auto_embed)
+
+# Task to auto retrieve current Covid-19 stats by state and print in Covid stats channel every day
+@tasks.loop(hours=6.0)
+async def covid_auto_county():
+    channel_covid = bot.get_channel(794303837989109771)
+     # this keeps the clean command from deleting pinned messages
+    await channel_covid.purge(limit=100, check=lambda msg: not msg.pinned)
+    yesterday = ((d.today() - timedelta(days=1)).strftime('%Y-%m-%d'))
+    url = 'https://www.tn.gov/content/dam/tn/health/documents/cedep/novel-coronavirus/datasets/Public-Dataset-County-New.XLSX'
+    retrieve(url, 'daily-covid-tn.xlsx')
+    read = pd.read_excel('daily-covid-tn.xlsx', engine='openpyxl')
+    read.to_csv('daily-covid-tn.csv')
+    with open ('daily-covid-tn.csv', encoding='ISO-8859-1') as file:
+        reader = csv.DictReader(file)
+        for entry in reader:
+            if entry['COUNTY'] == 'Chester' and entry['DATE'] == yesterday:
+                date = entry['DATE']
+                county = entry['COUNTY']
+                total_cases = entry['TOTAL_CASES']
+                new_cases = entry['NEW_CASES']
+                new_deaths = entry['NEW_DEATHS']
+                total_active = entry['TOTAL_ACTIVE']
+
+    covid_auto_embed = discord.Embed(title = f"Covid-19 stats for {county} County")
+    covid_auto_embed.set_thumbnail(url="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse4.mm.bing.net%2Fth%3Fid%3DOIP.HzXFdJrxdmvB6iTytSEUtQAAAA%26pid%3DApi&f=1")
+    covid_auto_embed.add_field(name="Date: ", value=f"{date}", inline=True)
+    covid_auto_embed.add_field(name="Total Cases: ", value=f"{total_cases}", inline=True)
+    covid_auto_embed.add_field(name="New Cases: ", value=f"{new_cases}", inline=True)
+    covid_auto_embed.add_field(name="New Deaths: ", value=f"{new_deaths}", inline=True)
+    covid_auto_embed.add_field(name="Total Active: ", value=f"{total_active}", inline=True)
+    covid_auto_embed.set_footer(text="~~~Data retrieved from Tennessee Dept Health (https://www.tn.gov/health/cedep/ncov/data/downloadable-datasets.html)")
     channel = bot.get_channel(794303837989109771)
     await channel_covid.send(embed = covid_auto_embed)
 
