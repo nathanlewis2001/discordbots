@@ -2,6 +2,7 @@
 CYBi Bot
 FHU CYB Discord bot 12/2020
 
+~~~~    CYBi is a teaching tool on Discord bot making
 ~~~~    This monster bot, with 1000+ lines of code, is loaded with commands and tasks to demonstrate some of the many things one can do with a Discord bot ~~~
 
 Author: Professor Mark Scott (mscott@fhu.edu)
