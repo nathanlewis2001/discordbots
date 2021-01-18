@@ -167,8 +167,6 @@ async def covid_auto():
 @tasks.loop(hours=4.0)
 async def covid_auto_county():
     channel_covid = bot.get_channel(794303837989109771)
-    # this keeps the clean command from deleting pinned messages
-    await channel_covid.purge(limit=100, check=lambda msg: not msg.pinned)
     # TN Health Dept Covid data set is always for yesterday and create yesterday in correct format
     yesterday = ((d.today() - timedelta(days=1)).strftime('%Y-%m-%d'))
     # the following downloads dataset from URL
@@ -194,20 +192,20 @@ async def covid_auto_county():
                 new_hospitalized = entry['NEW_HOSPITALIZED']
 
     # write data into embed
-    covid_auto_embed = discord.Embed(title = f"Covid-19 stats for {county} County")
-    covid_auto_embed.set_thumbnail(url="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftha.com%2Fwp-content%2Fuploads%2F2017%2F04%2FTN-depart-of-health-website-graphic.png&f=1&nofb=1")
-    covid_auto_embed.add_field(name="Date: ", value=f"{date}", inline=False)
-    covid_auto_embed.add_field(name="Total Cases: ", value=f"{total_cases[:-2]}", inline=False)
+    covid_auto_county_embed = discord.Embed(title = f"Covid-19 stats for {county} County")
+    covid_auto_county_embed.set_thumbnail(url="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftha.com%2Fwp-content%2Fuploads%2F2017%2F04%2FTN-depart-of-health-website-graphic.png&f=1&nofb=1")
+    covid_auto_county_embed.add_field(name="Date: ", value=f"{date}", inline=False)
+    covid_auto_county_embed.add_field(name="Total Cases: ", value=f"{total_cases[:-2]}", inline=False)
     # adding [:-2] to the variable removes the last 2 digits, so 10.0 becomes 10
-    covid_auto_embed.add_field(name="New Cases: ", value=f"{new_cases[:-2]}", inline=False)
-    covid_auto_embed.add_field(name="Total Deaths: ", value=f"{total_deaths[:-2]}", inline=False)
-    covid_auto_embed.add_field(name="New Deaths: ", value=f"{new_deaths[:-2]}", inline=False)
-    covid_auto_embed.add_field(name="Total Hospitalized: ", value=f"{total_hospitalized[:-2]}", inline=False)
-    covid_auto_embed.add_field(name="New Hospitalized: ", value=f"{new_hospitalized[:-2]}", inline=False)
-    covid_auto_embed.add_field(name="Total Active: ", value=f"{total_active[:-2]}", inline=False)
-    covid_auto_embed.set_footer(text="~~~Data retrieved from Tennessee Dept of Health (https://www.tn.gov/health/cedep/ncov/data/downloadable-datasets.html)")
+    covid_auto_county_embed.add_field(name="New Cases: ", value=f"{new_cases[:-2]}", inline=False)
+    covid_auto_county_embed.add_field(name="Total Deaths: ", value=f"{total_deaths[:-2]}", inline=False)
+    covid_auto_county_embed.add_field(name="New Deaths: ", value=f"{new_deaths[:-2]}", inline=False)
+    covid_auto_county_embed.add_field(name="Total Hospitalized: ", value=f"{total_hospitalized[:-2]}", inline=False)
+    covid_auto_county_embed.add_field(name="New Hospitalized: ", value=f"{new_hospitalized[:-2]}", inline=False)
+    covid_auto_county_embed.add_field(name="Total Active: ", value=f"{total_active[:-2]}", inline=False)
+    covid_auto_county_embed.set_footer(text="~~~Data retrieved from Tennessee Dept of Health (https://www.tn.gov/health/cedep/ncov/data/downloadable-datasets.html)")
     channel = bot.get_channel(794303837989109771)
-    await channel_covid.send(embed = covid_auto_embed)
+    await channel_covid.send(embed = covid_auto_county_embed)
 
 # task to auto clean forecast channel and then retrieve 2-day forecast for Henderson, TN
 @tasks.loop(hours=3.0)
