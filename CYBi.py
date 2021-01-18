@@ -156,7 +156,7 @@ async def covid_auto():
     await channel_covid.send(embed = covid_auto_embed)
 
 # Task to auto retrieve current Covid-19 stats from TN Dept Health datasets for Chester County, TN
-# and print in Covid stats channel every day
+# and print in the Covid stats channel every day
 @tasks.loop(hours=12.0)
 async def covid_auto_county():
     channel_covid = bot.get_channel(794303837989109771)
