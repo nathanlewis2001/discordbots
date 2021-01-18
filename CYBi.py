@@ -2,7 +2,7 @@
 CYBi Bot
 FHU CYB Discord bot 12/2020
 
-~~~~    This monster bot, with 1000+ lines of code, is loaded with commands to demonstrate some of the many things one can do with a Discord bot ~~~
+~~~~    This monster bot, with 1000+ lines of code, is loaded with commands and tasks to demonstrate some of the many things one can do with a Discord bot ~~~
 
 Author: Professor Mark Scott (mscott@fhu.edu)
 Other contributors: 1. Cameron Pierce (pierce.cameron7@yahoo.com): original poll command, added code to support command,
@@ -117,7 +117,7 @@ async def clean_channels():
          await channel_stocks.purge(limit=100, check=lambda msg: not msg.pinned)
 
 # Task to auto retrieve current Covid-19 stats by state and print in Covid stats channel every day
-@tasks.loop(hours=6.0)
+@tasks.loop(hours=12.0)
 async def covid_auto():
     channel_covid = bot.get_channel(794303837989109771)
      # this keeps the clean command from deleting pinned messages
@@ -155,21 +155,26 @@ async def covid_auto():
     channel = bot.get_channel(794303837989109771)
     await channel_covid.send(embed = covid_auto_embed)
 
-# Task to auto retrieve current Covid-19 stats by state and print in Covid stats channel every day
-@tasks.loop(hours=6.0)
+# Task to auto retrieve current Covid-19 stats from TN Dept Health datasets for Chester County, TN
+# and print in Covid stats channel every day
+@tasks.loop(hours=12.0)
 async def covid_auto_county():
     channel_covid = bot.get_channel(794303837989109771)
      # this keeps the clean command from deleting pinned messages
     await channel_covid.purge(limit=100, check=lambda msg: not msg.pinned)
+    # TN Health Dept Covid data set is always for yesterday and create yesterday in correct format
     yesterday = ((d.today() - timedelta(days=1)).strftime('%Y-%m-%d'))
+    # the following downloads dataset from URL
     url = 'https://www.tn.gov/content/dam/tn/health/documents/cedep/novel-coronavirus/datasets/Public-Dataset-County-New.XLSX'
     retrieve(url, 'daily-covid-tn.xlsx')
     read = pd.read_excel('daily-covid-tn.xlsx', engine='openpyxl')
+    # convert to csv
     read.to_csv('daily-covid-tn.csv')
+    # read file into dictionary
     with open ('daily-covid-tn.csv', encoding='ISO-8859-1') as file:
         reader = csv.DictReader(file)
         for entry in reader:
-            if entry['COUNTY'] == 'Chester' and entry['DATE'] == yesterday:
+            if entry['COUNTY'] == 'Chester' and entry['DATE'] == yesterday: #specify Chester County
                 date = entry['DATE']
                 county = entry['COUNTY']
                 total_cases = entry['TOTAL_CASES']
@@ -177,13 +182,14 @@ async def covid_auto_county():
                 new_deaths = entry['NEW_DEATHS']
                 total_active = entry['TOTAL_ACTIVE']
 
+    # write data into embed
     covid_auto_embed = discord.Embed(title = f"Covid-19 stats for {county} County")
-    covid_auto_embed.set_thumbnail(url="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse4.mm.bing.net%2Fth%3Fid%3DOIP.HzXFdJrxdmvB6iTytSEUtQAAAA%26pid%3DApi&f=1")
-    covid_auto_embed.add_field(name="Date: ", value=f"{date}", inline=True)
-    covid_auto_embed.add_field(name="Total Cases: ", value=f"{total_cases}", inline=True)
-    covid_auto_embed.add_field(name="New Cases: ", value=f"{new_cases}", inline=True)
-    covid_auto_embed.add_field(name="New Deaths: ", value=f"{new_deaths}", inline=True)
-    covid_auto_embed.add_field(name="Total Active: ", value=f"{total_active}", inline=True)
+    covid_auto_embed.set_thumbnail(url="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftha.com%2Fwp-content%2Fuploads%2F2017%2F04%2FTN-depart-of-health-website-graphic.png&f=1&nofb=1")
+    covid_auto_embed.add_field(name="Date: ", value=f"{date}", inline=False)
+    covid_auto_embed.add_field(name="Total Cases: ", value=f"{total_cases}", inline=False)
+    covid_auto_embed.add_field(name="New Cases: ", value=f"{new_cases}", inline=False)
+    covid_auto_embed.add_field(name="New Deaths: ", value=f"{new_deaths}", inline=False)
+    covid_auto_embed.add_field(name="Total Active: ", value=f"{total_active}", inline=False)
     covid_auto_embed.set_footer(text="~~~Data retrieved from Tennessee Dept Health (https://www.tn.gov/health/cedep/ncov/data/downloadable-datasets.html)")
     channel = bot.get_channel(794303837989109771)
     await channel_covid.send(embed = covid_auto_embed)
