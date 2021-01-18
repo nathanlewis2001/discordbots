@@ -166,6 +166,7 @@ async def covid_auto_county():
     yesterday = ((d.today() - timedelta(days=1)).strftime('%Y-%m-%d'))
     # the following downloads dataset from URL
     url = 'https://www.tn.gov/content/dam/tn/health/documents/cedep/novel-coronavirus/datasets/Public-Dataset-County-New.XLSX'
+    # download dataset locally
     retrieve(url, 'daily-covid-tn.xlsx')
     read = pd.read_excel('daily-covid-tn.xlsx', engine='openpyxl')
     # convert to csv
@@ -186,10 +187,11 @@ async def covid_auto_county():
     covid_auto_embed = discord.Embed(title = f"Covid-19 stats for {county} County")
     covid_auto_embed.set_thumbnail(url="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftha.com%2Fwp-content%2Fuploads%2F2017%2F04%2FTN-depart-of-health-website-graphic.png&f=1&nofb=1")
     covid_auto_embed.add_field(name="Date: ", value=f"{date}", inline=False)
-    covid_auto_embed.add_field(name="Total Cases: ", value=f"{total_cases}", inline=False)
-    covid_auto_embed.add_field(name="New Cases: ", value=f"{new_cases}", inline=False)
-    covid_auto_embed.add_field(name="New Deaths: ", value=f"{new_deaths}", inline=False)
-    covid_auto_embed.add_field(name="Total Active: ", value=f"{total_active}", inline=False)
+    covid_auto_embed.add_field(name="Total Cases: ", value=f"{total_cases[:-2]}", inline=False)
+    # adding [:-2] to the variable removes the last 2 digits, so 10.0 becomes 10
+    covid_auto_embed.add_field(name="New Cases: ", value=f"{new_cases[:-2]}", inline=False)
+    covid_auto_embed.add_field(name="New Deaths: ", value=f"{new_deaths[:-2]}", inline=False)
+    covid_auto_embed.add_field(name="Total Active: ", value=f"{total_active[:-2]}", inline=False)
     covid_auto_embed.set_footer(text="~~~Data retrieved from Tennessee Dept Health (https://www.tn.gov/health/cedep/ncov/data/downloadable-datasets.html)")
     channel = bot.get_channel(794303837989109771)
     await channel_covid.send(embed = covid_auto_embed)
