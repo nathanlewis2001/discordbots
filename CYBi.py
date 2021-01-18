@@ -175,7 +175,7 @@ async def covid_auto_county():
     with open ('daily-covid-tn.csv', encoding='ISO-8859-1') as file:
         reader = csv.DictReader(file)
         for entry in reader:
-            if entry['COUNTY'] == 'Chester' and entry['DATE'] == yesterday: #specify Chester County
+            if entry['COUNTY'] == 'Chester' and entry['DATE'] == yesterday: #specify Chester County and yesterday's date
                 date = entry['DATE']
                 county = entry['COUNTY']
                 total_cases = entry['TOTAL_CASES']
@@ -183,6 +183,8 @@ async def covid_auto_county():
                 total_deaths = entry['TOTAL_DEATHS']
                 new_deaths = entry['NEW_DEATHS']
                 total_active = entry['TOTAL_ACTIVE']
+                total_hospitalized = entry['TOTAL_HOSPITALIZED']
+                new_hospitalized = entry['NEW_HOSPITALIZED']
 
     # write data into embed
     covid_auto_embed = discord.Embed(title = f"Covid-19 stats for {county} County")
@@ -193,6 +195,8 @@ async def covid_auto_county():
     covid_auto_embed.add_field(name="New Cases: ", value=f"{new_cases[:-2]}", inline=False)
     covid_auto_embed.add_field(name="Total Deaths: ", value=f"{total_deaths[:-2]}", inline=False)
     covid_auto_embed.add_field(name="New Deaths: ", value=f"{new_deaths[:-2]}", inline=False)
+    covid_auto_embed.add_field(name="Total Hospitalized: ", value=f"{total_hospitalized[:-2]}", inline=False)
+    covid_auto_embed.add_field(name="New Hospitalized: ", value=f"{new_hospitalized[:-2]}", inline=False)
     covid_auto_embed.add_field(name="Total Active: ", value=f"{total_active[:-2]}", inline=False)
     covid_auto_embed.set_footer(text="~~~Data retrieved from Tennessee Dept Health (https://www.tn.gov/health/cedep/ncov/data/downloadable-datasets.html)")
     channel = bot.get_channel(794303837989109771)
