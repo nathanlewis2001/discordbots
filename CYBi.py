@@ -3,8 +3,11 @@ CYBi Bot
 FHU CYB Discord bot 12/2020
 
 ~~~~    CYBi is a teaching tool on Discord bot making
-~~~~    This monster bot, with 1000+ lines of code, is loaded with commands and tasks to demonstrate some of the many things one can do with a Discord bot ~~~
+        This monster bot, with 1000+ lines of code, is loaded with commands and tasks to demonstrate some of the many things one can do with a Discord bot.
 
+~~~~    How to get started creating a Discord bottom
+        https://discordpy.readthedocs.io/en/latest/discord.html
+        
 Author: Professor Mark Scott (mscott@fhu.edu)
 Other contributors: 1. Cameron Pierce (pierce.cameron7@yahoo.com): original poll command, added code to support command,
                     2. Other Open Source Projects
