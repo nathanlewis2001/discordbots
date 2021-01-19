@@ -379,7 +379,7 @@ async def bleeping():
     # this keeps the clean command from deleting pinned messages
     await channel_bleeping.purge(limit=100, check=lambda msg: not msg.pinned)
     feed = feedparser.parse("https://www.bleepingcomputer.com/feed/")
-    for entry in [feed.entries[1], feed.entries[2], feed.entries[3], feed.entries[4], feed.entries[5], feed.entries[6]]:
+    for entry in [feed.entries[0], feed.entries[1], feed.entries[2], feed.entries[3], feed.entries[4]]:
         title = (entry.title)
         link = (entry.link)
         bleeping_embed = discord.Embed(title = f"Bleeping Computer Headlines")
@@ -395,7 +395,7 @@ async def cisa():
     # this keeps the clean command from deleting pinned messages
     await channel_cisa.purge(limit=100, check=lambda msg: not msg.pinned)
     feed = feedparser.parse("https://us-cert.cisa.gov/ncas/alerts.xml")
-    for entry in feed.entries:
+    for entry in [feed.entries[0], feed.entries[1], feed.entries[2], feed.entries[3], feed.entries[4]]:
         title = (entry.title)
         link = (entry.link)
         cisa_embed = discord.Embed(title = f"CISA Alerts")
@@ -411,7 +411,7 @@ async def cisab():
     # this keeps the clean command from deleting pinned messages
     await channel_cisab.purge(limit=100, check=lambda msg: not msg.pinned)
     feed = feedparser.parse("https://us-cert.cisa.gov/ncas/bulletins.xml")
-    for entry in feed.entries:
+    for entry in [feed.entries[0], feed.entries[1], feed.entries[2], feed.entries[3], feed.entries[4]]:
         title = (entry.title)
         link = (entry.link)
         cisab_embed = discord.Embed(title = f"CISA Bulletins")
@@ -427,7 +427,7 @@ async def espn():
     # this keeps the clean command from deleting pinned messages
     await channel_espn.purge(limit=100, check=lambda msg: not msg.pinned)
     feed = feedparser.parse("https://www.espn.com/espn/rss/news")
-    for entry in [feed.entries[1], feed.entries[2], feed.entries[3], feed.entries[4], feed.entries[5], feed.entries[6]]:
+    for entry in [feed.entries[0], feed.entries[1], feed.entries[2], feed.entries[3], feed.entries[4]]:
         title = (entry.title)
         link = (entry.link)
         espn_embed = discord.Embed(title = f"ESPN Headlines")
@@ -443,7 +443,7 @@ async def foxnews():
     # this keeps the clean command from deleting pinned messages
     await channel_foxnews.purge(limit=100, check=lambda msg: not msg.pinned)
     feed = feedparser.parse("http://feeds.foxnews.com/foxnews/latest")
-    for entry in feed.entries:
+    for entry in [feed.entries[0], feed.entries[1], feed.entries[2], feed.entries[3], feed.entries[4]]:
         title = (entry.title)
         link = (entry.link)
         fox_embed = discord.Embed(title = f"FoxNews Headlines")
@@ -459,7 +459,7 @@ async def krebs():
     # this keeps the clean command from deleting pinned messages
     await channel_krebs.purge(limit=100, check=lambda msg: not msg.pinned)
     feed = feedparser.parse("https://feeds.feedburner.com/KrebsOnSecurity")
-    for entry in feed.entries:
+    for entry in [feed.entries[0], feed.entries[1], feed.entries[2], feed.entries[3], feed.entries[4]]:
         title = (entry.title)
         link = (entry.link)
         krebs_embed = discord.Embed(title = f"Krebs On Security")
@@ -475,7 +475,7 @@ async def mac():
     # this keeps the clean command from deleting pinned messages
     await channel_mac.purge(limit=100, check=lambda msg: not msg.pinned)
     feed = feedparser.parse("https://9to5mac.com/feed/")
-    for entry in [feed.entries[1], feed.entries[2], feed.entries[3], feed.entries[4], feed.entries[5], feed.entries[6]]:
+    for entry in [feed.entries[0], feed.entries[1], feed.entries[2], feed.entries[3], feed.entries[4]]:
         title = (entry.title)
         link = (entry.link)
         mac_embed = discord.Embed(title = f"9to5 Mac Headlines")
@@ -491,7 +491,7 @@ async def npr():
     # this keeps the clean command from deleting pinned messages
     await channel_npr.purge(limit=100, check=lambda msg: not msg.pinned)
     feed = feedparser.parse("https://feeds.npr.org/1001/rss.xml")
-    for entry in feed.entries:
+    for entry in [feed.entries[0], feed.entries[1], feed.entries[2], feed.entries[3], feed.entries[4]]:
         title = (entry.title)
         link = (entry.link)
         npr_embed = discord.Embed(title = f"NPR News Headlines")
@@ -507,7 +507,7 @@ async def tr():
     # this keeps the clean command from deleting pinned messages
     await channel_tr.purge(limit=100, check=lambda msg: not msg.pinned)
     feed = feedparser.parse("http://www.techrepublic.com/rssfeeds/topic/security/?feedType=rssfeeds")
-    for entry in feed.entries:
+    for entry in [feed.entries[0], feed.entries[1], feed.entries[2], feed.entries[3], feed.entries[4]]:
         title = (entry.title)
         link = (entry.link)
         tr_embed = discord.Embed(title = f"TechRepublic")
@@ -523,7 +523,7 @@ async def live():
     # this keeps the clean command from deleting pinned messages
     await channel_live.purge(limit=100, check=lambda msg: not msg.pinned)
     feed = feedparser.parse("http://feeds.feedburner.com/eset/blog")
-    for entry in feed.entries:
+    for entry in [feed.entries[0], feed.entries[1], feed.entries[2], feed.entries[3], feed.entries[4]]:
         title = (entry.title)
         link = (entry.link)
         live_embed = discord.Embed(title = f"We Live Security Blog")
@@ -539,7 +539,7 @@ async def windows():
     # this keeps the clean command from deleting pinned messages
     await channel_windows.purge(limit=100, check=lambda msg: not msg.pinned)
     feed = feedparser.parse("https://www.windowscentral.com/rss")
-    for entry in feed.entries:
+    for entry in [feed.entries[0], feed.entries[1], feed.entries[2], feed.entries[3], feed.entries[4]]:
         title = (entry.title)
         link = (entry.link)
         windows_embed = discord.Embed(title = f"Windows Central Blog")
