@@ -8,8 +8,8 @@ FHU CYB Discord bot 12/2020
         - learn how to create custom Discord help command
         - learn how to automate Discord tasks
         - learn how to two ways clean out Discord channels
-        - learn how to pull in RSS feeds to a specific channel
-        - learn how to protect personal login tokens, keys, etc.
+        - learn how to pull in RSS feeds into a specific channel
+        - learn how to protect personal login tokens, keys, passwords, etc.
         - learn how to download datasets (xls, csv) from Internet and process locally
         - learn how to use embeds
         - learn how to take user input and save to a local file
