@@ -17,7 +17,7 @@ FHU CYB Discord bot 12/2020
         - learn how to run local system commands within Discord (ping, dig, dns)
         - learn how to create a simple y/n poll
         - learn how to create many bot commands
-    
+
 
 
 ~~~~    How to get started creating a Discord bot
@@ -379,7 +379,7 @@ async def bleeping():
     # this keeps the clean command from deleting pinned messages
     await channel_bleeping.purge(limit=100, check=lambda msg: not msg.pinned)
     feed = feedparser.parse("https://www.bleepingcomputer.com/feed/")
-    for entry in feed.entries:
+    for entry in [feed.entries[1], feed.entries[2], feed.entries[3], feed.entries[4], feed.entries[5], feed.entries[6]]:
         title = (entry.title)
         link = (entry.link)
         bleeping_embed = discord.Embed(title = f"Bleeping Computer Headlines")
@@ -421,13 +421,13 @@ async def cisab():
         await channel_cisab.send(embed = cisab_embed)
 
 # Task to auto retrieve current ESPN RSS feed
-@tasks.loop(hours=2.0)
+@tasks.loop(hours=1.0)
 async def espn():
     channel_espn = bot.get_channel(796091192634507304)
     # this keeps the clean command from deleting pinned messages
     await channel_espn.purge(limit=100, check=lambda msg: not msg.pinned)
     feed = feedparser.parse("https://www.espn.com/espn/rss/news")
-    for entry in feed.entries:
+    for entry in [feed.entries[1], feed.entries[2], feed.entries[3], feed.entries[4], feed.entries[5], feed.entries[6]]:
         title = (entry.title)
         link = (entry.link)
         espn_embed = discord.Embed(title = f"ESPN Headlines")
@@ -475,7 +475,7 @@ async def mac():
     # this keeps the clean command from deleting pinned messages
     await channel_mac.purge(limit=100, check=lambda msg: not msg.pinned)
     feed = feedparser.parse("https://9to5mac.com/feed/")
-    for entry in feed.entries:
+    for entry in [feed.entries[1], feed.entries[2], feed.entries[3], feed.entries[4], feed.entries[5], feed.entries[6]]:
         title = (entry.title)
         link = (entry.link)
         mac_embed = discord.Embed(title = f"9to5 Mac Headlines")
