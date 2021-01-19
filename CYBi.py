@@ -207,8 +207,8 @@ async def covid_auto_county():
     covid_auto_county_embed = discord.Embed(title = f"{county} County Covid")
     covid_auto_county_embed.set_thumbnail(url="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftha.com%2Fwp-content%2Fuploads%2F2017%2F04%2FTN-depart-of-health-website-graphic.png&f=1&nofb=1")
     covid_auto_county_embed.add_field(name="Date: ", value=f"{date}", inline=False)
-    covid_auto_county_embed.add_field(name="Total Cases: ", value=f"{total_cases[:-2]}", inline=False)
     # adding [:-2] to the variable removes the last 2 digits, so 10.0 becomes 10
+    covid_auto_county_embed.add_field(name="Total Cases: ", value=f"{total_cases[:-2]}", inline=False)
     covid_auto_county_embed.add_field(name="New Cases: ", value=f"{new_cases[:-2]}", inline=False)
     covid_auto_county_embed.add_field(name="Total Deaths: ", value=f"{total_deaths[:-2]}", inline=False)
     covid_auto_county_embed.add_field(name="New Deaths: ", value=f"{new_deaths[:-2]}", inline=False)
