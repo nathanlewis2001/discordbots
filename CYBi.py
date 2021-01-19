@@ -89,10 +89,8 @@ async def on_command_error(ctx, error):
     # if command has local error handler, return
     if hasattr(ctx.command, 'on_error'):
         return
-
     # get the original exception
     error = getattr(error, 'original', error)
-
     if isinstance(error, commands.CommandNotFound):
         await ctx.send("That CYBi command is not found. For more help, use the ./help command.")
 
