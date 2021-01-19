@@ -17,6 +17,7 @@ FHU CYB Discord bot 12/2020
         - learn how to run local system commands within Discord (ping, dig, dns)
         - learn how to create a simple y/n poll
         - learn how to create many bot commands
+        - learn how to capture errors and offer help
 
 ~~~~    How to get started creating a Discord bot
         https://discordpy.readthedocs.io/en/latest/discord.html
