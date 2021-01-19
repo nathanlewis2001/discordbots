@@ -4,6 +4,21 @@ FHU CYB Discord bot 12/2020
 
 ~~~~    CYBi is a teaching tool on Discord bot making
         This monster bot, with 1000+ lines of code, is loaded with commands and tasks to demonstrate some of the many things one can do with a Discord bot.
+        - learn how to use APIs
+        - learn how to creat custom Discord help command
+        - learn how to automate Discord tasks
+        - learn how to two ways clean out Discord channels
+        - learn how to pull in RSS feeds to a specific channel
+        - learn how to protect personal login tokens, keys, etc.
+        - learn how to download files (xls, csv) from Internet and process locally
+        - learn how to use embeds
+        - learn how to take user input and save to a local file
+        - learn how to create a simple user support system
+        - learn how to run local system commands within Discord (ping, dig, dns)
+        - learn how to create a simple y/n poll
+        - learn how to create many bot commands
+    
+
 
 ~~~~    How to get started creating a Discord bot
         https://discordpy.readthedocs.io/en/latest/discord.html
