@@ -360,7 +360,7 @@ async def unban_error(ctx, error):
 
 # ------------------------------------------------------------------------------
 
-print("SSBot bot is starting..")
+print("SSBot is starting..")
 
 # the hidden .env variable located on the server stores the Discord bot token
 load_dotenv('.envSSBOT')
