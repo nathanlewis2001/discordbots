@@ -317,7 +317,7 @@ async def support(ctx, *, question, member: discord.Member = None):
     support_embed = discord.Embed(title = "Support request", description=f"{question}")
     support_embed.set_author(name=f'From: {member.display_name} (aka:{member.name})')
     support_embed.set_thumbnail(url=ctx.message.author.avatar_url)
-    channel = bot.get_channel(789239232836272159)
+    channel = bot.get_channel(801833430656483378)
 
     await channel.send(embed = support_embed)
     author = ctx.message.author
