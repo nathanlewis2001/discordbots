@@ -66,11 +66,11 @@ async def on_command_error(ctx, error):
     error = getattr(error, 'original', error)
     # offer help to user
     if isinstance(error, commands.CommandNotFound):
-        await ctx.send("That SSBot command is not found. For more help, use the ./help command.")
+        await ctx.send("That SSBot command is not found. For more help, use the /help command.")
 
 @bot.event
 async def on_ready():
-    bleeping.start() # starts the Bleeping Computer RSS feed
+    SSN_bleeping.start() # starts the Bleeping Computer RSS feed
     #clean_channels.start() # starts the clean_rss task
     print("SSBot is ready")
     print('Logged on as', bot.user)
@@ -99,7 +99,7 @@ Tasks to pull RSS feeds
 
 # Task to auto retrieve current Bleeping Computer RSS feed
 @tasks.loop(hours=1.0)
-async def bleeping():
+async def SSN_bleeping():
     channel_bleeping = bot.get_channel(801839283739557938)
     # this keeps the clean command from deleting pinned messages
     await channel_bleeping.purge(limit=100, check=lambda msg: not msg.pinned)
@@ -235,26 +235,26 @@ async def help(ctx):
     embed = discord.Embed(
         colour=discord.Colour.purple(),
         title="SSBot's Commands",
-        description="/ or a period and forward slash are SSBot's prefix"
+        description="/ (forward slash) is SSBot's prefix"
     )
     #embed.set_thumbnail(url="")
     embed.set_footer(text="~~~MScott")
 
     embed.add_field(name="~~~",value="UTILITIES", inline=False)
-    embed.add_field(name="SSNping", value="Checks bot latency: **Usage:** *./SSNping*", inline=False)
+    embed.add_field(name="SSNping", value="Checks bot latency: **Usage:** */SSNping*", inline=False)
     embed.add_field(name="clean",
-                    value="(Admin) Deletes channel messages except for pinned messages: **Usage:** *./clean 5 or ./clean 50*, etc.", inline=False)
+                    value="(Admin) Deletes channel messages except for pinned messages: **Usage:** */clean 5 or /clean 50*, etc.", inline=False)
     embed.add_field(name="cleanall",
-                    value="(Admin) Deletes channel messages, including pinned messages: **Usage:** *./clean 5 or ./clean 50*, etc.", inline=False)
+                    value="(Admin) Deletes channel messages, including pinned messages: **Usage:** */clean 5 or /clean 50*, etc.", inline=False)
     embed.add_field(name="kick",
-                    value="(Admin) Kicks Discord member from guild: **Usage:** *./kick member name*", inline=False)
-    embed.add_field(name="SSN", value="Creates a support request: **Usage:** *./SSN I need help installing VirtualBox", inline=False)
+                    value="(Admin) Kicks Discord member from guild: **Usage:** */kick member name*", inline=False)
+    embed.add_field(name="SSN", value="Creates a support request: **Usage:** */SSN I need help installing VirtualBox", inline=False)
     embed.add_field(name="~~~", value="INFORMATIONAL",inline=False)
-    embed.add_field(name="SSBottime", value="Gives the current date and time: **Usage:** *./SSBottime*", inline=False)
-    embed.add_field(name="cid", value="Get a list of CIDR range(s) from a start and ending IP address: **Usage:** *./cid ip1 ip2)*", inline=False)
-    embed.add_field(name="COVID", value="Gives the current Covid stats by state: **Usage:** *./COVID TN (or AL, KY, etc.)*", inline=False)
-    embed.add_field(name="DNS", value="Get Get the IP address of a domain: **Usage:** *./DNS domain)*", inline=False)
-    embed.add_field(name="Pinging", value="Check to see if domain or IP is active (up): **Usage:** *./Pinging domain or ./ping ip)*", inline=False)
+    embed.add_field(name="SSBottime", value="Gives the current date and time: **Usage:** */SSBottime*", inline=False)
+    embed.add_field(name="cid", value="Get a list of CIDR range(s) from a start and ending IP address: **Usage:** */cid ip1 ip2)*", inline=False)
+    embed.add_field(name="COVID", value="Gives the current Covid stats by state: **Usage:** */COVID TN (or AL, KY, etc.)*", inline=False)
+    embed.add_field(name="DNS", value="Get Get the IP address of a domain: **Usage:** */DNS domain)*", inline=False)
+    embed.add_field(name="Pinging", value="Check to see if domain or IP is active (up): **Usage:** */Pinging domain or /ping ip)*", inline=False)
     await author.send(embed=embed)
 
 # kick member for mods and admins only
