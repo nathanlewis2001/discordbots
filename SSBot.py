@@ -53,7 +53,7 @@ from urllib.request import urlretrieve as retrieve
 #print(appid, rapidapi) #verify api
 
 help_command = commands.DefaultHelpCommand(no_category = 'SSBot Commands')
-bot = commands.Bot(command_prefix='./', help_command = help_command)
+bot = commands.Bot(command_prefix='/', help_command = help_command)
 # disabled built-in help command in order to use custom help
 bot.remove_command('help')
 
@@ -235,7 +235,7 @@ async def help(ctx):
     embed = discord.Embed(
         colour=discord.Colour.purple(),
         title="SSBot's Commands",
-        description="./ or a period and forward slash are SSBot's prefix"
+        description="/ or a period and forward slash are SSBot's prefix"
     )
     #embed.set_thumbnail(url="")
     embed.set_footer(text="~~~MScott")
