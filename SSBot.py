@@ -6,7 +6,7 @@ Author: r.mark.scott@gmail.com
 Other contributors:
                     1. Other Open Source Projects
 
-This bot lives at
+This bot lives at https://github.com/rmarkscott/discordbots/blob/main/SSBot.py
 --------------------------------------------------------------------------------
 Released under the MIT license
 
