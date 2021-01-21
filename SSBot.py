@@ -81,19 +81,19 @@ async def on_ready():
     bleeping.start() # starts the Bleeping Computer RSS feed
     cisa.start() # starts the CISA alerts RSS feed
     cisab.start() # starts the CISA bulletin RSS feed
-    clean_channels.start() # starts the clean_rss task
-    covid_auto.start() # starts the covid_auto task
-    covid_auto_county.start() # starts the covid_auto_county task
-    clean_forecast.start() # starts the clean_forecast task
-    clean_weather.start() # starts the clean_weather task
-    espn.start() # starts the ESPN RSS feed
-    foxnews.start() # starts the FoxNews RSS feed
+    #clean_channels.start() # starts the clean_rss task
+    #covid_auto.start() # starts the covid_auto task
+    #covid_auto_county.start() # starts the covid_auto_county task
+    #clean_forecast.start() # starts the clean_forecast task
+    #clean_weather.start() # starts the clean_weather task
+    #espn.start() # starts the ESPN RSS feed
+    #foxnews.start() # starts the FoxNews RSS feed
     krebs.start() # starts the Krebs on Security RSS feed
-    live.start() # starts the We Live Security RSS feed
-    mac.start() # starts the 9to5 Mac RSS feed
-    npr.start() # starts the NPR News RSS feed
-    tr.start() # starts the TechRepublic RSS feed
-    windows.start() # starts the Windows Central RSS feed
+    #live.start() # starts the We Live Security RSS feed
+    #mac.start() # starts the 9to5 Mac RSS feed
+    #npr.start() # starts the NPR News RSS feed
+    #tr.start() # starts the TechRepublic RSS feed
+    #windows.start() # starts the Windows Central RSS feed
     print("CYBi Bot is ready")
     print('Logged on as', bot.user)
     print('Discord.py Version: {}'.format(discord.__version__))
@@ -111,14 +111,14 @@ CYBi Discord Automated Tasks
 
 @tasks.loop(hours=12.0)
 async def clean_channels():
-         channel_stocks = bot.get_channel(792085912095162368)
+         #channel_stocks = bot.get_channel()
          # "check=lambda msg: not msg.pinned" keeps the purge command from deleting pinned messages
          await channel_stocks.purge(limit=100, check=lambda msg: not msg.pinned)
 
 # Task to auto retrieve current Covid-19 stats by state and print in Covid stats channel every day
 @tasks.loop(hours=3.0)
 async def covid_auto():
-    channel_covid = bot.get_channel(794303837989109771)
+    #channel_covid = bot.get_channel()
      # this keeps the clean command from deleting pinned messages
     await channel_covid.purge(limit=100, check=lambda msg: not msg.pinned)
     urla = ('https://covidtracking.com/api/states?state=TN')
@@ -158,7 +158,7 @@ async def covid_auto():
 # and print in the Covid stats channel every day
 @tasks.loop(hours=3.0)
 async def covid_auto_county():
-    channel_covid = bot.get_channel(794303837989109771)
+    #channel_covid = bot.get_channel()
     # TN Health Dept Covid data set is always for yesterday and create yesterday in correct format
     yesterday = ((d.today() - timedelta(days=1)).strftime('%Y-%m-%d'))
     # the following downloads dataset from URL
@@ -353,7 +353,7 @@ Tasks to pull RSS feeds
 # Task to auto retrieve current Bleeping Computer RSS feed
 @tasks.loop(hours=1.0)
 async def bleeping():
-    channel_bleeping = bot.get_channel(796100268844515348)
+    channel_bleeping = bot.get_channel(801839283739557938)
     # this keeps the clean command from deleting pinned messages
     await channel_bleeping.purge(limit=100, check=lambda msg: not msg.pinned)
     feed = feedparser.parse("https://www.bleepingcomputer.com/feed/")
@@ -369,7 +369,7 @@ async def bleeping():
 # Task to auto retrieve current CISA alerts RSS feed
 @tasks.loop(hours=1.0)
 async def cisa():
-    channel_cisa = bot.get_channel(800016247210115092)
+    channel_cisa = bot.get_channel(801839710066180156)
     # this keeps the clean command from deleting pinned messages
     await channel_cisa.purge(limit=100, check=lambda msg: not msg.pinned)
     feed = feedparser.parse("https://us-cert.cisa.gov/ncas/alerts.xml")
@@ -385,7 +385,7 @@ async def cisa():
 # Task to auto retrieve current CISA bulletins RSS feed
 @tasks.loop(hours=1.0)
 async def cisab():
-    channel_cisab = bot.get_channel(800019411984711680)
+    channel_cisab = bot.get_channel(8801839745273430026)
     # this keeps the clean command from deleting pinned messages
     await channel_cisab.purge(limit=100, check=lambda msg: not msg.pinned)
     feed = feedparser.parse("https://us-cert.cisa.gov/ncas/bulletins.xml")
@@ -433,7 +433,7 @@ async def foxnews():
 # Task to auto retrieve current Krebs RSS feed
 @tasks.loop(hours=2.0)
 async def krebs():
-    channel_krebs = bot.get_channel(800024147781746708)
+    channel_krebs = bot.get_channel(801840153785925674)
     # this keeps the clean command from deleting pinned messages
     await channel_krebs.purge(limit=100, check=lambda msg: not msg.pinned)
     feed = feedparser.parse("https://feeds.feedburner.com/KrebsOnSecurity")
@@ -558,7 +558,7 @@ async def bottime(ctx):
 async def cidr(ctx, ip1: str, ip2: str):
     await ctx.message.delete()
     data = (calculate_cidr(ip1, ip2))
-    channel = bot.get_channel(795746943216779284)
+    channel = bot.get_channel(801841617254088705)
     await channel.send(f'```yaml\n CIDR range(s) for {ip1} & {ip2}\n```'
     f'```yaml\n {data}```'
     )
@@ -630,7 +630,7 @@ async def covid(ctx, state: str):
     covid_embed.add_field(name="Confirmed death (includes probable): ", value=f"{deaths2}", inline=True)
     covid_embed.add_field(name="New deaths: ", value=f"{deaths3}", inline=True)
     covid_embed.set_footer(text="~~~Data retrieved from The COVID Tracking Project (https://covidtracking.com/about)")
-    channel = bot.get_channel(794303837989109771)
+    channel = bot.get_channel(801841942521577483)
     await channel.send(embed = covid_embed)
 
 @covid.error
@@ -643,7 +643,7 @@ async def covid_error(ctx, error):
 async def dns(ctx, ipA: str):
     await ctx.message.delete()
     address = socket.gethostbyname(ipA)
-    channel = bot.get_channel(795746943216779284)
+    channel = bot.get_channel(801841617254088705)
     await channel.send(f'```yaml\n The IP(s) for {ipA}\n```'
     f'```yaml\n {address}```'
     )
@@ -716,7 +716,7 @@ async def botping(ctx):
 @bot.command()
 async def ping(ctx, ip: str):
     await ctx.message.delete()
-    channel = bot.get_channel(795746943216779284)
+    channel = bot.get_channel(801841617254088705)
     hostname0 = (ip)
     response = os.system("ping -c 1 " + hostname0)
     if response == 0:
@@ -738,8 +738,8 @@ async def cybpoll(ctx, *, question, member: discord.Member = None):
     poll_embed.set_footer(text=f'~~~{member.display_name} (aka:{member.name})')
     poll_embed.set_thumbnail(url="https://drive.google.com/uc?id=14FBUSKg4Hz8HRITRaUiTzy97omZDDEwn")
     # forces message to be created in the poll channel
-    channel = bot.get_channel(778614115244703764)
-    sent_message = await channel.send(embed = poll_embed)
+    #channel = bot.get_channel(778614115244703764)
+    #sent_message = await channel.send(embed = poll_embed)
     await ctx.message.delete()
     await sent_message.add_reaction("👍")
     await sent_message.add_reaction("👎")
@@ -759,12 +759,12 @@ async def cybpoll_error(ctx, error):
 async def rules(ctx, member: discord.Member = None):
     member = ctx.author if not member else member
     # forces present message to be created in the rules channel
-    channel = bot.get_channel(778286477691191347)
+    #channel = bot.get_channel(778286477691191347)
     await channel.send(f'{member.display_name} (aka: {member.name}) has read and agrees to abide by these rules!')
     await ctx.message.delete()
     rightnow = dt.datetime.now()
     # creates rules verification log on backend server
-    with open("rules.log", "a+") as file:
+    #with open("rules.log", "a+") as file:
         file.write(str(rightnow))
         file.write(f'--{member.display_name} (aka:{member.name})\n')
         file.close()
@@ -773,15 +773,15 @@ async def rules(ctx, member: discord.Member = None):
 @bot.command()
 async def stocky(ctx, ticker: str, member: discord.Member = None):
     member = ctx.author if not member else member
-    channel = bot.get_channel(792085912095162368)
-    await ctx.message.delete()
+    #channel = bot.get_channel(792085912095162368)
+    #await ctx.message.delete()
     price = si.get_live_price(ticker)
     Price = round(price,3)
     tickr = (ticker.upper())
     stock_embed = discord.Embed(colour=discord.Colour.green(), title = f'Currently {tickr} is priced at ${Price}')
     stock_embed.set_author(name=f"{tickr} Stock Price")
     stock_embed.set_thumbnail(url="https://play-lh.googleusercontent.com/K4eJEI8ogLQO2MkjUKgxC8FNWL4I5etsbFw2OXwQJ9Uch4DGkW1gEdoQk_k-cmtD4F4=s360")
-    await channel.send(embed=stock_embed)
+    #await channel.send(embed=stock_embed)
     await ctx.message.delete()
 
 @stocky.error
@@ -802,8 +802,8 @@ async def support(ctx, *, question, member: discord.Member = None):
     author = ctx.message.author
     await author.send(f'{member.display_name}, thank you for using our support channel. A support team member will contact with soon!')
     # creates alert message for moderators in the moderator-discussions channel that there is a new support request
-    channel2 = bot.get_channel(743118001183916113)
-    await channel2.send(f'<@&742848842554278020> there is a new support request from {member.display_name} (aka: {member.name}) in the #support channel. Can a mod respond?')
+    channel2 = bot.get_channel(801241102585299014)
+    await channel2.send(f'<@&777229279301337098> there is a new support request from {member.display_name} (aka: {member.name}) in the <#801833430656483378> channel. Can a mod respond?')
     await ctx.message.delete()
 
 @support.error
@@ -833,7 +833,7 @@ async def unban_error(ctx, error):
 
 # pull weather info by zipcode
 @bot.command()
-async def weather(ctx, zip: str):
+#async def weather(ctx, zip: str):
     await ctx.message.delete()
     url = 'http://api.openweathermap.org/data/2.5/weather?zip={}&appid={}&units=imperial'.format(zip, appid)
     result = requests.get(url)
@@ -873,7 +873,7 @@ async def weather_error(ctx, error):
 
 # pull 2 day weather forecast info by zipcode
 @bot.command()
-async def forecast(ctx, zip: str):
+#async def forecast(ctx, zip: str):
     await ctx.message.delete()
     url = 'http://api.openweathermap.org/data/2.5/forecast?zip={}&exclude=hourly&appid={}&units=imperial'.format(zip, appid)
     result = requests.get(url)
