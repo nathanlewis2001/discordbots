@@ -11,7 +11,7 @@ This bot lives at https://github.com/rmarkscott/discordbots/blob/main/SSBot.py
 Released under the MIT license
 
 The MIT License (MIT)
-Copyright © 2020 Professor Mark Scott
+Copyright © 2020 Mark Scott
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software
 and associated documentation files (the “Software”), to deal in the Software without restriction,
@@ -76,7 +76,7 @@ async def on_ready():
     print('Logged on as', bot.user)
     print('Discord.py Version: {}'.format(discord.__version__))
     await bot.change_presence(status=discord.Status.online,
-                              activity=discord.Activity(type=discord.ActivityType.watching, name="over FHU CYB"))
+                              activity=discord.Activity(type=discord.ActivityType.watching, name="over SSN Clients"))
 
 '''
 ------------------------------------------------------------------------
