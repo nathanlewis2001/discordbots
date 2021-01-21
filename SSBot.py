@@ -121,28 +121,16 @@ SSBot Discord Bot Commands
 ------------------------------------------------------------------------
 '''
 
-# ban members for moderators and admins
-@bot.command()
-@commands.has_role('Admin')
-async def ban(ctx, member: discord.Member, *, reason=None):
-    await member.ban(reason=reason)
-    await ctx.send(f'Banned: {member.mention}')
-
-@ban.error
-async def ban_error(ctx, error):
-    if isinstance(error, commands.CheckFailure):
-        await ctx.send('You need special permission to ban!')
-
 # bottime provides date and time
 @bot.command()
-async def bottime(ctx):
+async def SSBottime(ctx):
     await ctx.message.delete()
     rightnow = dt.datetime.now()
     await ctx.send(rightnow)
 
 # Get a list of CIDR range(s) from a start and ending IP address
 @bot.command()
-async def cidr(ctx, ip1: str, ip2: str):
+async def cid(ctx, ip1: str, ip2: str):
     await ctx.message.delete()
     data = (calculate_cidr(ip1, ip2))
     channel = bot.get_channel(801841617254088705)
@@ -150,8 +138,8 @@ async def cidr(ctx, ip1: str, ip2: str):
     f'```yaml\n {data}```'
     )
 
-    @cidr.error
-    async def cidr_error(ctx, error):
+    @cid.error
+    async def cid_error(ctx, error):
         if isinstance(error, commands.MissingRequiredArgument):
             await ctx.send('Please specify a beginning and ending IP address.')
 
@@ -184,7 +172,7 @@ async def cleanall_error(ctx, error):
 
 # Retrieve current Covid-19 stats by state
 @bot.command()
-async def covid(ctx, state: str):
+async def COVID(ctx, state: str):
     await ctx.message.delete()
     url = ('https://covidtracking.com/api/states?state={}'.format(state))
     result = requests.get(url)
@@ -220,22 +208,22 @@ async def covid(ctx, state: str):
     channel = bot.get_channel(801841942521577483)
     await channel.send(embed = covid_embed)
 
-@covid.error
-async def covid_error(ctx, error):
+@COVID.error
+async def COVID_error(ctx, error):
     if isinstance(error, commands.MissingRequiredArgument):
         await ctx.send('Please specify a state, i.e., CA, MO, TN, AL, KY, etc.')
 
 #Resolve domain IP address
 @bot.command()
-async def dns(ctx, ipA: str):
+async def DNS(ctx, ipA: str):
     await ctx.message.delete()
     address = socket.gethostbyname(ipA)
     channel = bot.get_channel(801841617254088705)
     await channel.send(f'```yaml\n The IP(s) for {ipA}\n```'
     f'```yaml\n {address}```'
     )
-@dns.error
-async def dns_error(ctx, error):
+@DNS.error
+async def DNS_error(ctx, error):
     if isinstance(error, commands.MissingRequiredArgument):
         await ctx.send('Please specify a domain.')
 
@@ -253,48 +241,43 @@ async def help(ctx):
     embed.set_footer(text="~~~MScott")
 
     embed.add_field(name="~~~",value="UTILITIES", inline=False)
-    embed.add_field(name="ban",
-                    value="(Moderator) Bans a Discord member from the guild: **Usage:** *./ban member name*",
-                    inline=False)
-    embed.add_field(name="botping", value="Checks bot latency: **Usage:** *./botping*", inline=False)
+    embed.add_field(name="SSNping", value="Checks bot latency: **Usage:** *./SSNping*", inline=False)
     embed.add_field(name="clean",
                     value="(Admin) Deletes channel messages except for pinned messages: **Usage:** *./clean 5 or ./clean 50*, etc.", inline=False)
     embed.add_field(name="cleanall",
                     value="(Admin) Deletes channel messages, including pinned messages: **Usage:** *./clean 5 or ./clean 50*, etc.", inline=False)
     embed.add_field(name="kick",
-                    value="(Moderator) Kicks Discord member from guild: **Usage:** *./kick member name*", inline=False)
-    embed.add_field(name="support", value="Creates a support request: **Usage:** *./support I need help installing VirtualBox", inline=False)
-    embed.add_field(name="unban", value="(Moderator) Unbans Discord member: **Usage:** *./unban member name*",
-                    inline=False)
+                    value="(Admin) Kicks Discord member from guild: **Usage:** *./kick member name*", inline=False)
+    embed.add_field(name="SSN", value="Creates a support request: **Usage:** *./SSN I need help installing VirtualBox", inline=False)
     embed.add_field(name="~~~", value="INFORMATIONAL",inline=False)
-    embed.add_field(name="bottime", value="Gives the current date and time: **Usage:** *./bottime*", inline=False)
-    embed.add_field(name="cidr", value="Get a list of CIDR range(s) from a start and ending IP address: **Usage:** *./cidr ip1 ip2)*", inline=False)
-    embed.add_field(name="covid", value="Gives the current Covid stats by state: **Usage:** *./covid TN (or AL, KY, etc.)*", inline=False)
-    embed.add_field(name="dns", value="Get Get the IP address of a domain: **Usage:** *./dns domain)*", inline=False)
-    embed.add_field(name="ping", value="Check to see if domain or IP is active (up): **Usage:** *./ping domain or ./ping ip)*", inline=False)
+    embed.add_field(name="SSBottime", value="Gives the current date and time: **Usage:** *./SSBottime*", inline=False)
+    embed.add_field(name="cid", value="Get a list of CIDR range(s) from a start and ending IP address: **Usage:** *./cid ip1 ip2)*", inline=False)
+    embed.add_field(name="COVID", value="Gives the current Covid stats by state: **Usage:** *./COVID TN (or AL, KY, etc.)*", inline=False)
+    embed.add_field(name="DNS", value="Get Get the IP address of a domain: **Usage:** *./DNS domain)*", inline=False)
+    embed.add_field(name="Pinging", value="Check to see if domain or IP is active (up): **Usage:** *./Pinging domain or ./ping ip)*", inline=False)
     await author.send(embed=embed)
 
 # kick member for mods and admins only
 @bot.command()
-@commands.has_role('Moderator')
-async def kick(ctx, member: discord.Member, *, reason=None):
+@commands.has_role('Admin')
+async def kicking(ctx, member: discord.Member, *, reason=None):
     await member.kick(reason=reason)
     await ctx.send(f'Kicked: {member.mention}')
 
-@kick.error
-async def kick_error(ctx, error):
+@kicking.error
+async def kicking_error(ctx, error):
     if isinstance(error, commands.CheckFailure):
         await ctx.send('You DO NOT have permission to kick!')
 
 # ping to check bot latency
 @bot.command()
-async def botping(ctx):
+async def SSNping(ctx):
     await ctx.message.delete()
     await ctx.send(f'The ping latency to the bot server is {bot.latency}!')
 
 # ping IP address
 @bot.command()
-async def ping(ctx, ip: str):
+async def pinging(ctx, ip: str):
     await ctx.message.delete()
     channel = bot.get_channel(801841617254088705)
     hostname0 = (ip)
@@ -305,14 +288,14 @@ async def ping(ctx, ip: str):
         await channel.send(f'```yaml\n Ping indicates that {hostname0} is down!```')
     await ctx.message.delete()
 
-@ping.error
-async def ping_error(ctx, error):
+@pinging.error
+async def pinging_error(ctx, error):
     if isinstance(error, commands.MissingRequiredArgument):
         await ctx.send('Please specify an IP Address or domain.')
 
 # support
 @bot.command(pass_context=True)
-async def support(ctx, *, question, member: discord.Member = None):
+async def SSN(ctx, *, question, member: discord.Member = None):
     member = ctx.author if not member else member
     support_embed = discord.Embed(title = "Support request", description=f"{question}")
     support_embed.set_author(name=f'From: {member.display_name} (aka:{member.name})')
@@ -324,33 +307,13 @@ async def support(ctx, *, question, member: discord.Member = None):
     await author.send(f'{member.display_name}, thank you for using our support channel. A support team member will contact with soon!')
     # creates alert message for moderators in the moderator-discussions channel that there is a new support request
     channel2 = bot.get_channel(801241102585299014)
-    await channel2.send(f'<@&777229279301337098> there is a new support request from {member.display_name} (aka: {member.name}) in the <#801833430656483378> channel. Can a mod respond?')
+    await channel2.send(f'<@&8018571918751826324> there is a new support request from {member.display_name} (aka: {member.name}) in the <#801833430656483378> channel. Can a mod respond?')
     await ctx.message.delete()
 
-@support.error
-async def support_error(ctx, error):
+@SSN.error
+async def SSN_error(ctx, error):
     if isinstance(error, commands.MissingRequiredArgument):
         await ctx.send('Please specify what you need help with.')
-
-# unban members for mods and admins only
-@bot.command()
-@commands.has_role('Admin')
-async def unban(ctx, *, member):
-    banned_users = await ctx.guild.bans()
-    member_name, member_discriminator = member.split('#')
-
-    for ban_entry in banned_users:
-        user = ban_entry.user
-
-        if (user.name, user.discriminator) == (member_name, member_discriminator):
-            await ctx.guild.unban(user)
-            await ctx.send(f'Unbanned {user.mention}')
-            return
-
-@unban.error
-async def unban_error(ctx, error):
-    if isinstance(error, commands.CheckFailure):
-        await ctx.send('You need special permission to unban!')
 
 # ------------------------------------------------------------------------------
 
