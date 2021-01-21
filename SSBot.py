@@ -266,18 +266,12 @@ async def help(ctx):
     embed.add_field(name="support", value="Creates a support request: **Usage:** *./support I need help installing VirtualBox", inline=False)
     embed.add_field(name="unban", value="(Moderator) Unbans Discord member: **Usage:** *./unban member name*",
                     inline=False)
-    embed.add_field(name="cybpoll", value="Creates a quick yes or no poll: **Usage:** *./cybpoll Do you like eggs?*", inline=False)
-    embed.add_field(name="rules", value="Verifies member has read and understands the Discord rules: **Usage:** *./rules*", inline=False)
-
     embed.add_field(name="~~~", value="INFORMATIONAL",inline=False)
     embed.add_field(name="bottime", value="Gives the current date and time: **Usage:** *./bottime*", inline=False)
     embed.add_field(name="cidr", value="Get a list of CIDR range(s) from a start and ending IP address: **Usage:** *./cidr ip1 ip2)*", inline=False)
     embed.add_field(name="covid", value="Gives the current Covid stats by state: **Usage:** *./covid TN (or AL, KY, etc.)*", inline=False)
     embed.add_field(name="dns", value="Get Get the IP address of a domain: **Usage:** *./dns domain)*", inline=False)
-    embed.add_field(name="forecast", value="Gives the 2-day weather forecast by zipcode: **Usage:** *./forecast 38340*", inline=False)
     embed.add_field(name="ping", value="Check to see if domain or IP is active (up): **Usage:** *./ping domain or ./ping ip)*", inline=False)
-    embed.add_field(name="stocky", value="Retrieve current stock prices: **Usage:** *./stocky AAPL*", inline=False)
-    embed.add_field(name="weather", value="Gives the current weather by zipcode: **Usage:** *./weather 38340*", inline=False)
     await author.send(embed=embed)
 
 # kick member for mods and admins only
