@@ -52,7 +52,7 @@ from urllib.request import urlretrieve as retrieve
 
 #print(appid, rapidapi) #verify api
 
-help_command = commands.DefaultHelpCommand(no_category = 'SSBot's Commands')
+help_command = commands.DefaultHelpCommand(no_category = 'SSBot Commands')
 bot = commands.Bot(command_prefix='./', help_command = help_command)
 # disabled built-in help command in order to use custom help
 bot.remove_command('help')
@@ -71,11 +71,8 @@ async def on_command_error(ctx, error):
 @bot.event
 async def on_ready():
     bleeping.start() # starts the Bleeping Computer RSS feed
-    cisa.start() # starts the CISA alerts RSS feed
-    cisab.start() # starts the CISA bulletin RSS feed
     #clean_channels.start() # starts the clean_rss task
-    krebs.start() # starts the Krebs on Security RSS feed
-    print("SSBoy Bot is ready")
+    print("SSBot is ready")
     print('Logged on as', bot.user)
     print('Discord.py Version: {}'.format(discord.__version__))
     await bot.change_presence(status=discord.Status.online,
@@ -84,7 +81,7 @@ async def on_ready():
 '''
 ------------------------------------------------------------------------
 
-SSBoy Discord Automated Tasks
+SSBot Discord Automated Tasks
 
 ------------------------------------------------------------------------
 '''
@@ -249,8 +246,8 @@ async def help(ctx):
     await ctx.message.delete()
     embed = discord.Embed(
         colour=discord.Colour.purple(),
-        title="SSBoy's Commands",
-        description="./ or a period and forward slash are SSBoy's prefix"
+        title="SSBot's Commands",
+        description="./ or a period and forward slash are SSBot's prefix"
     )
     #embed.set_thumbnail(url="")
     embed.set_footer(text="~~~MScott")
@@ -363,7 +360,7 @@ async def unban_error(ctx, error):
 
 # ------------------------------------------------------------------------------
 
-print("SSBoy bot is starting..")
+print("SSBot bot is starting..")
 
 # the hidden .env variable located on the server stores the Discord bot token
 load_dotenv('.envSSBOT')
