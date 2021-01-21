@@ -307,7 +307,7 @@ async def SSN(ctx, *, question, member: discord.Member = None):
     await author.send(f'{member.display_name}, thank you for using our support channel. A support team member will contact with soon!')
     # creates alert message for moderators in the moderator-discussions channel that there is a new support request
     channel2 = bot.get_channel(801241102585299014)
-    await channel2.send(f'<@&8018571918751826324> there is a new support request from {member.display_name} (aka: {member.name}) in the <#801833430656483378> channel. Can a mod respond?')
+    await channel2.send(f'<@&777229279301337098> there is a new support request from {member.display_name} (aka: {member.name}) in the <#801833430656483378> channel. Can a mod respond?')
     await ctx.message.delete()
 
 @SSN.error
