@@ -849,7 +849,7 @@ async def support(ctx, *, question, member: discord.Member = None):
 
     await channel.send(embed = support_embed)
     author = ctx.message.author
-    await author.send(f'{member.display_name}, thank you for using our support channel. A support team member will contact with soon!')
+    await author.send(f'{member.display_name}, thank you for using our support channel. A support team member will contact you soon!')
     # creates alert message for moderators in the moderator-discussions channel that there is a new support request
     channel2 = bot.get_channel(743118001183916113)
     await channel2.send(f'<@&742848842554278020> there is a new support request from {member.display_name} (aka: {member.name}) in the <#789239232836272159> channel. Can a mod respond?')
