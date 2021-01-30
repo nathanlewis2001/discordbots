@@ -1,0 +1,34 @@
+from urllib.request import urlretrieve as retrieve
+import csv
+import pandas as pd
+from datetime import timedelta
+from datetime import date
+
+#yesterday = ((date.today() - timedelta(days=1)).strftime('%Y-%m-%d'))
+#print(yesterday)
+
+start_date = ((date.today() - timedelta(days=14)).strftime('%Y-%m-%d'))
+date_range = pd.date_range(start= start_date, periods= 14).strftime('%Y-%m-%d')
+#print(date_range)
+
+url = 'https://www.tn.gov/content/dam/tn/health/documents/cedep/novel-coronavirus/datasets/Public-Dataset-County-New.XLSX'
+
+retrieve(url, 'daily-covid-tn.xls')
+read = pd.read_excel('daily-covid-tn.xls')
+read.to_csv('daily-covid-tn.csv')
+with open ('daily-covid-tn.csv', encoding='ISO-8859-1') as file:
+    reader = [row for row in csv.DictReader(file)]
+    for day in date_range:
+        for entry in reader:
+            if entry['COUNTY'] == 'Chester' and entry['DATE'] == (day):
+                date = entry['DATE']
+                county = entry['COUNTY']
+                total_cases = entry['TOTAL_CASES']
+                new_cases = entry['NEW_CASES']
+                total_deaths = entry['TOTAL_DEATHS']
+                new_deaths = entry['NEW_DEATHS']
+                total_active = entry['TOTAL_ACTIVE']
+                total_hospitalized = entry['TOTAL_HOSPITALIZED']
+                new_hospitalized = entry['NEW_HOSPITALIZED']
+
+                print(date, county, new_cases[:-2])
