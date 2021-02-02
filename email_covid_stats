@@ -5,24 +5,24 @@ from email.mime.text import MIMEText
 with open('covid_stats.txt', 'r') as file:
     data = file.read().replace('\n\n', '',)
 
-mail_content = 'Here are the last seven days of new Covid cases in Chester County:\n' + data
+body = 'Here are the last seven days of new Covid cases in Chester County:\n' + data
 
 #The mail addresses and password
 sender = 'mscott@fhu.edu'
 gmail_pass = 'myywqevbvyhghwqb'
-receiver = 'r.mark.scott@gmail.com,me@me.com'
+receiver = 'r.mark.scott@gmail.com'
 
 #Setup the MIME
 message = MIMEMultipart()
 message['From'] = sender
 message['To'] = receiver
 message['Subject'] = 'New Covid Cases in Chester County'   #The subject line
-message.attach(MIMEText(mail_content, 'plain'))
+message.attach(MIMEText(body, 'plain'))
 
 #Create SMTP session for sending the mail
 session = smtplib.SMTP('smtp.gmail.com', 587)
 session.starttls() #enable security
 session.login(sender, gmail_pass)
-text = message.as_string()
-session.sendmail(sender, receiver.split(','), text)
+mail_body = message.as_string()
+session.sendmail(sender, receiver.split(','), mail_body)
 session.quit()
