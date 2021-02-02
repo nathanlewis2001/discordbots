@@ -1,3 +1,4 @@
+import os
 from urllib.request import urlretrieve as retrieve
 import csv
 import pandas as pd
@@ -7,8 +8,11 @@ from datetime import date
 #yesterday = ((date.today() - timedelta(days=1)).strftime('%Y-%m-%d'))
 #print(yesterday)
 
-start_date = ((date.today() - timedelta(days=14)).strftime('%Y-%m-%d'))
-date_range = pd.date_range(start= start_date, periods= 14).strftime('%Y-%m-%d')
+if os.path.exists("covid_stats.txt"):
+    os.remove("covid_stats.txt")
+
+start_date = ((date.today() - timedelta(days= 7)).strftime('%Y-%m-%d'))
+date_range = pd.date_range(start= start_date, periods= 7).strftime('%Y-%m-%d')
 #print(date_range)
 
 url = 'https://www.tn.gov/content/dam/tn/health/documents/cedep/novel-coronavirus/datasets/Public-Dataset-County-New.XLSX'
@@ -16,6 +20,7 @@ url = 'https://www.tn.gov/content/dam/tn/health/documents/cedep/novel-coronaviru
 retrieve(url, 'daily-covid-tn.xls')
 read = pd.read_excel('daily-covid-tn.xls')
 read.to_csv('daily-covid-tn.csv')
+
 with open ('daily-covid-tn.csv', encoding='ISO-8859-1') as file:
     reader = [row for row in csv.DictReader(file)]
     for day in date_range:
@@ -30,5 +35,10 @@ with open ('daily-covid-tn.csv', encoding='ISO-8859-1') as file:
                 total_active = entry['TOTAL_ACTIVE']
                 total_hospitalized = entry['TOTAL_HOSPITALIZED']
                 new_hospitalized = entry['NEW_HOSPITALIZED']
+
+                with open("covid_stats.txt", "a+") as file:
+                    file.write('\n')
+                    file.write(date + " " + county + " " + " " + new_cases[:-2])
+                    file.close()
 
                 print(date, county, new_cases[:-2])
