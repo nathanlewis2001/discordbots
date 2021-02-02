@@ -13,7 +13,6 @@ if os.path.exists("covid_stats.txt"):
 
 start_date = ((date.today() - timedelta(days= 7)).strftime('%Y-%m-%d'))
 date_range = pd.date_range(start= start_date, periods= 7).strftime('%Y-%m-%d')
-#print(date_range)
 
 url = 'https://www.tn.gov/content/dam/tn/health/documents/cedep/novel-coronavirus/datasets/Public-Dataset-County-New.XLSX'
 
