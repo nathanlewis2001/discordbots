@@ -1,0 +1,28 @@
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+
+with open('covid_stats.txt', 'r') as file:
+    data = file.read().replace('\n\n', '',)
+
+mail_content = 'Here are the last seven days of new Covid cases in Chester County:\n' + data
+
+#The mail addresses and password
+sender_address = 'sendr email'
+sender_pass = 'password'
+receiver_address = 'receiver email'
+
+#Setup the MIME
+message = MIMEMultipart()
+message['From'] = sender_address
+message['To'] = receiver_address
+message['Subject'] = 'New Covid Cases in Chester County'   #The subject line
+message.attach(MIMEText(mail_content, 'plain'))
+
+#Create SMTP session for sending the mail
+session = smtplib.SMTP('smtp.gmail.com', 587)
+session.starttls() #enable security
+session.login(sender_address, sender_pass)
+text = message.as_string()
+session.sendmail(sender_address, receiver_address, text)
+session.quit()
