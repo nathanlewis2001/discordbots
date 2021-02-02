@@ -8,7 +8,7 @@ with open('covid_stats.txt', 'r') as file:
 mail_content = 'Here are the last seven days of new Covid cases in Chester County:\n' + data
 
 #The mail addresses and password
-sender_address = 'sendr email'
+sender_address = 'sender email'
 sender_pass = 'password'
 receiver_address = 'receiver email'
 
