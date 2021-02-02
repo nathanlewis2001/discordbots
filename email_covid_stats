@@ -8,21 +8,21 @@ with open('covid_stats.txt', 'r') as file:
 mail_content = 'Here are the last seven days of new Covid cases in Chester County:\n' + data
 
 #The mail addresses and password
-sender_address = 'mscott@fhu.edu'
-sender_pass = 'myywqevbvyhghwqb'
-receiver_address = 'r.mark.scott@gmail.com, me@me.com'
+sender = 'mscott@fhu.edu'
+gmail_pass = 'myywqevbvyhghwqb'
+receiver = 'r.mark.scott@gmail.com,me@me.com'
 
 #Setup the MIME
 message = MIMEMultipart()
-message['From'] = sender_address
-message['To'] = receiver_address
+message['From'] = sender
+message['To'] = receiver
 message['Subject'] = 'New Covid Cases in Chester County'   #The subject line
 message.attach(MIMEText(mail_content, 'plain'))
 
 #Create SMTP session for sending the mail
 session = smtplib.SMTP('smtp.gmail.com', 587)
 session.starttls() #enable security
-session.login(sender_address, sender_pass)
+session.login(sender, gmail_pass)
 text = message.as_string()
-session.sendmail(sender_address, receiver_address.split(','), text)
+session.sendmail(sender, receiver.split(','), text)
 session.quit()
