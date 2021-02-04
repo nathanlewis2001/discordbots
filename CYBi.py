@@ -5,7 +5,7 @@ FHU CYB Discord bot 12/2020
 ~~~~    CYBi is a teaching tool on Discord bot making
         This monster bot, with 1000+ lines of code, is loaded with commands and tasks to demonstrate some of the many things one can do with a Discord bot.
         - learn how to use APIs
-        - learn how to create custom Discord help command
+        - learn how to create a custom Discord help command
         - learn how to automate and schedule Discord tasks
         - learn how to two ways clean out Discord channels
         - learn how to pull in RSS feeds into a specific channel
