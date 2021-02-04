@@ -73,7 +73,7 @@ from urllib.request import urlretrieve as retrieve
 appid = os.environ.get('OWM_API') #secured the OpenWeatherMap API token by calling it from an environment variable
 rapidapi = os.environ.get('rapidapi_key') #secured the RAPIDAPI token by calling it from an environment variable
 '''To create an environment variable containing the token or key,
-   add this command to the bottom of .profile (if you using Ubuntu 20), then reboot your server.
+   add this command to the bottom of .profile (if you are using Ubuntu 20), then reboot your server.
    Here are the entries this bot uses:
    export OWM_API="your token here"
    export rapidapi_key="your token here"
